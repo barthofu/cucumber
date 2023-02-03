@@ -1,4 +1,4 @@
-package com.cucumber.client;
+package org.cucumber.client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

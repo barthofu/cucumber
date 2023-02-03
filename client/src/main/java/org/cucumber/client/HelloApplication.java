@@ -1,4 +1,4 @@
-package com.cucumber.client;
+package org.cucumber.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

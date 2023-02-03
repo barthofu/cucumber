@@ -4,14 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cucumber</groupId>
-    <artifactId>client</artifactId>
+    <groupId>org.cucumber</groupId>
+    <artifactId>socketClient</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>client</name>
+    <name>socketClient</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
+        <lombok.version>1.18.24</lombok.version>
     </properties>
 
     <dependencies>
@@ -52,6 +53,21 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!--    Our Dependencies    -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.cucumber</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -63,6 +79,15 @@
                 <configuration>
                     <source>18</source>
                     <target>18</target>
+
+                    <!-- ANNOTATIONS : -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -74,7 +99,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.cucumber.client/com.cucumber.client.HelloApplication</mainClass>
+                            <mainClass>org.cucumber.socketClient/org.cucumber.socketClient.HelloApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

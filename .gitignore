@@ -1,3 +1,6 @@
+### Secrets ###
+.env
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -37,3 +40,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+socketClient/src/main/resources/com/cucumber/socketClient/cucumber_logo.psd
