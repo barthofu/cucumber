@@ -57,6 +57,7 @@ public class Server {
                 Socket sockNewClient = socket.accept();
                 // TODO : auth check
                 SocketClient newSocketClient = new SocketClient(sockNewClient);
+                System.out.println("client connected");
                 this.addClient(newSocketClient);
 
                 Thread threadNewClient = new Thread(new Connection(newSocketClient));
