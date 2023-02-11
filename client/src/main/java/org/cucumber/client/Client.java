@@ -13,13 +13,14 @@ public class Client {
     public static void main(String[] args) {
 
         try {
-
+            System.out.println("Opening Connection");
             openConnection();
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
+        System.out.println("Connection correctly started");
     }
 
     public static void openConnection() throws IOException {
