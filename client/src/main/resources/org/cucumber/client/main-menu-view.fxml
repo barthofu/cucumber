@@ -6,6 +6,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.MainMenuController">
    <children>
+      <HBox alignment="CENTER" layoutY="280.0" prefHeight="120.0" prefWidth="599.0">
+         <children>
+            <Button mnemonicParsing="false" text="start dating" />
+         </children>
+      </HBox>
       <ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <items>
             <BorderPane prefHeight="30.0" prefWidth="599.0" style="-fx-min-width: 100;">
@@ -16,7 +21,7 @@
                      </BorderPane.margin></Label>
                </right>
                <left>
-                  <Button mnemonicParsing="false" text="Quitter" BorderPane.alignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#onQuitButton" text="Quitter" BorderPane.alignment="CENTER" />
                </left>
             </BorderPane>
          </items>
@@ -24,5 +29,6 @@
             <Insets left="0.5" />
          </padding>
       </ToolBar>
+      <Button layoutX="558.0" layoutY="38.0" mnemonicParsing="false" onAction="#onFavButton" text="☆" />
    </children>
 </AnchorPane>
