@@ -13,10 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-
             Client client = Client.getInstance();
             client.openConnection(address, port);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

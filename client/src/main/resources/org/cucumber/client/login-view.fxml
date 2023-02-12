@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.LoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@cucumber_logo.png" />
+      </image>
+   </ImageView>
+   <VBox prefHeight="200.0" prefWidth="100.0">
+      <children>
+         <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label text="Username " />
+               <TextField />
+            </children>
+         </HBox>
+         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <children>
+               <Label text="Password  " />
+               <PasswordField />
+            </children>
+         </HBox>
+      </children>
+   </VBox>
+    <Button fx:id="loginBtn" onAction="#onLoginButton" text="Login" />
+   <Separator orientation="VERTICAL" prefHeight="200.0" />
+</VBox>

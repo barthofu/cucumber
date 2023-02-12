@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.cucumber.client.models.so.Connection;
+import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -51,4 +52,8 @@ public class Client {
         return instance;
     }
 
+    public void send(SocketMessage socketMessage) throws IOException {
+        Logger.log(LoggerStatus.INFO, String.format("sending [%s]SocketMessage(%s) to `%s`", socketMessage.getId(), socketMessage.getContent().getClass().getName(), socketMessage.getRoute()));
+        getInstance().out.writeObject(socketMessage);
+    }
 }
