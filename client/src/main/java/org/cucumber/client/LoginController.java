@@ -26,13 +26,7 @@ public class LoginController {
     @FXML
     protected void onLoginButton(ActionEvent event) throws IOException {
         System.out.println("login");
-
-        Parent parent = FXMLLoader.load(LoginController.class.getResource(FXUtils.mainMenuViewName));
-        Scene scene = new Scene(parent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setTitle("Cucumber - La vitesse rencontre l'amour!");
-        appStage.setResizable(false);
-        appStage.setScene(scene);
+        FXUtils.goToMainMenu(this, event);
 
         try {
             Logger.log(LoggerStatus.INFO, "trying sending hello");
