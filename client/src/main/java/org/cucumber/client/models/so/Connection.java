@@ -14,7 +14,6 @@ import org.cucumber.common.utils.Logger;
 public class Connection implements Runnable {
 
     private final Socket socket;
-    private final String id;
     private boolean isActive = true;
 
     private ObjectInputStream in;
@@ -23,7 +22,6 @@ public class Connection implements Runnable {
     public Connection (Socket socket, ObjectOutputStream out) {
         this.socket = socket;
         this.out = out;
-        this.id = UUID.randomUUID().toString();
     }
 
     /**
@@ -47,7 +45,7 @@ public class Connection implements Runnable {
             // handle message
             MessageManager.getInstance().receive(message.getId(), message.getContent());
 
-            Logger.log(LoggerStatus.INFO, "\tincoming message: " + message.getRoute());
+            Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
         }
 
         // client.disconnectedServer();
@@ -59,11 +57,11 @@ public class Connection implements Runnable {
 
         try {
             message = (SocketMessage) in.readObject();
-            System.out.println("Reading incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.INFO, String.format("[%s] reading : %s", message.getId(), message.getContent().getClass().getName()));
         } catch (IOException e) {
-            System.out.println("Can't receive incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.SEVERE, String.format("couldn't be received > %s : %s", e.getClass().getName(), e.getMessage()));
         } catch (ClassNotFoundException e) {
-            System.out.println("Can't parse incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.SEVERE, String.format("couldn't be parsed > %s : %s", e.getClass().getName(), e.getMessage()));
         }
 
         if (message == null) {

@@ -60,11 +60,11 @@ public class SocketClient implements Runnable {
 
         try {
             message = (SocketMessage) in.readObject();
-            System.out.println("Reading incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.INFO, String.format("[%s:%s] reading : %s", this.id, message.getId(), message.getContent().getClass().getName()));
         } catch (IOException e) {
-            System.out.println("Can't receive incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be received : %s", this.id, e.getMessage()));
         } catch (ClassNotFoundException e) {
-            System.out.println("Can't parse incoming message (" + this.id + ")");
+            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be parsed : %s", this.id, e.getMessage()));
         }
 
         if (message == null) {
