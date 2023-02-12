@@ -10,18 +10,12 @@ import org.cucumber.utils.classes.Controller;
 
 import java.util.Set;
 
+/**
+ * The Router service is used to handle incoming messages from clients and dispatch them to the corresponding controller instance.
+ */
 @Getter
 @Setter
 public class Router {
-
-    static Router instance;
-
-    public static Router getInstance() {
-        if (instance == null) {
-            instance = new Router();
-        }
-        return instance;
-    }
 
     private final Set<Controller> routes;
 
@@ -44,5 +38,18 @@ public class Router {
 
     public Controller findFromRoute(String route) throws EntityNotFoundException {
         return this.routes.stream().filter(controller -> controller.getRoute().equals(route)).findFirst().orElseThrow(EntityNotFoundException::new);
+    }
+
+    // ================================
+    // Singleton
+    // ================================
+
+    private static Router instance;
+
+    public static Router getInstance() {
+        if (instance == null) {
+            instance = new Router();
+        }
+        return instance;
     }
 }

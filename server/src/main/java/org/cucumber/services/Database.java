@@ -6,25 +6,28 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * The Database service is responsible for managing the database connection.
+ */
 public class Database {
 
-    private final String URL;
-    private final String USER;
-    private final String PASSWORD;
+    private final String url;
+    private final String user;
+    private final String password;
 
     private Connection connection;
 
-    public Database() {
+    private Database() {
 
         Dotenv dotenv = Dotenv.load();
 
-        this.URL = dotenv.get("DATABASE_URL");
-        this.USER = dotenv.get("DATABASE_USER");
-        this.PASSWORD = dotenv.get("DATABASE_PASSWORD");
+        this.url = dotenv.get("DATABASE_URL");
+        this.user = dotenv.get("DATABASE_USER");
+        this.password = dotenv.get("DATABASE_PASSWORD");
     }
 
     public void connect() throws SQLException {
-        this.connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        this.connection = DriverManager.getConnection(url, user, password);
     }
 
     public void disconnect() throws SQLException {
@@ -35,5 +38,18 @@ public class Database {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    // ================================
+    // Singleton
+    // ================================
+
+    private static Database instance;
+
+    public static Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
+        }
+        return instance;
     }
 }

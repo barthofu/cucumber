@@ -1,40 +1,54 @@
 package org.cucumber.client;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import org.cucumber.client.services.Connection;
+import org.cucumber.client.models.so.Connection;
+import org.cucumber.common.so.LoggerStatus;
+import org.cucumber.common.utils.Logger;
 
 public class Client {
 
-    public static int port = 3000;
-    public static String address = "localhost";
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+    private Socket socket;
 
-    public static void main(String[] args) {
+    public void openConnection(String address, int port) throws IOException {
 
-        try {
-            System.out.println("Opening Connection");
-            openConnection();
+        socket = new Socket(address, port);
+        out = new ObjectOutputStream(socket.getOutputStream());
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        System.out.println("Connection correctly started");
-    }
+        Thread clientReceiveThread = new Thread(new Connection(socket, out));
 
-    public static void openConnection() throws IOException {
-
-        Socket socket = new Socket(address, port);
-
-        Connection connection = new Connection(socket);
-
-        Thread clientReceiveThread = new Thread(connection);
         clientReceiveThread.start();
+
+        Logger.log(LoggerStatus.INFO, "Client connected to server");
     }
 
-    public static void disconnectedServer() {
-        // TODO: implement
+    public void closeConnection() throws IOException {
+        if (this.in != null) {
+            this.in.close();
+        }
+        out.close();
+        socket.close();
+    }
+
+    // ================================
+    // Singleton
+    // ================================
+
+    private static Client instance;
+
+    private Client() {
+    }
+
+    public static Client getInstance() {
+        if (instance == null) {
+            instance = new Client();
+        }
+        return instance;
     }
 
 }

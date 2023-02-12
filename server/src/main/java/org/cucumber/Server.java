@@ -2,88 +2,43 @@ package org.cucumber;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import lombok.Getter;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.models.so.SocketClient;
-import org.cucumber.services.Connection;
+import org.cucumber.common.so.LoggerStatus;
+import org.cucumber.common.utils.Logger;
+import org.cucumber.services.SocketManager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 public class Server {
 
-    private static Server instance;
+    private int port;
 
-    public static Server getInstance() {
-        if (instance == null) {
-            try {
-                instance = new Server();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                System.exit(-1);
-            }
-        }
-        return instance;
-    }
+    public Server() {
 
-    private final List<SocketClient> socketClients = new ArrayList<>();
-    private ServerSocket socket;
-
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
-
-    private Server() throws Exception {
-
-        int port;
         try {
             port = Integer.parseInt(Dotenv.load().get("PORT"));
         } catch (Exception ignore) {
+            Logger.log(LoggerStatus.WARNING, "Can't access .env value \"PORT\" : setting port to default value 3000");
             port = 3000;
         }
 
-        this.socket = new ServerSocket(port);
     }
 
-    public void listen() {
+    public void start() throws Exception {
 
-        while (true) {
-            try {
-                Socket sockNewClient = socket.accept();
-                // TODO : auth check
-                SocketClient newSocketClient = new SocketClient(sockNewClient);
-                System.out.println("client connected");
-                this.addClient(newSocketClient);
+        Logger.log(LoggerStatus.INFO, "Server started");
 
-                Thread threadNewClient = new Thread(new Connection(newSocketClient));
-                threadNewClient.start();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        // instantiate the server socket
+        ServerSocket serverSocket = new ServerSocket(port);
+
+        // instantiate the socket manager
+        SocketManager socketManager = SocketManager.getInstance();
+        socketManager.init(serverSocket);
+
+        // start the socket manager in a new thread
+        Thread threadConnectionManager = new Thread(socketManager);
+        threadConnectionManager.start();
     }
 
-    // messages
 
-    public void broadcastMessage(SocketMessage message, int id) {
-        this.socketClients.forEach(connectedClient -> {
-            if (connectedClient.getId() != id) connectedClient.send(message);
-        });
-    }
-
-    // manage clients
-
-    public void addClient(SocketClient socketClient) {
-        //a new client has joined
-        this.socketClients.add(socketClient);
-    }
-
-    public void removeClient(SocketClient socketClient) {
-        this.socketClients.remove(socketClient);
-    }
 }

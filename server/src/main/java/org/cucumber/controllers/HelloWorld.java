@@ -24,9 +24,9 @@ public class HelloWorld extends Controller {
         Args arguments = args instanceof Args ? ((Args) args) : null;
 
         if (arguments != null) {
-            socketClient.send(new SocketMessage(requestId, new Args("Hello " + arguments.text)));
+            socketClient.sendToClient(new SocketMessage(requestId, new Args("Hello " + arguments.text)));
         } else {
-            socketClient.send(new SocketMessage(requestId, new Args("Hello world")));
+            socketClient.sendToClient(new SocketMessage(requestId, new Args("Hello world")));
         }
     }
 }

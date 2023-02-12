@@ -1,4 +1,6 @@
 package org.cucumber.common.dto;
 
-public abstract class SocketMessageContent {
+import java.io.Serializable;
+
+public abstract class SocketMessageContent implements Serializable {
 }

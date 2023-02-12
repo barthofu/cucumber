@@ -7,9 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            Server server = Server.getInstance();
-            Logger.log(LoggerStatus.INFO, "Server started");
-            server.listen();
+            Server server = new Server();
+            server.start();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -12,7 +12,7 @@ public class MessageManager {
 
     private static final Long timeoutMillis = 10000L;
 
-    private Map<String, SocketMessageContent> responseQueue = new HashMap<>();
+    private final Map<String, SocketMessageContent> responseQueue = new HashMap<>();
 
     private static MessageManager instance;
 
@@ -34,13 +34,12 @@ public class MessageManager {
 
         String requestId = UUID.randomUUID().toString();
 
-        // TODO:send message to server on route
+        // TODO: send message to server on route
 
         // wait for response
         long startTime = System.currentTimeMillis();
 
         while (!isResponseReceived(requestId) || isExpired(startTime)) {
-
             // wait
             try {
                 Thread.sleep(15L);
@@ -74,5 +73,4 @@ public class MessageManager {
     private boolean isExpired(Long startTime){
         return System.currentTimeMillis() >= startTime + timeoutMillis;
     }
-
 }
