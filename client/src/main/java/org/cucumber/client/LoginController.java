@@ -24,6 +24,11 @@ public class LoginController {
     private Button loginBtn;
 
     @FXML
+    protected void onSignUp(ActionEvent event) throws IOException {
+        FXUtils.goToSignup(this, event);
+    }
+
+    @FXML
     protected void onLoginButton(ActionEvent event) throws IOException {
         System.out.println("login");
         FXUtils.goToMainMenu(this, event);
@@ -37,7 +42,8 @@ public class LoginController {
                             "helloWorld",
                             new HelloMsg("ClientApp")
                     ),
-                    LoginController::handleHelloResponse
+                    LoginController::handleHelloResponse,
+                    this
             );
         } catch (IOException e) {
             Logger.log(LoggerStatus.SEVERE, e.getMessage());
@@ -45,7 +51,7 @@ public class LoginController {
     }
 
     //run on hello response
-    public static void handleHelloResponse(SocketMessageContent message){
+    public static void handleHelloResponse(SocketMessageContent message, Object context){
         System.out.println("hello from the callback on server response : " + ((HelloMsg) message).getText());
     }
 }

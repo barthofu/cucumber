@@ -30,7 +30,7 @@ public class MessageManager {
         return instance;
     }
 
-    public void send(SocketMessage message, IMessageCallback callback) throws IOException {
+    public void send(SocketMessage message, IMessageCallback callback, Object context) throws IOException {
         String requestId = message.getId();
         Client.getInstance().send(message);
 
@@ -48,13 +48,13 @@ public class MessageManager {
                 }
             }
             if (isResponseReceived(requestId)) {
-                callback.apply(getResponseContent(requestId));
+                callback.apply(getResponseContent(requestId), context);
             } else {
                 Logger.log(LoggerStatus.SEVERE, "response [%s] has expired");
             }
         }).start();
     }
-    public void send(SocketMessage message, IMessageCallback callback, IMessageCallback failedCallback) throws IOException {
+    public void send(SocketMessage message, IMessageCallback callback, IMessageCallback failedCallback, Object context) throws IOException {
         String requestId = message.getId();
         Client.getInstance().send(message);
 
@@ -72,10 +72,10 @@ public class MessageManager {
                 }
             }
             if (isResponseReceived(requestId)) {
-                callback.apply(getResponseContent(requestId));
+                callback.apply(getResponseContent(requestId), context);
             } else {
                 Logger.log(LoggerStatus.SEVERE, "response [%s] has expired");
-                failedCallback.apply(getResponseContent(requestId));
+                failedCallback.apply(getResponseContent(requestId), context);
             }
         }).start();
     }

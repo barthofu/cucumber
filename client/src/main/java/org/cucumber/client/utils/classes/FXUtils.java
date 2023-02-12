@@ -14,6 +14,7 @@ public class FXUtils {
     public static String mainMenuViewName = "main-menu-view.fxml";
     public static String favView = "fav-view.fxml";
     public static String loginViewName = "login-view.fxml";
+    public static String registerViewName = "register-view.fxml";
 
     public static void goToMainMenu(Object o, ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(o.getClass().getResource(FXUtils.mainMenuViewName));
@@ -38,6 +39,15 @@ public class FXUtils {
         Scene scene = new Scene(parent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appStage.setTitle("Cucumber - Se connecter");
+        appStage.setResizable(false);
+        appStage.setScene(scene);
+    }
+
+    public static void goToSignup(Object o, ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(o.getClass().getResource(FXUtils.registerViewName));
+        Scene scene = new Scene(parent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setTitle("Cucumber - S'enregistrer");
         appStage.setResizable(false);
         appStage.setScene(scene);
     }

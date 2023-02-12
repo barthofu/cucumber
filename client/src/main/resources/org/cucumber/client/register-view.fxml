@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.RegisterViewController">
+   <children>
+      <VBox alignment="CENTER" layoutY="100.0" prefHeight="200.0" prefWidth="600.0">
+         <children>
+            <Label text="Enregistrer un nouveau compte" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Username                    " />
+                  <TextField fx:id="username" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Mot de passe               " />
+                  <PasswordField fx:id="password" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Répéter Mot de passe " />
+                  <PasswordField fx:id="passwordVerif" />
+               </children>
+            </HBox>
+            <Label fx:id="errorLabel" />
+            <Button mnemonicParsing="false" onAction="#onRegisterButton" text="Valider" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
