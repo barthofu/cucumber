@@ -8,7 +8,6 @@ public class Main {
         try {
             Server server = new Server();
             server.start();
-            AuthService.checkAuth("x", "xxx");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
