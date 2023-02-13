@@ -1,9 +1,7 @@
 package org.cucumber.server.controllers;
 
-import lombok.AllArgsConstructor;
 import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.socketmsg_impl.HelloMsg;
+import org.cucumber.common.dto.contents.Message;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.utils.classes.Controller;
@@ -18,12 +16,12 @@ public class HelloWorld extends Controller {
 
     @Override
     public void handle(SocketClient socketClient, String requestId, Object args) {
-        HelloMsg arguments = args instanceof HelloMsg ? ((HelloMsg) args) : null;
+        Message arguments = args instanceof Message ? ((Message) args) : null;
         Logger.log(LoggerStatus.INFO, arguments == null ? "null" : arguments.toString());
         if (arguments != null) {
-            socketClient.sendToClient(new SocketMessage(requestId, route, new HelloMsg("Hello " + arguments.getText())));
+            socketClient.sendToClient(new SocketMessage(requestId, route, new Message("Hello " + arguments.getText())));
         } else {
-            socketClient.sendToClient(new SocketMessage(requestId, route, new HelloMsg("Hello world")));
+            socketClient.sendToClient(new SocketMessage(requestId, route, new Message("Hello world")));
         }
     }
 }

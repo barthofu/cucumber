@@ -11,8 +11,8 @@ import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.socketmsg_impl.RegisterMsg;
-import org.cucumber.common.dto.socketmsg_impl.RegisterResponse;
+import org.cucumber.common.dto.contents.RegisterRequest;
+import org.cucumber.common.dto.contents.RegisterResponse;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -46,7 +46,7 @@ public class RegisterViewController extends Controller {
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "register",
-                            new RegisterMsg(username.getText(), password.getText())
+                            new RegisterRequest(username.getText(), password.getText())
                     ),
                     RegisterViewController::handleRegisterResponse,
                     this

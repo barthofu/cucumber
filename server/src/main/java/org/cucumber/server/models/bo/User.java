@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "password")
     private String password; //must be hashed

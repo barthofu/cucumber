@@ -6,6 +6,7 @@ import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.core.Router;
 import org.cucumber.server.core.SocketManager;
+import org.cucumber.server.models.bo.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,16 +18,18 @@ public class SocketClient implements Runnable {
 
     private static int idCounter = 0;
 
-    private int id;
+    private final int socketId;
     private final Socket socket;
     private boolean isActive;
+
+    private User user = null;
 
     private ObjectOutputStream out;
     private ObjectInputStream in;
 
     public SocketClient(Socket socket) {
 
-        this.id = ++idCounter;
+        this.socketId = ++idCounter;
         this.socket = socket;
 
         try {
@@ -34,7 +37,7 @@ public class SocketClient implements Runnable {
             in = new ObjectInputStream(this.socket.getInputStream());
             this.isActive = true;
         } catch (IOException e) {
-            Logger.log(LoggerStatus.SEVERE, String.format("Can't reach client N°%d : %s", this.id, e.getMessage()));
+            Logger.log(LoggerStatus.SEVERE, String.format("Can't reach client N°%d : %s", this.socketId, e.getMessage()));
 //            Server.getInstance().removeClient(socketClient);
         }
     }
@@ -60,11 +63,11 @@ public class SocketClient implements Runnable {
 
         try {
             message = (SocketMessage) in.readObject();
-            Logger.log(LoggerStatus.INFO, String.format("[%s:%s] reading : %s", this.id, message.getId(), message.getContent().getClass().getName()));
+            Logger.log(LoggerStatus.INFO, String.format("[%s:%s] reading : %s", this.socketId, message.getId(), message.getContent().getClass().getName()));
         } catch (IOException e) {
-            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be received : %s", this.id, e.getMessage()));
+            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be received : %s", this.socketId, e.getMessage()));
         } catch (ClassNotFoundException e) {
-            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be parsed : %s", this.id, e.getMessage()));
+            Logger.log(LoggerStatus.SEVERE, String.format("[%s] couldn't be parsed : %s", this.socketId, e.getMessage()));
         }
 
         if (message == null) {
@@ -81,7 +84,7 @@ public class SocketClient implements Runnable {
             this.out.close();
             this.socket.close();
         } catch (IOException ioException) {
-            Logger.log(LoggerStatus.SEVERE, "Can't close client (" + id + ")");
+            Logger.log(LoggerStatus.SEVERE, "Can't close client (" + socketId + ")");
         }
     }
 

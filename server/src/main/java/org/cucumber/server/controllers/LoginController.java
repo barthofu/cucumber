@@ -1,10 +1,8 @@
 package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.socketmsg_impl.LoginMsg;
-import org.cucumber.common.dto.socketmsg_impl.LoginResponse;
-import org.cucumber.common.dto.socketmsg_impl.RegisterMsg;
-import org.cucumber.common.dto.socketmsg_impl.RegisterResponse;
+import org.cucumber.common.dto.contents.LoginMsg;
+import org.cucumber.common.dto.contents.LoginResponse;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.models.so.SocketClient;
@@ -24,7 +22,7 @@ public class LoginController extends Controller {
         if (arguments != null) {
             try {
                 socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(
-                        AuthService.checkAuth(arguments.getUsername(), arguments.getPassword())
+                        AuthService.getInstance().checkAuth(arguments.getUsername(), arguments.getPassword())
                 )));
             } catch (Exception ignore) {
                 socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(false)));

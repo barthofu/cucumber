@@ -16,19 +16,20 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "closed")
-    private Boolean closed;
+    private Boolean closed = false;
 
 
     @Column(name = "started_at")
-    private Date started_at;
+    private Date started_at = new Date(System.currentTimeMillis());
 
     @OneToMany(mappedBy = "room")
     @ToString.Exclude

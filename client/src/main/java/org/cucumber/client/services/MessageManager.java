@@ -18,18 +18,6 @@ public class MessageManager {
 
     private final Map<String, SocketMessageContent> responseQueue = new HashMap<>();
 
-    private static MessageManager instance;
-
-    private MessageManager() {
-    }
-
-    public static MessageManager getInstance() {
-        if (instance == null) {
-            instance = new MessageManager();
-        }
-        return instance;
-    }
-
     public <T extends Controller> void send(SocketMessage message, IMessageCallback callback, T context) throws IOException {
 
         // send message to server
@@ -98,5 +86,20 @@ public class MessageManager {
 
     private boolean isExpired(Long startTime) {
         return System.currentTimeMillis() >= startTime + timeoutMillis;
+    }
+
+    // ================================
+    // Singleton
+    // ================================
+
+    private static MessageManager instance;
+
+    private MessageManager() {}
+
+    public static MessageManager getInstance() {
+        if (instance == null) {
+            instance = new MessageManager();
+        }
+        return instance;
     }
 }

@@ -62,8 +62,12 @@ public class SocketManager implements Runnable {
      */
     public void broadcastMessage(SocketMessage message, int id) {
         this.socketClients.forEach(connectedClient -> {
-            if (connectedClient.getId() != id) connectedClient.sendToClient(message);
+            if (connectedClient.getSocketId() != id) connectedClient.sendToClient(message);
         });
+    }
+
+    public SocketClient getById(int id) {
+        return this.socketClients.stream().filter(socketClient -> socketClient.getSocketId() == id).findFirst().orElse(null);
     }
 
     /**
@@ -72,7 +76,7 @@ public class SocketManager implements Runnable {
      */
     public void addClient(SocketClient socketClient) {
 
-        Logger.log(LoggerStatus.INFO, String.format("New client connected (%d)", socketClient.getId()));
+        Logger.log(LoggerStatus.INFO, String.format("New client connected (%d)", socketClient.getSocketId()));
         this.socketClients.add(socketClient);
     }
 
@@ -82,7 +86,7 @@ public class SocketManager implements Runnable {
      */
     public void removeClient(SocketClient socketClient) {
 
-        Logger.log(LoggerStatus.INFO, String.format("Client disconnected (%d)", socketClient.getId()));
+        Logger.log(LoggerStatus.INFO, String.format("Client disconnected (%d)", socketClient.getSocketId()));
         this.socketClients.remove(socketClient);
     }
 

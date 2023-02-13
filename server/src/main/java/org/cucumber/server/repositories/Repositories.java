@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class Repositories {
 
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
-    private List<BasicRepository> repositories = new ArrayList<>();
+    private final List<BasicRepository> repositories = new ArrayList<>();
 
     private Repositories() {
 

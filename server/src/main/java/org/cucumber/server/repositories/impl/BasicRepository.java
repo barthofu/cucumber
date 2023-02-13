@@ -16,7 +16,7 @@ public abstract class BasicRepository<T> implements IBasicRepository<T> {
     }
 
     @Override
-    public T findById(Long id) {
+    public T findById(Integer id) {
         return em.find(targetClass, id);
     }
 

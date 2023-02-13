@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AuthService {
 
-    public static boolean checkAuth(String username, String password) {
+    public boolean checkAuth(String username, String password) {
         try {
             List<User> users = Repositories.get(UserRepository.class).findAll();
             for (User user : users)
@@ -27,10 +27,10 @@ public class AuthService {
         return false;
     }
 
-    public static void register(String username, String password) {
+    public void register(String username, String password) {
         User user = User.builder()
                 .username(username)
-                .password(AuthService.hashPsswd(password))
+                .password(hashPsswd(password))
                 .build();
 
         Repositories
@@ -40,13 +40,28 @@ public class AuthService {
         Logger.log(LoggerStatus.INFO, "Added new user: " + username);
     }
 
-    public static String hashPsswd(String str) {
+    public String hashPsswd(String str) {
         return BCrypt
                 .withDefaults()
                 .hashToString(12, str.toCharArray());
     }
 
-    public static boolean checkHash(String psswd, String hash) {
+    public boolean checkHash(String psswd, String hash) {
         return BCrypt.verifyer().verify(psswd.toCharArray(), hash).verified;
+    }
+
+    // ================================
+    // Singleton
+    // ================================
+
+    private static AuthService instance;
+
+    private AuthService() {}
+
+    public static AuthService getInstance() {
+        if (instance == null) {
+            instance = new AuthService();
+        }
+        return instance;
     }
 }

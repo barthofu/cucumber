@@ -15,12 +15,13 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "content", nullable = false)
     private String content;

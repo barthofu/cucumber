@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
 import org.cucumber.server.controllers.LoginController;
+import org.cucumber.server.controllers.ChatController;
 import org.cucumber.server.controllers.RegisterController;
 import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.server.controllers.HelloWorld;
@@ -25,6 +26,9 @@ public class Router {
         this.routes = Set.of(
                 new HelloWorld(),
                 new RegisterController(),
+                new ChatController.SendMessage(),
+                new ChatController.JoinRoom(),
+                new ChatController.CancelJoin(),
                 new LoginController()
         );
     }

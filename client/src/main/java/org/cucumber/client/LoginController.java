@@ -12,7 +12,7 @@ import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.socketmsg_impl.*;
+import org.cucumber.common.dto.contents.*;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -78,7 +78,7 @@ public class LoginController extends Controller {
 
     //run on hello response
     public static void handleHelloResponse(SocketMessageContent message, Object context){
-        System.out.println("hello from the callback on server response : " + ((HelloMsg) message).getText());
+        System.out.println("hello from the callback on server response : " + ((Message) message).getText());
     }
 
 

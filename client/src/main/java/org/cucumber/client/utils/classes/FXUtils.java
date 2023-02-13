@@ -33,5 +33,22 @@ public class FXUtils {
         appStage.setScene(scene);
     }
 
+    public static <T extends Controller> void goTo(
+            String viewName,
+            Object controllerContext,
+            Scene sourceScene
+    ) throws IOException {
+
+        Parent parent = FXMLLoader.load(
+                controllerContext.getClass().getResource(viewName + viewNameSuffix)
+        );
+        Scene scene = new Scene(parent);
+        Stage appStage = (Stage) sourceScene.getWindow();
+
+        appStage.setTitle(titlePrefix + ((T) controllerContext).getTitle());
+        appStage.setResizable(false);
+        appStage.setScene(scene);
+    }
+
 
 }

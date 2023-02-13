@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.WaitingController">
+   <children>
+      <Button fx:id="button_cancel" layoutX="31.0" layoutY="29.0" mnemonicParsing="false" onAction="#onCancel" text="Annuler" />
+      <Text layoutX="180.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="En attente d'un interlocuteur..." wrappingWidth="215.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

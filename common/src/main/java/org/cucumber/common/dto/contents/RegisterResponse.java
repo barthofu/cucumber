@@ -1,4 +1,4 @@
-package org.cucumber.common.dto.socketmsg_impl;
+package org.cucumber.common.dto.contents;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,6 @@ import org.cucumber.common.dto.SocketMessageContent;
 @AllArgsConstructor
 @Getter
 @Setter
-public class LoginMsg extends SocketMessageContent {
-    private String username;
-    private String password;
+public class RegisterResponse extends SocketMessageContent {
+    private boolean status;
 }

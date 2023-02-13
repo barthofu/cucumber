@@ -1,15 +1,14 @@
-package org.cucumber.common.dto.socketmsg_impl;
+package org.cucumber.common.dto.contents;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.cucumber.common.dto.SocketMessageContent;
 
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-public class HelloMsg extends SocketMessageContent {
-    private String text;
+public class RegisterRequest extends SocketMessageContent {
+    private String username;
+    private String password;
 }

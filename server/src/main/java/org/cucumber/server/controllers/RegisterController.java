@@ -1,8 +1,8 @@
 package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.socketmsg_impl.RegisterMsg;
-import org.cucumber.common.dto.socketmsg_impl.RegisterResponse;
+import org.cucumber.common.dto.contents.RegisterRequest;
+import org.cucumber.common.dto.contents.RegisterResponse;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.services.AuthService;
@@ -18,10 +18,10 @@ public class RegisterController extends Controller {
 
     @Override
     public void handle(SocketClient socketClient, String requestId, Object args) {
-        RegisterMsg arguments = args instanceof RegisterMsg ? ((RegisterMsg) args) : null;
+        RegisterRequest arguments = args instanceof RegisterRequest ? ((RegisterRequest) args) : null;
         if (arguments != null) {
             try {
-                AuthService.register(arguments.getUsername(), arguments.getPassword());
+                AuthService.getInstance().register(arguments.getUsername(), arguments.getPassword());
                 socketClient.sendToClient(new SocketMessage(requestId, route, new RegisterResponse(true)));
             } catch (Exception ignore) {
                 socketClient.sendToClient(new SocketMessage(requestId, route, new RegisterResponse(false)));
