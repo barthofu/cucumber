@@ -24,7 +24,6 @@ public class RegisterController extends Controller {
                 AuthService.register(arguments.getUsername(), arguments.getPassword());
                 socketClient.sendToClient(new SocketMessage(requestId, route, new RegisterResponse(true)));
             } catch (Exception ignore) {
-                System.out.println(ignore.getMessage());
                 socketClient.sendToClient(new SocketMessage(requestId, route, new RegisterResponse(false)));
             }
         } else {

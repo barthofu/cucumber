@@ -3,13 +3,12 @@ package org.cucumber.client;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.services.MessageManager;
 import org.cucumber.client.utils.classes.FXUtils;
+import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.dto.SocketMessageContent;
 import org.cucumber.common.dto.socketmsg_impl.RegisterMsg;
@@ -20,7 +19,11 @@ import org.cucumber.common.utils.Logger;
 import java.io.IOException;
 import java.util.UUID;
 
-public class RegisterViewController {
+public class RegisterViewController extends Controller {
+
+    public RegisterViewController() {
+        super("S'inscrire");
+    }
 
     @FXML
     protected Label errorLabel;
@@ -53,12 +56,12 @@ public class RegisterViewController {
         }
     }
 
-    private static void handleRegisterResponse(SocketMessageContent socketMessageContent, Object context) {
+    private static <T extends Controller> void handleRegisterResponse(SocketMessageContent socketMessageContent, T context) {
         try {
             if (( (RegisterResponse) socketMessageContent).isStatus()) {
                 Platform.runLater(() -> {
                     try {
-                        FXUtils.goToLogin(context, ((RegisterViewController) context).lastActionEvent);
+                        FXUtils.goTo(Views.LOGIN.getViewName(), context, ((RegisterViewController) context).lastActionEvent);
                     } catch (IOException e) {
                         ((RegisterViewController) context).errorLabel.setText(e.getMessage());
                     }

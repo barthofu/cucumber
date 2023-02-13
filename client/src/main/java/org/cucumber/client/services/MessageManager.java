@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cucumber.client.Client;
+import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.interfaces.IMessageCallback;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.dto.SocketMessageContent;
@@ -29,7 +30,7 @@ public class MessageManager {
         return instance;
     }
 
-    public void send(SocketMessage message, IMessageCallback callback, Object context) throws IOException {
+    public <T extends Controller> void send(SocketMessage message, IMessageCallback callback, T context) throws IOException {
 
         // send message to server
         String requestId = message.getId();
@@ -55,7 +56,7 @@ public class MessageManager {
             }
         }).start();
     }
-    public void send(SocketMessage message, IMessageCallback callback, IMessageCallback failedCallback, Object context) throws IOException {
+    public <T extends Controller> void send(SocketMessage message, IMessageCallback callback, IMessageCallback failedCallback, T context) throws IOException {
 
         // send message to server
         String requestId = message.getId();

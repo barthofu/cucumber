@@ -2,19 +2,20 @@ package org.cucumber.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
+import org.cucumber.client.utils.enums.Views;
 
 import java.io.IOException;
 
-public class FavViewController {
+public class FavViewController extends Controller {
+
+    public FavViewController() {
+        super("Mes favoris");
+    }
 
     @FXML
     protected void onRetourButton(ActionEvent event) throws IOException {
-        FXUtils.goToMainMenu(this, event);
+        FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
     }
 }

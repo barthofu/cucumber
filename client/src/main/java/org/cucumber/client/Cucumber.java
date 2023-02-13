@@ -9,18 +9,27 @@ import org.cucumber.client.utils.classes.FXUtils;
 import java.io.IOException;
 
 public class Cucumber extends Application {
+
     public static int port = 3000;
     public static String address = "localhost";
 
+    private static final String firstViewName = "login-view.fxml";
+    private static final String firstViewTitle = "Cucumber - Se connecter";
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Cucumber.class.getResource(FXUtils.loginViewName));
+
+        // load the first view
+        FXMLLoader fxmlLoader = new FXMLLoader(Cucumber.class.getResource(Cucumber.firstViewName));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Cucumber - Se connecter");
+
+        // set the first view properties
+        stage.setTitle(Cucumber.firstViewTitle);
         stage.setScene(scene);
         stage.resizableProperty().set(false);
         stage.show();
 
+        // open a websocket connection to the server
         Client client = Client.getInstance();
         client.openConnection(address, port);
     }
