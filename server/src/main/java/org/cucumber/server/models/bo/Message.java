@@ -1,35 +1,58 @@
 package org.cucumber.server.models.bo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.util.Objects;
 
 @Entity
-@Table(name = "message")
+@Table(name = "message", schema = "public")
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "timestamp", nullable = false)
-    private Date timestamp;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "room_id", nullable = false)
+    @ToString.Exclude
+    private Room room;
 
-    @OneToOne(mappedBy = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"from\"", nullable = false)
+    @ToString.Exclude
     private User from;
 
-    @OneToOne(mappedBy = "id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "\"to\"", nullable = false)
+    @ToString.Exclude
     private User to;
+
+    @Column(name = "created_at", nullable = false)
+    private Instant createdAt = Instant.now();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Message message = (Message) o;
+        return id != null && Objects.equals(id, message.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

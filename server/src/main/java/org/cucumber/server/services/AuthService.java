@@ -4,11 +4,15 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.core.Database;
+import org.cucumber.server.models.bo.User;
+import org.cucumber.server.repositories.Repositories;
+import org.cucumber.server.repositories.impl.UserRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class AuthService {
 
@@ -35,14 +39,17 @@ public class AuthService {
 
     public static void register(String username, String password) throws SQLException {
 
-        Connection c = Database.getInstance().getConnection();
-        Statement st = c.createStatement();
-        st.executeUpdate(String.format(
-                "INSERT INTO public.user (username, password) VALUES ('%s', '%s')",
-                username,
-                BCrypt.withDefaults().hashToString(12, password.toCharArray())
-        ));
-        st.close();
-        Logger.log(LoggerStatus.INFO, "added new user " + username);
+        String hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
+        User user = User.builder()
+                .username(username)
+                .password(hashedPassword)
+                .build();
+
+        Repositories
+                .get(UserRepository.class)
+                .create(user);
+
+        Logger.log(LoggerStatus.INFO, "Added new user: " + username);
     }
 }

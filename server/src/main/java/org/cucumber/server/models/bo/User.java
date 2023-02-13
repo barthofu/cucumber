@@ -1,23 +1,25 @@
 package org.cucumber.server.models.bo;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -27,6 +29,33 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @OneToMany(mappedBy = "id")
-    private Set<User> favorites;
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite",
+            joinColumns = @JoinColumn(name = "from"),
+            inverseJoinColumns = @JoinColumn(name = "to")
+    )
+    @ToString.Exclude
+    private Set<User> favorites = new LinkedHashSet<>();
+
+    @ManyToMany(mappedBy = "favorites")
+    @ToString.Exclude
+    private Set<User> favoritedBy = new LinkedHashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
+    private Set<Room> rooms = new LinkedHashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
