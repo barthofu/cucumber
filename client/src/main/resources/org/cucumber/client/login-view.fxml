@@ -16,16 +16,17 @@
                <Image url="@cucumber_logo.png" />
             </image>
          </ImageView>
+         <Label fx:id="errorLabel" text="entrez vos infos" />
          <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
             <children>
                <Label text="Username " />
-               <TextField />
+               <TextField fx:id="username" />
             </children>
          </HBox>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                <Label text="Password  " />
-               <PasswordField />
+               <PasswordField fx:id="password" />
             </children>
          </HBox>
           <Button fx:id="loginBtn" onAction="#onLoginButton" text=" Login ">

@@ -1,15 +1,18 @@
 package org.cucumber.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.services.MessageManager;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.socketmsg_impl.HelloMsg;
+import org.cucumber.common.dto.socketmsg_impl.*;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -26,30 +29,50 @@ public class LoginController extends Controller {
     private Button loginBtn;
 
     @FXML
+    protected TextField username;
+    @FXML
+    protected TextField password;
+    @FXML
+    protected Label errorLabel;
+
+    private ActionEvent lastActionEvent;
+
+    @FXML
     protected void onSignUp(ActionEvent event) throws IOException {
         FXUtils.goTo(Views.REGISTER.getViewName(), this, event);
     }
 
     @FXML
     protected void onLoginButton(ActionEvent event) throws IOException {
-
-        System.out.println("login");
-        FXUtils.goTo(Views.LOGIN.getViewName(), this, event);
-
-        try {
-            Logger.log(LoggerStatus.INFO, "trying sending hello");
-
+            lastActionEvent = event;
             MessageManager.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
-                            "helloWorld",
-                            new HelloMsg("ClientApp")
+                            "login",
+                            new LoginMsg(username.getText(), password.getText())
                     ),
-                    LoginController::handleHelloResponse,
+                    LoginController::handleLoginResponse,
                     this
             );
-        } catch (IOException e) {
-            Logger.log(LoggerStatus.SEVERE, e.getMessage());
+    }
+
+    public static <T extends Controller> void handleLoginResponse(SocketMessageContent message, T context){
+        try {
+            if (( (LoginResponse) message).isStatus()) {
+                Platform.runLater(() -> {
+                    try {
+                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginController) context).lastActionEvent);
+                    } catch (IOException e) {
+                        ((LoginController) context).errorLabel.setText(e.getMessage());
+                    }
+                });
+            }else{
+                Platform.runLater(() -> {
+                    ((LoginController) context).errorLabel.setText("Connexion impossible");
+                });
+            }
+        }catch (Exception e){
+            System.out.println(RegisterViewController.class.getName() + " : "+  e.getMessage());
         }
     }
 
@@ -57,4 +80,6 @@ public class LoginController extends Controller {
     public static void handleHelloResponse(SocketMessageContent message, Object context){
         System.out.println("hello from the callback on server response : " + ((HelloMsg) message).getText());
     }
+
+
 }
