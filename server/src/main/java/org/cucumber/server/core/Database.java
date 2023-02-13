@@ -1,4 +1,4 @@
-package org.cucumber.server.services;
+package org.cucumber.server.core;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -37,6 +37,13 @@ public class Database {
     }
 
     public Connection getConnection() {
+        if (connection == null) {
+            try {
+                connect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return connection;
     }
 

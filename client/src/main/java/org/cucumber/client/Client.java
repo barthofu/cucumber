@@ -36,6 +36,12 @@ public class Client {
         socket.close();
     }
 
+    public void sendToServer(SocketMessage socketMessage) throws IOException {
+        Logger.log(LoggerStatus.INFO, String.format("sending [%s]SocketMessage(%s) to `%s`", socketMessage.getId(), socketMessage.getContent().getClass().getName(), socketMessage.getRoute()));
+        out.writeObject(socketMessage);
+        out.flush();
+    }
+
     // ================================
     // Singleton
     // ================================
@@ -52,8 +58,4 @@ public class Client {
         return instance;
     }
 
-    public void send(SocketMessage socketMessage) throws IOException {
-        Logger.log(LoggerStatus.INFO, String.format("sending [%s]SocketMessage(%s) to `%s`", socketMessage.getId(), socketMessage.getContent().getClass().getName(), socketMessage.getRoute()));
-        getInstance().out.writeObject(socketMessage);
-    }
 }

@@ -1,7 +1,5 @@
 package org.cucumber.server;
 
-import org.cucumber.db.AuthService;
-
 public class Main {
 
     public static void main(String[] args) {

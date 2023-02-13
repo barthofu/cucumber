@@ -3,7 +3,6 @@ package org.cucumber.client.services;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.cucumber.client.Client;
 import org.cucumber.client.utils.interfaces.IMessageCallback;
@@ -31,8 +30,10 @@ public class MessageManager {
     }
 
     public void send(SocketMessage message, IMessageCallback callback, Object context) throws IOException {
+
+        // send message to server
         String requestId = message.getId();
-        Client.getInstance().send(message);
+        Client.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {
@@ -55,8 +56,10 @@ public class MessageManager {
         }).start();
     }
     public void send(SocketMessage message, IMessageCallback callback, IMessageCallback failedCallback, Object context) throws IOException {
+
+        // send message to server
         String requestId = message.getId();
-        Client.getInstance().send(message);
+        Client.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {

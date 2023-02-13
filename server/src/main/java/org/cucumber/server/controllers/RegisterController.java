@@ -1,13 +1,11 @@
 package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.socketmsg_impl.HelloMsg;
 import org.cucumber.common.dto.socketmsg_impl.RegisterMsg;
 import org.cucumber.common.dto.socketmsg_impl.RegisterResponse;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
-import org.cucumber.db.AuthService;
-import org.cucumber.db.DAO;
+import org.cucumber.server.services.AuthService;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.utils.classes.Controller;
 

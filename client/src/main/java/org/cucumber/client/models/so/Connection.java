@@ -11,6 +11,9 @@ import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
+/**
+ * The Connection class is responsible for managing the connection to the server.
+ */
 public class Connection implements Runnable {
 
     private final Socket socket;
@@ -73,7 +76,7 @@ public class Connection implements Runnable {
 
     }
 
-    public void send(SocketMessage socketMessage){
+    public void sendToServer(SocketMessage socketMessage){
         try {
             out.writeObject(socketMessage);
             out.flush();

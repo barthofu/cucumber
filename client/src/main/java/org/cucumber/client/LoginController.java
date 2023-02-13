@@ -35,7 +35,7 @@ public class LoginController {
 
         try {
             Logger.log(LoggerStatus.INFO, "trying sending hello");
-//            Client.getInstance().send(
+
             MessageManager.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
