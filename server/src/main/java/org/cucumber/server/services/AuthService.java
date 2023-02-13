@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AuthService {
 
-    public boolean checkAuth(String username, String password) {
+    public User checkAuth(String username, String password) {
         try {
             List<User> users = Repositories.get(UserRepository.class).findAll();
             for (User user : users)
@@ -19,12 +19,12 @@ public class AuthService {
                         username.equals(user.getUsername()) &&
                                 checkHash(password, user.getPassword())
                 ) {
-                    return true;
+                    return user;
                 }
         } catch (Exception e) {
             Logger.log(LoggerStatus.SEVERE, e.getMessage());
         }
-        return false;
+        return null;
     }
 
     public void register(String username, String password) {

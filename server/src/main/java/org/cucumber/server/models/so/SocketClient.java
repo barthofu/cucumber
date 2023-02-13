@@ -1,6 +1,7 @@
 package org.cucumber.server.models.so;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.cucumber.common.dto.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
@@ -14,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 @Getter
+@Setter
 public class SocketClient implements Runnable {
 
     private static int idCounter = 0;

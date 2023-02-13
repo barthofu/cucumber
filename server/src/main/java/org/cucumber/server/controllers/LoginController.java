@@ -5,6 +5,7 @@ import org.cucumber.common.dto.contents.LoginMsg;
 import org.cucumber.common.dto.contents.LoginResponse;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.AuthService;
 import org.cucumber.server.utils.classes.Controller;
@@ -21,8 +22,10 @@ public class LoginController extends Controller {
         LoginMsg arguments = args instanceof LoginMsg ? ((LoginMsg) args) : null;
         if (arguments != null) {
             try {
+                User user = AuthService.getInstance().checkAuth(arguments.getUsername(), arguments.getPassword());
+                socketClient.setUser(user);
                 socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(
-                        AuthService.getInstance().checkAuth(arguments.getUsername(), arguments.getPassword())
+                        user != null
                 )));
             } catch (Exception ignore) {
                 socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(false)));
