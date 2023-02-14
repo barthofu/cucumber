@@ -13,7 +13,7 @@
       </HBox>
       <ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <items>
-            <BorderPane prefHeight="30.0" prefWidth="599.0" style="-fx-min-width: 100;">
+            <BorderPane prefHeight="30.0" prefWidth="648.0" style="-fx-min-width: 100;">
                <right>
                   <Label fx:id="connectedUsersLabel" text="X personnes connectées" BorderPane.alignment="CENTER">
                      <BorderPane.margin>

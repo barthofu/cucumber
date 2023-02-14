@@ -75,4 +75,9 @@ public class RegisterViewController extends Controller {
             System.out.println(RegisterViewController.class.getName() + " : "+  e.getMessage());
         }
     }
+
+    @Override
+    public void onView() {
+
+    }
 }

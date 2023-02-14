@@ -1,7 +1,6 @@
 package org.cucumber.client.utils.classes;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
@@ -9,4 +8,6 @@ import lombok.Getter;
 public abstract class Controller {
 
     private String title;
+
+    public abstract void onView();
 }

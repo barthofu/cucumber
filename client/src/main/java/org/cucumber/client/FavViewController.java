@@ -18,4 +18,9 @@ public class FavViewController extends Controller {
     protected void onRetourButton(ActionEvent event) throws IOException {
         FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
     }
+
+    @Override
+    public void onView() {
+
+    }
 }

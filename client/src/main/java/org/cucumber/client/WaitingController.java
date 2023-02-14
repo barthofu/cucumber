@@ -84,4 +84,9 @@ public class WaitingController extends Controller implements Initializable {
             System.out.println(MainMenuController.class.getName() + " : "+  e.getMessage());
         }
     }
+
+    @Override
+    public void onView() {
+
+    }
 }

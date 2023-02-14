@@ -48,4 +48,9 @@ public class ChatController extends Controller implements Initializable {
     protected void onSendMessage(ActionEvent event) throws IOException {
 
     }
+
+    @Override
+    public void onView() {
+
+    }
 }
