@@ -5,12 +5,13 @@ import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.RegisterRequest;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.AuthService;
 import org.cucumber.server.utils.classes.Controller;
 
 public class RegisterController extends Controller {
-    public static final String route = "register";
+    public static final String route = Routes.Server.REGISTER_REGISTER.getValue();
 
     public RegisterController() {
         super(route);

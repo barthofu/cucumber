@@ -5,6 +5,7 @@ import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.LoginRequest;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.AuthService;
@@ -13,7 +14,7 @@ import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 
 public class LoginController extends Controller {
-    public static final String route = "login";
+    public static final String route = Routes.Server.LOGIN_LOGIN.getValue();
 
     public LoginController() {
         super(route);

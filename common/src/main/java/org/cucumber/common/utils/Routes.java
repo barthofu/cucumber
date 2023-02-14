@@ -1,0 +1,38 @@
+package org.cucumber.common.utils;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class Routes {
+
+    @Getter
+    @AllArgsConstructor
+    public enum Server {
+        FAV_ADD("fav/add"),
+        FAV_GET("fav/get"),
+        FAV_REMOVE("fav/remove"),
+
+        CHAT_SEND("chat/send"),
+        CHAT_JOIN("chat/join"),
+        CHAT_CANCEL("chat/cancel"),
+
+        USER_ME("user/me"),
+
+        REGISTER_REGISTER("register"),
+
+        LOGIN_LOGIN("login");
+        private final String value;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum Client {
+        USER_TOTAL("fav/add"),
+
+        MESSAGE_RECEIVE("fav/get");
+
+        private final String value;
+    }
+}

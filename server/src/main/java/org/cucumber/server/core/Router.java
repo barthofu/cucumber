@@ -3,11 +3,8 @@ package org.cucumber.server.core;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Getter;
 import lombok.Setter;
-import org.cucumber.server.controllers.LoginController;
-import org.cucumber.server.controllers.ChatController;
-import org.cucumber.server.controllers.RegisterController;
+import org.cucumber.server.controllers.*;
 import org.cucumber.server.utils.classes.Controller;
-import org.cucumber.server.controllers.HelloWorld;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.server.models.so.SocketClient;
 
@@ -24,12 +21,14 @@ public class Router {
 
     private Router() {
         this.routes = Set.of(
-                new HelloWorld(),
                 new RegisterController(),
                 new ChatController.SendMessage(),
                 new ChatController.JoinRoom(),
                 new ChatController.CancelJoin(),
-                new LoginController()
+                new LoginController(),
+                new FavControllers.Add(),
+                new FavControllers.Get(),
+                new FavControllers.Remove()
         );
     }
 

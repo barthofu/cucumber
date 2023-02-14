@@ -3,6 +3,7 @@ package org.cucumber.server.controllers;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.utils.Routes;
 import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.utils.classes.Controller;
@@ -13,7 +14,7 @@ public class UserController {
 
     public class UserMe extends Controller {
 
-        public static final String route = "user/me";
+        public static final String route = Routes.Server.USER_ME.getValue();
         public UserMe() {
             super(route);
         }
