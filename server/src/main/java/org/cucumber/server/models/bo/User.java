@@ -3,7 +3,9 @@ package org.cucumber.server.models.bo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,11 +25,20 @@ public class User {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password; //must be hashed
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     @ManyToMany
     @JoinTable(
@@ -45,6 +56,10 @@ public class User {
     @ManyToMany(mappedBy = "users")
     @ToString.Exclude
     private Set<Room> rooms = new LinkedHashSet<>();
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Date timestamp;
 
     @Override
     public boolean equals(Object o) {

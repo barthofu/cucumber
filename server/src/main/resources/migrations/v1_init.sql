@@ -1,12 +1,16 @@
 create table "user" (
     id serial primary key,
     username varchar(50) not null,
-    password varchar not null
+    password varchar(255) not null,
+    description text,
+    age integer,
+    avatar varchar(255),
+    created_at timestamp default now()
 );
 
 create table user_favorite (
-    "from" integer not null constraint favorite_from_fkey references "user"(id),
-    "to" integer not null constraint favorite_to_fkey references "user"(id),
+    "from" integer not null references "user"(id),
+    "to" integer not null references "user"(id),
     constraint user_favorite_pk primary key ("from", "to")
 );
 
