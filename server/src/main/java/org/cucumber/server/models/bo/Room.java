@@ -3,8 +3,10 @@ package org.cucumber.server.models.bo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
+import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -25,10 +27,12 @@ public class Room {
     private Integer id;
 
     @Column(name = "active")
-    private Boolean active = true;
+    @ColumnDefault("true")
+    private Boolean active;
 
-    @Column(name = "started_at")
-    private Date started_at = new Date(System.currentTimeMillis());
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Instant createdAt;
 
     @OneToMany(mappedBy = "room")
     @ToString.Exclude

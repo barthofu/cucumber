@@ -34,7 +34,6 @@ public class LoginController extends Controller {
 
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
-                        route,
                         Mappers.getMapper(UserMapper.class).userToUserDTO(user)
                 ));
 
@@ -43,7 +42,7 @@ public class LoginController extends Controller {
                 }, 1000);
 
             } catch (Exception ignore) {
-                socketClient.sendToClient(new SocketMessage(requestId, route, new Status(false)));
+                socketClient.sendToClient(new SocketMessage(requestId, new Status(false)));
             }
         } else {
             Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", LoginController.class.getName(), "args is null"));

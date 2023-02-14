@@ -29,7 +29,7 @@ public class Routes {
     @Getter
     @AllArgsConstructor
     public enum Client {
-        USER_TOTAL("fav/add"),
+        USER_TOTAL("user/total"),
 
         MESSAGE_RECEIVE("chat/receive");
 

@@ -23,9 +23,9 @@ public class RegisterController extends Controller {
         if (arguments != null) {
             try {
                 AuthService.getInstance().register(arguments.getUsername(), arguments.getPassword());
-                socketClient.sendToClient(new SocketMessage(requestId, route, new Status(true)));
+                socketClient.sendToClient(new SocketMessage(requestId, new Status(true)));
             } catch (Exception ignore) {
-                socketClient.sendToClient(new SocketMessage(requestId, route, new Status(false)));
+                socketClient.sendToClient(new SocketMessage(requestId, new Status(false)));
             }
         } else {
             Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", RegisterController.class.getName(), "args is null"));

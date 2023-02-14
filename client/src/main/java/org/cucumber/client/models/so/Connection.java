@@ -49,19 +49,31 @@ public class Connection implements Runnable {
 
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
 
-
-            switch (message.getRoute()) {
-                case "user/total" ->
-                    UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
-//                case "chat/receive"
-                default ->
-                    // handle response
-                    SocketMessageService.getInstance().receive(message.getId(), message.getContent());
+            if (message.getRoute() != null) {
+                // handle the message
+                handleRoute(message);
+            } else {
+                // send the message to the message service
+                SocketMessageService.getInstance().receive(message.getId(), message.getContent());
             }
-
         }
 
+        // TODO: handle connection lost
         // client.disconnectedServer();
+    }
+
+    private void handleRoute(SocketMessage message) {
+
+        if (matchRoute(message, Routes.Client.USER_TOTAL)) {
+            UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
+
+        } else if (matchRoute(message, Routes.Client.MESSAGE_RECEIVE)) {
+            // TODO
+        }
+    }
+
+    private boolean matchRoute(SocketMessage message, Routes.Client route) {
+        return message.getRoute().equals(route.getValue());
     }
 
     private SocketMessage waitForMessage() {

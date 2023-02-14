@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class User {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private Date timestamp;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object o) {
