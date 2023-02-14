@@ -1,6 +1,10 @@
 package org.cucumber.server.services;
 
 import org.cucumber.server.models.bo.User;
+import org.cucumber.server.repositories.Repositories;
+
+import java.util.List;
+import java.util.Set;
 
 public class FavService {
 
@@ -11,7 +15,7 @@ public class FavService {
     public void removeUserFromFav(User owner, User toRemove){
 
     }
-
+    
     // ================================
     // Singleton
     // ================================
