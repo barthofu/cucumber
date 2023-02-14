@@ -1,6 +1,6 @@
 package org.cucumber.server.core;
 
-import org.cucumber.common.dto.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.models.so.SocketClient;
@@ -68,6 +68,10 @@ public class SocketManager implements Runnable {
 
     public SocketClient getById(int id) {
         return this.socketClients.stream().filter(socketClient -> socketClient.getSocketId() == id).findFirst().orElse(null);
+    }
+
+    public SocketClient getByUserId(int id) {
+        return this.socketClients.stream().filter(socketClient -> socketClient.getUser().getId() == id).findFirst().orElse(null);
     }
 
     /**

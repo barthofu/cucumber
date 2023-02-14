@@ -2,7 +2,7 @@ package org.cucumber.server.models.so;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.cucumber.common.dto.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.core.Router;

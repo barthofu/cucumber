@@ -2,7 +2,7 @@ package org.cucumber.client.services;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.cucumber.common.dto.contents.UserInfo;
+import org.cucumber.common.dto.UserDTO;
 
 @Getter
 @Setter
@@ -10,16 +10,16 @@ public class ChatService {
 
     private boolean isChatting;
 
-    private UserInfo otherUserInfo;
+    private UserDTO otherUserDTO;
 
-    public void startChat(UserInfo otherUserInfo) {
+    public void startChat(UserDTO otherUserDTO) {
         isChatting = true;
-        this.otherUserInfo = otherUserInfo;
+        this.otherUserDTO = otherUserDTO;
     }
 
     public void reset() {
         isChatting = false;
-        otherUserInfo = null;
+        otherUserDTO = null;
     }
 
     // ================================

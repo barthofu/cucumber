@@ -1,8 +1,8 @@
 package org.cucumber.server.controllers;
 
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.contents.LoginMsg;
-import org.cucumber.common.dto.contents.LoginResponse;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.requests.LoginRequest;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.models.bo.User;
@@ -19,16 +19,16 @@ public class LoginController extends Controller {
 
     @Override
     public void handle(SocketClient socketClient, String requestId, Object args) {
-        LoginMsg arguments = args instanceof LoginMsg ? ((LoginMsg) args) : null;
+        LoginRequest arguments = args instanceof LoginRequest ? ((LoginRequest) args) : null;
         if (arguments != null) {
             try {
                 User user = AuthService.getInstance().checkAuth(arguments.getUsername(), arguments.getPassword());
                 socketClient.setUser(user);
-                socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(
+                socketClient.sendToClient(new SocketMessage(requestId, route, new Status(
                         user != null
                 )));
             } catch (Exception ignore) {
-                socketClient.sendToClient(new SocketMessage(requestId, route, new LoginResponse(false)));
+                socketClient.sendToClient(new SocketMessage(requestId, route, new Status(false)));
             }
         } else {
             Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", LoginController.class.getName(), "args is null"));

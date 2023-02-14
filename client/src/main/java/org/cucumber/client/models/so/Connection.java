@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.UUID;
 
 import org.cucumber.client.services.MessageManager;
-import org.cucumber.common.dto.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 

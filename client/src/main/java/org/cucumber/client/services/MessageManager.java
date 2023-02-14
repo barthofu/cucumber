@@ -7,8 +7,8 @@ import java.util.Map;
 import org.cucumber.client.Client;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.interfaces.IMessageCallback;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.SocketMessageContent;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 

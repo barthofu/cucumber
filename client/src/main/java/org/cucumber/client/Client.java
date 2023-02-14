@@ -6,7 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.cucumber.client.models.so.Connection;
-import org.cucumber.common.dto.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 

@@ -1,4 +1,4 @@
-package org.cucumber.common.dto;
+package org.cucumber.common.dto.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

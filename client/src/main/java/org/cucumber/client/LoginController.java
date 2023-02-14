@@ -6,15 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.contents.*;
-import org.cucumber.common.so.LoggerStatus;
-import org.cucumber.common.utils.Logger;
+import org.cucumber.common.dto.MessageDTO;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.requests.LoginRequest;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -49,7 +49,7 @@ public class LoginController extends Controller {
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "login",
-                            new LoginMsg(username.getText(), password.getText())
+                            new LoginRequest(username.getText(), password.getText())
                     ),
                     LoginController::handleLoginResponse,
                     this
@@ -58,7 +58,7 @@ public class LoginController extends Controller {
 
     public static <T extends Controller> void handleLoginResponse(SocketMessageContent message, T context){
         try {
-            if (( (LoginResponse) message).isStatus()) {
+            if (( (Status) message).isSuccess()) {
                 Platform.runLater(() -> {
                     try {
                         FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginController) context).lastActionEvent);
@@ -78,7 +78,7 @@ public class LoginController extends Controller {
 
     //run on hello response
     public static void handleHelloResponse(SocketMessageContent message, Object context){
-        System.out.println("hello from the callback on server response : " + ((Message) message).getText());
+        System.out.println("hello from the callback on server response : " + ((MessageDTO) message).getText());
     }
 
 

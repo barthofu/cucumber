@@ -1,12 +1,14 @@
 package org.cucumber.server.services;
 
 import lombok.AllArgsConstructor;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.contents.JoinRoomResponse;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.repositories.Repositories;
 import org.cucumber.server.repositories.impl.RoomRepository;
+import org.cucumber.server.repositories.impl.UserRepository;
+import org.cucumber.server.utils.mappers.UserMapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,18 +51,16 @@ public class ChatRoomService {
                 .getById(user1.socketId)
                 .sendToClient(new SocketMessage(
                         user1.requestId,
-                        new JoinRoomResponse(
-                                newRoom.getId(),
-                                user2.userId
+                        Mappers.getMapper(UserMapper.class).userToUserDTO(
+                                Repositories.get(UserRepository.class).findById(user2.userId)
                         )
                 ));
         SocketManager.getInstance()
                 .getById(user2.socketId)
                 .sendToClient(new SocketMessage(
                         user2.requestId,
-                        new JoinRoomResponse(
-                                newRoom.getId(),
-                                user1.userId
+                        Mappers.getMapper(UserMapper.class).userToUserDTO(
+                                Repositories.get(UserRepository.class).findById(user1.userId)
                         )
                 ));
     }

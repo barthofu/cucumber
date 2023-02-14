@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
-import org.cucumber.common.dto.User;
+import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -47,13 +47,13 @@ public class MainMenuController extends Controller {
         this.connectedUsersLabel.setText(String.format("%d personnes connectées", nbCLient));
     }
 
-    protected void getCurrentUser(User user){
-        usernameLabel.setText("Connecté en tant que " + user.getUsername());
+    protected void getCurrentUser(UserDTO user){
+        usernameLabel.setText("Connecté en tant que " + user);
     }
 
     @Override
     public void onView() {
         getHowManyClient();
-        getCurrentUser(new User("Bartholomichoux <<-- TODO"));
+        getCurrentUser(null);
     }
 }

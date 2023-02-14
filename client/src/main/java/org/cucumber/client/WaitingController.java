@@ -5,15 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import org.controlsfx.control.action.Action;
 import org.cucumber.client.services.ChatService;
 import org.cucumber.client.services.MessageManager;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.contents.*;
+import org.cucumber.common.dto.UserDTO;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Empty;
+import org.cucumber.common.dto.generics.Status;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class WaitingController extends Controller implements Initializable {
     @FXML
     protected void onCancel(ActionEvent event) throws IOException {
         MessageManager.getInstance().send(
-                new SocketMessage(UUID.randomUUID().toString(), "chat/cancel", new EmptyContent()),
+                new SocketMessage(UUID.randomUUID().toString(), "chat/cancel", new Empty()),
                 WaitingController::handleCancelResponse,
                 this
         );
@@ -44,7 +45,7 @@ public class WaitingController extends Controller implements Initializable {
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "chat/join",
-                            new EmptyContent()
+                            new Empty()
                     ),
                     WaitingController::handleJoinChatRoomResponse,
                     this
@@ -55,7 +56,9 @@ public class WaitingController extends Controller implements Initializable {
     }
 
     private static <T extends Controller> void handleCancelResponse(SocketMessageContent socketMessageContent, T context) {
-        GenericSuccess response = (GenericSuccess) socketMessageContent;
+
+        Status response = (Status) socketMessageContent;
+
         if (response.isSuccess()) {
             Platform.runLater(() -> {
                 try {
@@ -69,9 +72,9 @@ public class WaitingController extends Controller implements Initializable {
 
     private static <T extends Controller> void handleJoinChatRoomResponse(SocketMessageContent socketMessageContent, T context) {
         try {
-            UserInfo userInfo = (UserInfo) socketMessageContent;
+            UserDTO userDTO = (UserDTO) socketMessageContent;
 
-            ChatService.getInstance().startChat(userInfo);
+            ChatService.getInstance().startChat(userDTO);
 
             Platform.runLater(() -> {
                 try {

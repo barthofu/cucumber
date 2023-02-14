@@ -5,14 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
-import org.cucumber.common.dto.SocketMessage;
-import org.cucumber.common.dto.SocketMessageContent;
-import org.cucumber.common.dto.contents.RegisterRequest;
-import org.cucumber.common.dto.contents.RegisterResponse;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.requests.RegisterRequest;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
@@ -58,7 +58,7 @@ public class RegisterViewController extends Controller {
 
     private static <T extends Controller> void handleRegisterResponse(SocketMessageContent socketMessageContent, T context) {
         try {
-            if (( (RegisterResponse) socketMessageContent).isStatus()) {
+            if (( (Status) socketMessageContent).isSuccess()) {
                 Platform.runLater(() -> {
                     try {
                         FXUtils.goTo(Views.LOGIN.getViewName(), context, ((RegisterViewController) context).lastActionEvent);

@@ -8,7 +8,7 @@ import org.cucumber.server.controllers.ChatController;
 import org.cucumber.server.controllers.RegisterController;
 import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.server.controllers.HelloWorld;
-import org.cucumber.common.dto.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.server.models.so.SocketClient;
 
 import java.util.Set;

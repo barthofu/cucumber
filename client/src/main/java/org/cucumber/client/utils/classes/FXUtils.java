@@ -19,13 +19,12 @@ public class FXUtils {
             Object controllerContext,
             ActionEvent event
     ) throws IOException {
+
         FXMLLoader loader = new FXMLLoader(controllerContext.getClass().getResource(viewName + viewNameSuffix));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //
 
-        //
         appStage.setTitle(titlePrefix + ((T) loader.getController()).getTitle());
         appStage.setResizable(false);
         appStage.setScene(scene);
