@@ -7,8 +7,8 @@ import java.util.List;
 
 public abstract class BasicRepository<T> implements IBasicRepository<T> {
 
-    private final EntityManager em;
-    private final Class<T> targetClass;
+    protected final EntityManager em;
+    protected final Class<T> targetClass;
 
     public BasicRepository(EntityManager em, Class<T> targetClass ) {
         this.em = em;

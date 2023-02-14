@@ -27,4 +27,18 @@ public class RoomRepository extends BasicRepository<Room> implements IRoomReposi
 
         return create(room);
     }
+
+    @Override
+    public Room findByUserId(int userId) {
+        return em.createQuery(
+                    "SELECT r.* " +
+                    "FROM Room r " +
+                    "JOIN room_user ru ON ru.room_id = r.id " +
+                    "WHERE ru.user_id = :userId " +
+                    "  AND r.active = true ",
+                    Room.class
+                )
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
 }

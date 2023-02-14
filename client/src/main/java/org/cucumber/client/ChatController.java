@@ -6,12 +6,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
+import org.cucumber.common.dto.MessageDTO;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class ChatController extends Controller implements Initializable {
 
@@ -43,6 +50,19 @@ public class ChatController extends Controller implements Initializable {
 
     @FXML
     protected void onSendMessage(ActionEvent event) throws IOException {
+
+        MessageDTO messageDTO = new MessageDTO(tf_message.getText());
+        if (!messageDTO.getContent().isEmpty()) {
+            // send message to server
+            SocketMessageService.getInstance().send(
+                    new SocketMessage(UUID.randomUUID().toString(), Routes.Server.CHAT_SEND.getValue(), messageDTO),
+                    ChatController::handleMessageSendResponse,
+                    this
+            );
+        }
+    }
+
+    private static <T extends Controller> void handleMessageSendResponse(SocketMessageContent response, T context) {
 
     }
 

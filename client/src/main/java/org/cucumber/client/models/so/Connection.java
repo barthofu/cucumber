@@ -6,12 +6,12 @@ import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Objects;
 
 /**
  * The Connection class is responsible for managing the connection to the server.
@@ -49,16 +49,15 @@ public class Connection implements Runnable {
 
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
 
+
             switch (message.getRoute()) {
                 case "user/total" ->
                     UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
-//                case "message/"
+//                case "chat/receive"
                 default ->
                     // handle response
                     SocketMessageService.getInstance().receive(message.getId(), message.getContent());
             }
-
-
 
         }
 

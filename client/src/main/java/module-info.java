@@ -12,4 +12,6 @@ module org.cucumber.client {
     exports org.cucumber.client;
     exports org.cucumber.client.utils.classes;
     opens org.cucumber.client.utils.classes to javafx.fxml;
+    exports org.cucumber.client.services;
+    opens org.cucumber.client.services to javafx.fxml;
 }

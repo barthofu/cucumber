@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Room;
+import org.cucumber.server.models.bo.User;
 import org.cucumber.server.repositories.Repositories;
 import org.cucumber.server.repositories.impl.RoomRepository;
 import org.cucumber.server.repositories.impl.UserRepository;
@@ -31,6 +32,27 @@ public class ChatRoomService {
         if (waitingUsers.size() == 2) {
             processWaitingUsers();
         }
+    }
+
+    public User getChatter(int userId) {
+
+        Room room = Repositories
+                .get(RoomRepository.class)
+                .findByUserId(userId);
+
+        if (room != null) {
+            return getChatter(userId, room);
+        } else {
+            return null;
+        }
+    }
+
+    public User getChatter(int userId, Room room) {
+
+        return room.getUsers().stream()
+                .filter(user -> user.getId() != userId)
+                .findFirst()
+                .orElse(null);
     }
 
     public void processWaitingUsers() {

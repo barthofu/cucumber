@@ -24,9 +24,8 @@ public class Room {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "closed")
-    private Boolean closed = false;
-
+    @Column(name = "active")
+    private Boolean active = true;
 
     @Column(name = "started_at")
     private Date started_at = new Date(System.currentTimeMillis());

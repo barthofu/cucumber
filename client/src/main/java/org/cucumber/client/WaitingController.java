@@ -55,11 +55,11 @@ public class WaitingController extends Controller implements Initializable {
         }
     }
 
-    private static <T extends Controller> void handleCancelResponse(SocketMessageContent socketMessageContent, T context) {
+    private static <T extends Controller> void handleCancelResponse(SocketMessageContent response, T context) {
 
-        Status response = (Status) socketMessageContent;
+        Status status = (Status) response;
 
-        if (response.isSuccess()) {
+        if (status.isSuccess()) {
             Platform.runLater(() -> {
                 try {
                     FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((WaitingController) context).button_cancel.getScene());
@@ -70,9 +70,9 @@ public class WaitingController extends Controller implements Initializable {
         }
     }
 
-    private static <T extends Controller> void handleJoinChatRoomResponse(SocketMessageContent socketMessageContent, T context) {
+    private static <T extends Controller> void handleJoinChatRoomResponse(SocketMessageContent response, T context) {
         try {
-            UserDTO userDTO = (UserDTO) socketMessageContent;
+            UserDTO userDTO = (UserDTO) response;
 
             ChatService.getInstance().startChat(userDTO);
 

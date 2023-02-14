@@ -56,9 +56,9 @@ public class RegisterViewController extends Controller {
         }
     }
 
-    private static <T extends Controller> void handleRegisterResponse(SocketMessageContent socketMessageContent, T context) {
+    private static <T extends Controller> void handleRegisterResponse(SocketMessageContent response, T context) {
         try {
-            if (( (Status) socketMessageContent).isSuccess()) {
+            if (( (Status) response).isSuccess()) {
                 Platform.runLater(() -> {
                     try {
                         FXUtils.goTo(Views.LOGIN.getViewName(), context, ((RegisterViewController) context).lastActionEvent);

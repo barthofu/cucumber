@@ -31,7 +31,7 @@ public class Routes {
     public enum Client {
         USER_TOTAL("fav/add"),
 
-        MESSAGE_RECEIVE("fav/get");
+        MESSAGE_RECEIVE("chat/receive");
 
         private final String value;
     }

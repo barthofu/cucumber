@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cucumber.client.Client;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.interfaces.IMessageCallback;
 import org.cucumber.common.dto.base.SocketMessage;
@@ -22,7 +21,7 @@ public class SocketMessageService {
 
         // send message to server
         String requestId = message.getId();
-        Client.getInstance().sendToServer(message);
+        SocketService.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {
@@ -48,7 +47,7 @@ public class SocketMessageService {
 
         // send message to server
         String requestId = message.getId();
-        Client.getInstance().sendToServer(message);
+        SocketService.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {
