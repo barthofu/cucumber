@@ -7,10 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.MessageDTO;
+import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.dto.generics.Status;
@@ -56,9 +58,12 @@ public class LoginController extends Controller {
             );
     }
 
-    public static <T extends Controller> void handleLoginResponse(SocketMessageContent message, T context){
+    public static <T extends Controller> void handleLoginResponse(SocketMessageContent response, T context) {
         try {
-            if (( (Status) message).isSuccess()) {
+            if (response instanceof UserDTO) {
+
+                UserService.getInstance().setCurrentUser((UserDTO) response);
+
                 Platform.runLater(() -> {
                     try {
                         FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginController) context).lastActionEvent);
@@ -66,12 +71,12 @@ public class LoginController extends Controller {
                         ((LoginController) context).errorLabel.setText(e.getMessage());
                     }
                 });
-            }else{
+            } else {
                 Platform.runLater(() -> {
                     ((LoginController) context).errorLabel.setText("Connexion impossible");
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e){
             System.out.println(RegisterViewController.class.getName() + " : "+  e.getMessage());
         }
     }
