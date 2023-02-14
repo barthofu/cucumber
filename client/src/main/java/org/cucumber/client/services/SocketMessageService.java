@@ -12,7 +12,7 @@ import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
-public class MessageManager {
+public class SocketMessageService {
 
     private static final Long timeoutMillis = 10000L;
 
@@ -92,13 +92,13 @@ public class MessageManager {
     // Singleton
     // ================================
 
-    private static MessageManager instance;
+    private static SocketMessageService instance;
 
-    private MessageManager() {}
+    private SocketMessageService() {}
 
-    public static MessageManager getInstance() {
+    public static SocketMessageService getInstance() {
         if (instance == null) {
-            instance = new MessageManager();
+            instance = new SocketMessageService();
         }
         return instance;
     }

@@ -15,10 +15,7 @@ public class AuthService {
         try {
             List<User> users = Repositories.get(UserRepository.class).findAll();
             for (User user : users)
-                if (
-                        username.equals(user.getUsername()) &&
-                                checkHash(password, user.getPassword())
-                ) {
+                if (username.equals(user.getUsername()) && checkHash(password, user.getPassword())) {
                     return user;
                 }
         } catch (Exception e) {

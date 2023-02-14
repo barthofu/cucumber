@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
@@ -42,7 +42,7 @@ public class RegisterViewController extends Controller {
 
         if (password.getText().equals(passwordVerif.getText())){
             lastActionEvent = event;
-            MessageManager.getInstance().send(
+            SocketMessageService.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "register",

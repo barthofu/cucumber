@@ -9,10 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import org.cucumber.client.services.MessageManager;
 import org.cucumber.client.utils.classes.Controller;
-import org.cucumber.client.utils.classes.FXUtils;
-import org.cucumber.client.utils.enums.Views;
 
 import java.io.IOException;
 

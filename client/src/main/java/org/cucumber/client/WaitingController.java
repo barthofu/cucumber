@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import org.cucumber.client.services.ChatService;
-import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
@@ -30,7 +30,7 @@ public class WaitingController extends Controller implements Initializable {
 
     @FXML
     protected void onCancel(ActionEvent event) throws IOException {
-        MessageManager.getInstance().send(
+        SocketMessageService.getInstance().send(
                 new SocketMessage(UUID.randomUUID().toString(), "chat/cancel", new Empty()),
                 WaitingController::handleCancelResponse,
                 this
@@ -41,7 +41,7 @@ public class WaitingController extends Controller implements Initializable {
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
         try {
-            MessageManager.getInstance().send(
+            SocketMessageService.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "chat/join",

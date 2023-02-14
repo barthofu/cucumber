@@ -6,13 +6,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import org.cucumber.client.MainMenuController;
+
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class FXUtils {
 
     private static final String titlePrefix = "Cucumber - ";
     private static final String viewNameSuffix = ".fxml";
+
+    private static Controller currentController = null;
 
     public static <T extends Controller> void goTo(
             String viewName,
@@ -25,12 +31,14 @@ public class FXUtils {
         Scene scene = new Scene(parent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        appStage.setTitle(titlePrefix + ((T) loader.getController()).getTitle());
+        currentController = loader.getController();
+
+        appStage.setTitle(titlePrefix + currentController.getTitle());
         appStage.setResizable(false);
         appStage.setScene(scene);
 
         //onView Event trigger
-        ((T) loader.getController()).onView();
+        currentController.onView();
     }
 
     public static <T extends Controller> void goTo(
@@ -48,6 +56,17 @@ public class FXUtils {
         appStage.setTitle(titlePrefix + ((T) controllerContext).getTitle());
         appStage.setResizable(false);
         appStage.setScene(scene);
+
+        getCurrentController(MainMenuController.class);
+    }
+
+    public static Controller getCurrentController() {
+
+        return currentController;
+    }
+
+    public static <T extends Controller> Optional<T> getCurrentController(Class<?> controllerClass) {
+        return controllerClass.isInstance(currentController) ? Optional.of((T) currentController) : Optional.empty();
     }
 
 

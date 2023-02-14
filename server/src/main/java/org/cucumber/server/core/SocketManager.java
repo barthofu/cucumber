@@ -1,5 +1,6 @@
 package org.cucumber.server.core;
 
+import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
@@ -10,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The SocketManager service is responsible for managing the socket connections of the clients to the server.
@@ -74,6 +76,10 @@ public class SocketManager implements Runnable {
         return this.socketClients.stream().filter(socketClient -> socketClient.getUser().getId() == id).findFirst().orElse(null);
     }
 
+    public int countLoggedIn() {
+        return (int) this.socketClients.stream().filter(socketClient -> socketClient.getUser() != null).count();
+    }
+
     /**
      * Add a client to the list of connected clients
      * @param socketClient the client to add
@@ -81,7 +87,10 @@ public class SocketManager implements Runnable {
     public void addClient(SocketClient socketClient) {
 
         Logger.log(LoggerStatus.INFO, String.format("New client connected (%d)", socketClient.getSocketId()));
+
         this.socketClients.add(socketClient);
+
+        broadcastCountLoggedIn();
     }
 
     /**
@@ -91,7 +100,18 @@ public class SocketManager implements Runnable {
     public void removeClient(SocketClient socketClient) {
 
         Logger.log(LoggerStatus.INFO, String.format("Client disconnected (%d)", socketClient.getSocketId()));
+
         this.socketClients.remove(socketClient);
+
+        broadcastCountLoggedIn();
+    }
+
+    public void broadcastCountLoggedIn() {
+        this.broadcastMessage(new SocketMessage(
+                UUID.randomUUID().toString(),
+                "user/total",
+                new UsersDTO(this.countLoggedIn())
+        ));
     }
 
     // ================================

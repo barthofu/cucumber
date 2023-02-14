@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import org.cucumber.client.services.MessageManager;
+import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
@@ -15,7 +15,6 @@ import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
-import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.LoginRequest;
 
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class LoginController extends Controller {
     @FXML
     protected void onLoginButton(ActionEvent event) throws IOException {
             lastActionEvent = event;
-            MessageManager.getInstance().send(
+            SocketMessageService.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
                             "login",

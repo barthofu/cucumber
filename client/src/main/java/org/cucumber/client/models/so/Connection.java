@@ -1,14 +1,17 @@
 package org.cucumber.client.models.so;
 
+import org.cucumber.client.services.SocketMessageService;
+import org.cucumber.client.services.UserService;
+import org.cucumber.common.dto.UsersDTO;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.so.LoggerStatus;
+import org.cucumber.common.utils.Logger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-
-import org.cucumber.client.services.MessageManager;
-import org.cucumber.common.dto.base.SocketMessage;
-import org.cucumber.common.so.LoggerStatus;
-import org.cucumber.common.utils.Logger;
+import java.util.Objects;
 
 /**
  * The Connection class is responsible for managing the connection to the server.
@@ -44,10 +47,19 @@ public class Connection implements Runnable {
             // wait for a message from the server
             SocketMessage message = waitForMessage();
 
-            // handle message
-            MessageManager.getInstance().receive(message.getId(), message.getContent());
-
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
+
+            switch (message.getRoute()) {
+                case "user/total" ->
+                    UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
+//                case "message/"
+                default ->
+                    // handle response
+                    SocketMessageService.getInstance().receive(message.getId(), message.getContent());
+            }
+
+
+
         }
 
         // client.disconnectedServer();
