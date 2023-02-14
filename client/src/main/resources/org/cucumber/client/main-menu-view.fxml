@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.MainMenuController">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.MainMenuController">
    <children>
-      <HBox alignment="CENTER" layoutY="280.0" prefHeight="120.0" prefWidth="599.0">
+      <HBox alignment="CENTER" layoutX="26.0" layoutY="279.0" prefHeight="120.0" prefWidth="599.0">
          <children>
             <Button fx:id="button_join" mnemonicParsing="false" onAction="#onStartDating" text="start dating" />
          </children>
@@ -29,7 +29,7 @@
             <Insets left="0.5" />
          </padding>
       </ToolBar>
-      <Button layoutX="558.0" layoutY="38.0" mnemonicParsing="false" onAction="#onFavButton" text="☆" />
+      <Button layoutX="608.0" layoutY="38.0" mnemonicParsing="false" onAction="#onFavButton" text="☆" />
       <Label fx:id="usernameLabel" layoutX="14.0" layoutY="42.0" text="Connecté en tant que X" />
    </children>
 </AnchorPane>

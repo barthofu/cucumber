@@ -26,6 +26,8 @@ public class Cucumber extends Application {
         // set the first view properties
         stage.setTitle(Cucumber.firstViewTitle);
         stage.setScene(scene);
+        stage.setMinHeight(500);
+        stage.setMinWidth(650);
         stage.resizableProperty().set(false);
         stage.show();
 
