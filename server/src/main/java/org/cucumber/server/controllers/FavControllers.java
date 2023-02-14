@@ -1,8 +1,18 @@
 package org.cucumber.server.controllers;
 
+import org.cucumber.common.dto.UserDTO;
+import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.responses.GetFavOfUserResponse;
 import org.cucumber.common.utils.Routes;
+import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
+import org.cucumber.server.services.FavService;
 import org.cucumber.server.utils.classes.Controller;
+import org.cucumber.server.utils.mappers.UserMapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.Set;
 
 public class FavControllers {
 
@@ -42,6 +52,14 @@ public class FavControllers {
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
 
+            Set<User> userSet = socketClient.getUser().getFavorites();
+
+            socketClient.sendToClient(new SocketMessage(
+                    requestId,
+                    route,
+                    new GetFavOfUserResponse(
+                            Mappers.getMapper(UserMapper.class).userSetToUserDTOSet(userSet)
+                    ));
         }
     }
 }
