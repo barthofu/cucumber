@@ -17,6 +17,13 @@ public class UserRepository extends BasicRepository<User> implements IUserReposi
         return user.getFavorites();
     }
 
+    @Override
+    public void deleteFav(User user, Integer targetId) {
+        em.getTransaction().begin();
+        em.createNativeQuery(String.format("DELETE FROM user_favorite WHERE to = %d AND from = %d", targetId, user.getId()));
+        em.getTransaction().commit();
+    }
+
 //
 //    @Override
 //    public void deleteFav(User source, Integer targetId) {

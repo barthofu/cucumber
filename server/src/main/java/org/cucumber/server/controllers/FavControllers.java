@@ -67,13 +67,8 @@ public class FavControllers {
             UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
             UserRepository userRepository = Repositories.get(UserRepository.class);
             try {
-                User user = userRepository.findById(socketClient.getUser().getId());
+                userRepository.deleteFav(socketClient.getUser(), arguments.getTarget().getId());
 
-                System.out.println(user.getFavorites().size());
-                user.getFavorites()
-                        .remove(userRepository.findById(arguments.getTarget().getId()));
-                System.out.println(user.getFavorites().size());
-                userRepository.update(user);
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
                         route,
