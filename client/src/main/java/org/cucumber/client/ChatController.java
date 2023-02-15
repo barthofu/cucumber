@@ -8,7 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -16,13 +16,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
-import org.cucumber.client.services.ChatService;
 import org.cucumber.client.services.SocketMessageService;
-import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.common.dto.MessageDTO;
+import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
@@ -41,6 +41,18 @@ public class ChatController extends Controller implements Initializable {
     @FXML
     private ScrollPane sp_main;
 
+    //TOP BAR
+    @FXML
+    protected Label name;
+    @FXML
+    protected Label chrono;
+    @FXML
+    protected Button fav;
+    @FXML
+    protected Button stop;
+
+    public static UserDTO chatter;
+
     public ChatController() {
         super("Chat");
     }
@@ -56,6 +68,7 @@ public class ChatController extends Controller implements Initializable {
             }
         });
 
+        this.name.setText(chatter.getUsername());
     }
 
     public void appendMessage(MessageDTO message, boolean isOwnMessage) {
@@ -82,7 +95,7 @@ public class ChatController extends Controller implements Initializable {
         TextFlow textFlow = new TextFlow(messageText);
         textFlow.setPadding(new Insets(0, paddingSize, 0, paddingSize));
         textFlow.setStyle(
-                (isOwnMessage ? "-fx-background-color: #00bfff;" : "-fx-background-color: #f0f0f0;" ) +
+                (isOwnMessage ? "-fx-background-color: #00bfff;" : "-fx-background-color: #f0f0f0;") +
                         " -fx-background-radius: 10px;");
 
         hBox.getChildren().add(textFlow);
@@ -103,7 +116,6 @@ public class ChatController extends Controller implements Initializable {
 
     @FXML
     protected void onSendMessage(ActionEvent event) throws IOException {
-
         MessageDTO messageDTO = new MessageDTO(tf_message.getText());
         if (!messageDTO.getContent().isEmpty()) {
             // send message to server
@@ -113,10 +125,29 @@ public class ChatController extends Controller implements Initializable {
                     this
             );
         }
+        tf_message.setText("");
     }
 
     private static <T extends Controller> void handleMessageSendResponse(SocketMessageContent response, T context) {
 
+    }
+    private static <T extends Controller> void handleAddFavResponse(SocketMessageContent response, T context) {
+
+    }
+
+    @FXML
+    protected void onFav(ActionEvent event) throws IOException {
+        // send message to server
+        SocketMessageService.getInstance().send(
+                new SocketMessage(
+                        UUID.randomUUID().toString(),
+                        Routes.Server.FAV_ADD.getValue(),
+                        new UserTarget(chatter)
+                ),
+                ChatController::handleAddFavResponse,
+                this
+        );
+        this.fav.setDisable(true);
     }
 
     @Override

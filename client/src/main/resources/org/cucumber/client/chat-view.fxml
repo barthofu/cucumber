@@ -3,6 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.ChatController">
    <children>
@@ -16,6 +18,53 @@
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
+                     <children>
+                        <Button fx:id="stop" layoutX="533.0" layoutY="13.0" mnemonicParsing="false" text="Stop" />
+                        <Button fx:id="fav" layoutX="493.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFav" text="♥">
+                           <textFill>
+                              <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.48341232227488146">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.9918209910392761" green="0.5092592835426331" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.9835647940635681" green="0.013888888992369175" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                        </Button>
+                        <Label fx:id="chrono" layoutX="14.0" layoutY="10.0" text="__:__">
+                           <textFill>
+                              <LinearGradient endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.5118483412322274">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.9868420958518982" green="0.47514620423316956" blue="0.47514620423316956" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="0.009259259328246117" blue="0.7027778029441833" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </textFill>
+                           <font>
+                              <Font name="Consolas Bold" size="28.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="name" alignment="CENTER" layoutX="274.0" layoutY="14.0" text="........." textFill="#e4d532">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
                   </Pane>
                </children></VBox>
          </content>

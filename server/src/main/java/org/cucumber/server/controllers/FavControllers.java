@@ -31,11 +31,9 @@ public class FavControllers {
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
             UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
-            Set<User> userSet = socketClient.getUser().getFavorites();
+            UserRepository userRepository = Repositories.get(UserRepository.class);
             try {
-                UserRepository repository = Repositories.get(UserRepository.class);
-                userSet.add(repository.findById(arguments.getTarget().getId()));
-                socketClient.getUser().setFavorites(userSet);
+                userRepository.addFav(socketClient.getUser(), arguments.getTarget().getId());
 
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
@@ -43,14 +41,9 @@ public class FavControllers {
                         new Status(
                                 true
                         )));
-            }catch (Exception e){
-                socketClient.sendToClient(new SocketMessage(
-                        requestId,
-                        route,
-                        new Status(
-                                false,
-                                e.getMessage()
-                        )));
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.log(LoggerStatus.SEVERE, "can't save fav");
             }
         }
     }
@@ -74,7 +67,7 @@ public class FavControllers {
                         new Status(
                                 true
                         )));
-            }catch (Exception e){
+            } catch (Exception e) {
                 Logger.log(LoggerStatus.SEVERE, e.getMessage());
                 e.printStackTrace();
                 socketClient.sendToClient(new SocketMessage(

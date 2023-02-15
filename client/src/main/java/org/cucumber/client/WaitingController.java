@@ -73,11 +73,10 @@ public class WaitingController extends Controller implements Initializable {
     private static <T extends Controller> void handleJoinChatRoomResponse(SocketMessageContent response, T context) {
         try {
             UserDTO userDTO = (UserDTO) response;
-
             ChatService.getInstance().startChat(userDTO);
-
             Platform.runLater(() -> {
                 try {
+                    ChatController.chatter = userDTO;
                     FXUtils.goTo(Views.CHAT.getViewName(), context, ((WaitingController) context).button_cancel.getScene());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

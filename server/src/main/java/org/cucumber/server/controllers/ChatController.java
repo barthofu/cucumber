@@ -1,31 +1,31 @@
 package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.MessageDTO;
+import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Message;
-import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
-import org.cucumber.server.repositories.Repositories;
-import org.cucumber.server.repositories.impl.RoomRepository;
 import org.cucumber.server.services.ChatRoomService;
 import org.cucumber.server.services.MessageService;
 import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.server.utils.mappers.MessageMapper;
+import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
-
-import java.util.Objects;
-import java.util.Optional;
 
 public class ChatController {
 
 
     public static class SendMessage extends Controller {
         public static final String route = Routes.Server.CHAT_SEND.getValue();
-        public SendMessage() { super(route); }
+
+        public SendMessage() {
+            super(route);
+        }
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
@@ -54,11 +54,13 @@ public class ChatController {
 
     public static class JoinRoom extends Controller {
         public static final String route = Routes.Server.CHAT_JOIN.getValue();
-        public JoinRoom() { super(route); }
+
+        public JoinRoom() {
+            super(route);
+        }
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
-
             ChatRoomService.getInstance().addWaitingUser(
                     socketClient.getUser().getId(),
                     requestId,
@@ -69,7 +71,10 @@ public class ChatController {
 
     public static class CancelJoin extends Controller {
         public static final String route = Routes.Server.CHAT_CANCEL.getValue();
-        public CancelJoin() { super(route); }
+
+        public CancelJoin() {
+            super(route);
+        }
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
@@ -81,5 +86,4 @@ public class ChatController {
             ));
         }
     }
-
 }

@@ -35,7 +35,6 @@ public class ChatRoomService {
     }
 
     public User getChatter(int userId) {
-
         Room room = Repositories
                 .get(RoomRepository.class)
                 .findByUserId(userId);

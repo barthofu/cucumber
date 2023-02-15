@@ -33,12 +33,12 @@ public class RoomRepository extends BasicRepository<Room> implements IRoomReposi
     @Override
     public Room findByUserId(int userId) {
         return em.createQuery(
-                    "select r " +
-                    "from Room as r " +
-                    "   left join r.users as u " +
-                    "WHERE u.id = :userId" +
-                    "  AND r.active = true ",
-                    Room.class
+                        "select r " +
+                                "from Room as r " +
+                                "   left join r.users as u " +
+                                "WHERE u.id = :userId" +
+                                "  AND r.active = true ",
+                        Room.class
                 )
                 .setParameter("userId", userId)
                 .getResultStream()

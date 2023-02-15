@@ -28,4 +28,16 @@ public class UserRepository extends BasicRepository<User> implements IUserReposi
         em.getTransaction().commit();
         em.refresh(user);
     }
+
+    @Override
+    public void addFav(User user, Integer targetId) {
+        em.getTransaction().begin();
+
+        em
+                .createNativeQuery(String.format("INSERT INTO user_favorite (\"to\", \"from\") VALUES(%d, %d)", targetId, user.getId()))
+                .executeUpdate();
+
+        em.getTransaction().commit();
+        em.refresh(user);
+    }
 }

@@ -17,6 +17,7 @@ public class Routes {
         CHAT_SEND("chat/send"),
         CHAT_JOIN("chat/join"),
         CHAT_CANCEL("chat/cancel"),
+        CHAT_LOVER("chat/get-lover"),
 
         USER_ME("user/me"),
 
