@@ -1,20 +1,16 @@
 package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.MessageDTO;
-import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Status;
-import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Message;
-import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.ChatRoomService;
 import org.cucumber.server.services.MessageService;
 import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.server.utils.mappers.MessageMapper;
-import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 
 public class ChatController {
@@ -80,6 +76,23 @@ public class ChatController {
         public void handle(SocketClient socketClient, String requestId, Object args) {
 
             ChatRoomService.getInstance().removeWaitingUser(socketClient.getUser().getId());
+            socketClient.sendToClient(new SocketMessage(
+                    requestId,
+                    new Status(true)
+            ));
+        }
+    }
+
+    public static class CloseRoom extends Controller {
+        public static final String route = Routes.Server.CHAT_CLOSE.getValue();
+
+        public CloseRoom() {
+            super(route);
+        }
+
+        @Override
+        public void handle(SocketClient socketClient, String requestId, Object args) {
+            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId());
             socketClient.sendToClient(new SocketMessage(
                     requestId,
                     new Status(true)

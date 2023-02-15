@@ -1,8 +1,15 @@
 package org.cucumber.client.models.so;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.cucumber.client.ChatController;
+import org.cucumber.client.MainMenuController;
 import org.cucumber.client.services.MessageService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.UserService;
+import org.cucumber.client.utils.classes.FXUtils;
+import org.cucumber.client.utils.enums.Views;
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
@@ -26,7 +33,7 @@ public class Connection implements Runnable {
     private ObjectInputStream in;
     private final ObjectOutputStream out;
 
-    public Connection (Socket socket, ObjectOutputStream out) {
+    public Connection(Socket socket, ObjectOutputStream out) {
         this.socket = socket;
         this.out = out;
     }
@@ -67,9 +74,19 @@ public class Connection implements Runnable {
 
         if (matchRoute(message, Routes.Client.USER_TOTAL)) {
             UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
-
         } else if (matchRoute(message, Routes.Client.MESSAGE_RECEIVE)) {
             MessageService.getInstance().addMessage((MessageDTO) message.getContent());
+        } else if (matchRoute(message, Routes.Client.SESSION_STOP)) {
+            if (FXUtils.getCurrentController().getClass().getName()
+                    .equals(ChatController.class.getName())){
+                Platform.runLater(() -> {
+                    try {
+                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), FXUtils.getCurrentController(), ((ChatController) FXUtils.getCurrentController()).getStop().getScene());
+                    }catch (Exception e){
+                        System.exit(-1);
+                    }
+                });
+            }
         }
     }
 
@@ -99,11 +116,11 @@ public class Connection implements Runnable {
 
     }
 
-    public void sendToServer(SocketMessage socketMessage){
+    public void sendToServer(SocketMessage socketMessage) {
         try {
             out.writeObject(socketMessage);
             out.flush();
-        }catch (Exception ignore){
+        } catch (Exception ignore) {
             Logger.log(LoggerStatus.SEVERE, "couldn't send msg to server");
         }
     }

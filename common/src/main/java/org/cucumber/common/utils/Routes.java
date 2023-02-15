@@ -17,7 +17,7 @@ public class Routes {
         CHAT_SEND("chat/send"),
         CHAT_JOIN("chat/join"),
         CHAT_CANCEL("chat/cancel"),
-        CHAT_LOVER("chat/get-lover"),
+        CHAT_CLOSE("chat/close"),
 
         USER_ME("user/me"),
 
@@ -31,7 +31,7 @@ public class Routes {
     @AllArgsConstructor
     public enum Client {
         USER_TOTAL("user/total"),
-
+        SESSION_STOP("session/stop"),
         MESSAGE_RECEIVE("chat/receive");
 
         private final String value;

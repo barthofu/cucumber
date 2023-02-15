@@ -2,6 +2,8 @@ package org.cucumber.server.services;
 
 import lombok.AllArgsConstructor;
 import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.generics.Empty;
+import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.models.bo.User;
@@ -90,13 +92,29 @@ public class ChatRoomService {
         waitingUsers.removeIf(w -> w.userId == userId);
     }
 
+    public void closeRoom(int userId) {
+        Room current = Repositories.get(RoomRepository.class).findByUserId(userId);
+        current.setActive(false);
+        Repositories.get(RoomRepository.class).update(current);
+        current.getUsers().forEach(user ->
+                SocketManager.getInstance().getById(user.getId()).sendToClient(
+                        new SocketMessage(
+                                null,
+                                Routes.Client.SESSION_STOP.getValue(),
+                                new Empty()
+                        )
+                )
+        );
+    }
+
     // ================================
     // Singleton
     // ================================
 
     private static ChatRoomService instance;
 
-    private ChatRoomService() {}
+    private ChatRoomService() {
+    }
 
     public static ChatRoomService getInstance() {
         if (instance == null) {

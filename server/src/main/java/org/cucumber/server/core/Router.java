@@ -25,6 +25,7 @@ public class Router {
                 new ChatController.SendMessage(),
                 new ChatController.JoinRoom(),
                 new ChatController.CancelJoin(),
+                new ChatController.CloseRoom(),
                 new LoginController(),
                 new FavControllers.Add(),
                 new FavControllers.Get(),

@@ -19,7 +19,7 @@
                         <Insets bottom="5.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="stop" layoutX="533.0" layoutY="13.0" mnemonicParsing="false" text="Stop" />
+                        <Button fx:id="stop" layoutX="533.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStop" text="Stop" />
                         <Button fx:id="fav" layoutX="493.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFav" text="♥">
                            <textFill>
                               <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.48341232227488146">

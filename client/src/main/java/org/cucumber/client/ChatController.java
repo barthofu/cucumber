@@ -16,12 +16,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
+import lombok.Getter;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 
@@ -30,6 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
 public class ChatController extends Controller implements Initializable {
 
     @FXML
@@ -148,6 +151,24 @@ public class ChatController extends Controller implements Initializable {
                 this
         );
         this.fav.setDisable(true);
+    }
+
+    @FXML
+    protected void onStop(ActionEvent event) throws IOException {
+        // send message to server
+        SocketMessageService.getInstance().send(
+                new SocketMessage(
+                        UUID.randomUUID().toString(),
+                        Routes.Server.CHAT_CLOSE.getValue(),
+                        new Empty()
+                ),
+                ChatController::handleStopResponse,
+                this
+        );
+        this.fav.setDisable(true);
+    }
+
+    private static <T extends Controller> void handleStopResponse(SocketMessageContent response, T context) {
     }
 
     @Override
