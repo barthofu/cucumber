@@ -65,13 +65,15 @@ public class FavControllers {
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
             UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
+            UserRepository userRepository = Repositories.get(UserRepository.class);
             try {
-                Set<User> userFilteredSet = socketClient.getUser().getFavorites()
-                        .stream()
-                        .filter(usr -> !Objects.equals(usr.getId(), arguments.getTarget().getId()))
-                        .collect(Collectors.toSet());
+                User user = userRepository.findById(socketClient.getUser().getId());
 
-                Repositories.get(UserRepository.class).deleteFav(socketClient.getUser(), arguments.getTarget().getId());
+                System.out.println(user.getFavorites().size());
+                user.getFavorites()
+                        .remove(userRepository.findById(arguments.getTarget().getId()));
+                System.out.println(user.getFavorites().size());
+                userRepository.update(user);
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
                         route,

@@ -9,5 +9,4 @@ public interface IUserRepository {
     
     Set<User> getUserFav(User user);
 
-    void deleteFav(User source, Integer targetId);
 }

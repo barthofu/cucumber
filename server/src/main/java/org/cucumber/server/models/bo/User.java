@@ -3,6 +3,7 @@ package org.cucumber.server.models.bo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -40,7 +41,9 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @ManyToMany
+    @ManyToMany(
+            cascade = CascadeType.PERSIST
+    )
     @JoinTable(
             name = "user_favorite",
             joinColumns = @JoinColumn(name = "from"),
