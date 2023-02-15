@@ -48,7 +48,6 @@ public class Connection implements Runnable {
 
             // wait for a message from the server
             SocketMessage message = waitForMessage();
-
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
 
             if (message.getRoute() != null) {

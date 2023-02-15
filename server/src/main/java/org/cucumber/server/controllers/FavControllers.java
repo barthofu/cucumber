@@ -71,7 +71,6 @@ public class FavControllers {
 
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
-                        route,
                         new Status(
                                 true
                         )));
@@ -80,7 +79,6 @@ public class FavControllers {
                 e.printStackTrace();
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
-                        route,
                         new Status(
                                 false
                         )));
@@ -97,12 +95,10 @@ public class FavControllers {
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
-
             Set<User> userSet = socketClient.getUser().getFavorites();
 
             socketClient.sendToClient(new SocketMessage(
                     requestId,
-                    route,
                     new GetFavOfUserResponse(
                             Mappers.getMapper(UserMapper.class).userSetToUserDTOSet(userSet)
                     )));

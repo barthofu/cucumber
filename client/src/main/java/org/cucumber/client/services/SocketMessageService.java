@@ -37,9 +37,10 @@ public class SocketMessageService {
                 }
             }
             if (isResponseReceived(requestId)) {
+                Logger.log(LoggerStatus.INFO, String.format("response on %s has been resolved", message.getRoute()));
                 callback.apply(getResponseContent(requestId), context);
             } else {
-                Logger.log(LoggerStatus.SEVERE, "response [%s] has expired");
+                Logger.log(LoggerStatus.SEVERE, String.format("response on %s has expired", message.getRoute()));
             }
         }).start();
     }

@@ -41,9 +41,7 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @ManyToMany(
-            cascade = CascadeType.PERSIST
-    )
+    @ManyToMany()
     @JoinTable(
             name = "user_favorite",
             joinColumns = @JoinColumn(name = "from"),
