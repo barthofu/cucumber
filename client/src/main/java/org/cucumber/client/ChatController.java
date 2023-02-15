@@ -160,7 +160,7 @@ public class ChatController extends Controller implements Initializable {
                 new SocketMessage(
                         UUID.randomUUID().toString(),
                         Routes.Server.CHAT_CLOSE.getValue(),
-                        new Empty()
+                        new UserTarget(chatter)
                 ),
                 ChatController::handleStopResponse,
                 this

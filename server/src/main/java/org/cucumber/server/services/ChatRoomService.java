@@ -111,7 +111,6 @@ public class ChatRoomService {
         Room room = repository.findByUserId(user1);
         room.setActive(false);
         repository.update(room);
-
     }
 
     // ================================
