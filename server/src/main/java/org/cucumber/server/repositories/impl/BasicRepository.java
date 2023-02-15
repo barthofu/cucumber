@@ -35,11 +35,16 @@ public abstract class BasicRepository<T> implements IBasicRepository<T> {
 
     @Override
     public T update(T obj) {
-        return em.merge(obj);
+        em.getTransaction().begin();
+        em.merge(obj);
+        em.getTransaction().commit();
+        return obj;
     }
 
     @Override
     public void delete(T obj) {
+        em.getTransaction().begin();
         em.remove(obj);
+        em.getTransaction().commit();
     }
 }

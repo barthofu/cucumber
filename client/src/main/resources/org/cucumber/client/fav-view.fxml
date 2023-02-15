@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.FavViewController">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRetourButton" onDragDetected="#onRetourButton" text="Retour" />
+      <VBox alignment="CENTER" layoutX="132.0" layoutY="18.0" prefHeight="465.0" prefWidth="376.0">
+         <children>
+            <Pane prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+               <children>
+                  <Label fx:id="e1Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
+                  <Button fx:id="e1Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
+               </children>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+            </Pane>
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+               <children>
+                  <Label fx:id="e2Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
+                  <Button fx:id="e2Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
+               </children>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+               <VBox.margin>
+                  <Insets bottom="80.0" top="80.0" />
+               </VBox.margin>
+            </Pane>
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+               <children>
+                  <Label fx:id="e3Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
+                  <Button fx:id="e3Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
+               </children>
+               <effect>
+                  <ColorAdjust />
+               </effect>
+            </Pane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

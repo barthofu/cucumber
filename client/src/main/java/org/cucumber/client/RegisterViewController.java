@@ -15,6 +15,7 @@ import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.RegisterRequest;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class RegisterViewController extends Controller {
             SocketMessageService.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
-                            "register",
+                            Routes.Server.REGISTER_REGISTER.getValue(),
                             new RegisterRequest(username.getText(), password.getText())
                     ),
                     RegisterViewController::handleRegisterResponse,

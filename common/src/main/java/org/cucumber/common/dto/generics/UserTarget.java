@@ -9,6 +9,6 @@ import org.cucumber.common.dto.base.SocketMessageContent;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ClientTarget extends SocketMessageContent {
+public class UserTarget extends SocketMessageContent {
     private UserDTO target;
 }
