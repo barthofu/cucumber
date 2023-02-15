@@ -1,4 +1,4 @@
-package org.cucumber.client;
+package org.cucumber.client.services;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,7 +10,7 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
-public class Client {
+public class SocketService {
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
@@ -46,14 +46,14 @@ public class Client {
     // Singleton
     // ================================
 
-    private static Client instance;
+    private static SocketService instance;
 
-    private Client() {
+    private SocketService() {
     }
 
-    public static Client getInstance() {
+    public static SocketService getInstance() {
         if (instance == null) {
-            instance = new Client();
+            instance = new SocketService();
         }
         return instance;
     }

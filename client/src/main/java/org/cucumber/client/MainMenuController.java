@@ -32,7 +32,6 @@ public class MainMenuController extends Controller {
 
     @FXML
     protected void onFavButton(ActionEvent event) throws IOException {
-        Logger.log(LoggerStatus.INFO, "fav");
         FXUtils.goTo(Views.FAV.getViewName(), this, event);
     }
 

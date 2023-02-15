@@ -25,6 +25,7 @@ public class AuthService {
     }
 
     public void register(String username, String password) {
+
         User user = User.builder()
                 .username(username)
                 .password(hashPsswd(password))

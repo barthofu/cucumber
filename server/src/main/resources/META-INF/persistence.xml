@@ -8,6 +8,7 @@
         <class>org.cucumber.server.models.bo.User</class>
         <class>org.cucumber.server.models.bo.Message</class>
         <class>org.cucumber.server.models.bo.Room</class>
+<!--        <class>org.cucumber.server.models.bo.UserFavorite</class>-->
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>

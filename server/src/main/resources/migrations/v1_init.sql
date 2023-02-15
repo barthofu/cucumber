@@ -16,8 +16,8 @@ create table user_favorite (
 
 create table room (
     id serial primary key,
-    closed boolean default false,
-    started_at timestamp not null
+    active boolean default true,
+    created_at timestamp default now()
 );
 
 create table room_user (
@@ -32,5 +32,5 @@ create table message (
     "from" integer not null references "user"(id),
     "to" integer not null references "user"(id),
     content text not null,
-    created_at timestamp not null
+    created_at timestamp default now()
 );

@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.cucumber.client.utils.classes.FXUtils;
+import org.cucumber.client.services.SocketService;
 
 import java.io.IOException;
 
@@ -32,8 +32,7 @@ public class Cucumber extends Application {
         stage.show();
 
         // open a websocket connection to the server
-        Client client = Client.getInstance();
-        client.openConnection(address, port);
+        SocketService.getInstance().openConnection(address, port);
     }
 
     public static void main(String[] args) {

@@ -3,6 +3,7 @@ package org.cucumber.server.models.bo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -41,8 +42,9 @@ public class Message {
     @ToString.Exclude
     private User to;
 
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object o) {

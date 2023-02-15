@@ -8,4 +8,6 @@ import java.util.Set;
 public interface IUserRepository {
     
     Set<User> getUserFav(User user);
+
+    void deleteFav(User user, Integer targetId);
 }

@@ -3,9 +3,10 @@ package org.cucumber.server.models.bo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "user_favorite",
             joinColumns = @JoinColumn(name = "from"),
@@ -59,7 +60,7 @@ public class User {
 
     @Column(name = "created_at")
     @CreationTimestamp
-    private Date timestamp;
+    private Instant createdAt;
 
     @Override
     public boolean equals(Object o) {

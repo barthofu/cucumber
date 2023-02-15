@@ -4,9 +4,21 @@ import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.utils.Routes;
+import org.cucumber.server.core.SocketManager;
+import org.cucumber.server.models.bo.Message;
+import org.cucumber.server.models.bo.Room;
+import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
+import org.cucumber.server.repositories.Repositories;
+import org.cucumber.server.repositories.impl.RoomRepository;
 import org.cucumber.server.services.ChatRoomService;
+import org.cucumber.server.services.MessageService;
 import org.cucumber.server.utils.classes.Controller;
+import org.cucumber.server.utils.mappers.MessageMapper;
+import org.mapstruct.factory.Mappers;
+
+import java.util.Objects;
+import java.util.Optional;
 
 public class ChatController {
 
@@ -18,12 +30,24 @@ public class ChatController {
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
             MessageDTO arguments = args instanceof MessageDTO ? ((MessageDTO) args) : null;
+
             if (arguments != null) {
-                //TODO: xxx
-                // 1. get the id of the sender
-                // 2. get the id of the receiver
-                // 3. save in database
-                // 4. send to the receiver
+
+                Message message = MessageService.getInstance().saveMessage(socketClient.getUser(), arguments.getContent());
+
+                if (message != null) {
+                    // send back the message to both users
+
+                    SocketMessage socketMessage = new SocketMessage(
+                            requestId,
+                            Routes.Client.MESSAGE_RECEIVE.getValue(),
+                            Mappers.getMapper(MessageMapper.class).messageToMessageDTO(message)
+                    );
+
+                    SocketClient socketReceiver = SocketManager.getInstance().getByUserId(message.getTo().getId());
+                    socketReceiver.sendToClient(socketMessage);
+                    socketClient.sendToClient(socketMessage);
+                }
             }
         }
     }

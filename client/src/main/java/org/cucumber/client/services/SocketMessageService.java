@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cucumber.client.Client;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.interfaces.IMessageCallback;
 import org.cucumber.common.dto.base.SocketMessage;
@@ -22,7 +21,7 @@ public class SocketMessageService {
 
         // send message to server
         String requestId = message.getId();
-        Client.getInstance().sendToServer(message);
+        SocketService.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {
@@ -38,9 +37,10 @@ public class SocketMessageService {
                 }
             }
             if (isResponseReceived(requestId)) {
+                Logger.log(LoggerStatus.INFO, String.format("response on %s has been resolved", message.getRoute()));
                 callback.apply(getResponseContent(requestId), context);
             } else {
-                Logger.log(LoggerStatus.SEVERE, "response [%s] has expired");
+                Logger.log(LoggerStatus.SEVERE, String.format("response on %s has expired", message.getRoute()));
             }
         }).start();
     }
@@ -48,7 +48,7 @@ public class SocketMessageService {
 
         // send message to server
         String requestId = message.getId();
-        Client.getInstance().sendToServer(message);
+        SocketService.getInstance().sendToServer(message);
 
         // start a new thread to wait for response
         new Thread(() -> {

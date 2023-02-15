@@ -1,15 +1,19 @@
 package org.cucumber.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.cucumber.common.dto.base.SocketMessageContent;
 
-@AllArgsConstructor
+import java.time.Instant;
+
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class MessageDTO extends SocketMessageContent {
-    private String text;
+    private final String content;
+    private int from;
+    private int to;
+    private Instant date;
 }

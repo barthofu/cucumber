@@ -1,17 +1,19 @@
 package org.cucumber.client.models.so;
 
+import org.cucumber.client.services.MessageService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.UserService;
+import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Objects;
 
 /**
  * The Connection class is responsible for managing the connection to the server.
@@ -46,23 +48,33 @@ public class Connection implements Runnable {
 
             // wait for a message from the server
             SocketMessage message = waitForMessage();
-
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
 
-            switch (message.getRoute()) {
-                case "user/total" ->
-                    UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
-//                case "message/"
-                default ->
-                    // handle response
-                    SocketMessageService.getInstance().receive(message.getId(), message.getContent());
+            if (message.getRoute() != null) {
+                // handle the message
+                handleRoute(message);
+            } else {
+                // send the message to the message service
+                SocketMessageService.getInstance().receive(message.getId(), message.getContent());
             }
-
-
-
         }
 
+        // TODO: handle connection lost
         // client.disconnectedServer();
+    }
+
+    private void handleRoute(SocketMessage message) {
+
+        if (matchRoute(message, Routes.Client.USER_TOTAL)) {
+            UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
+
+        } else if (matchRoute(message, Routes.Client.MESSAGE_RECEIVE)) {
+            MessageService.getInstance().addMessage((MessageDTO) message.getContent());
+        }
+    }
+
+    private boolean matchRoute(SocketMessage message, Routes.Client route) {
+        return message.getRoute().equals(route.getValue());
     }
 
     private SocketMessage waitForMessage() {
