@@ -1,7 +1,9 @@
 package org.cucumber.client.models.so;
 
+import org.cucumber.client.services.MessageService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.UserService;
+import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
@@ -68,7 +70,7 @@ public class Connection implements Runnable {
             UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
 
         } else if (matchRoute(message, Routes.Client.MESSAGE_RECEIVE)) {
-            // TODO
+            MessageService.getInstance().addMessage((MessageDTO) message.getContent());
         }
     }
 
