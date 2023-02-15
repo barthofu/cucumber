@@ -1,12 +1,14 @@
 package org.cucumber.server.services;
 
 import lombok.AllArgsConstructor;
+import org.cucumber.common.dto.CloseDto;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.models.bo.User;
+import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.repositories.Repositories;
 import org.cucumber.server.repositories.impl.RoomRepository;
 import org.cucumber.server.repositories.impl.UserRepository;
@@ -92,19 +94,24 @@ public class ChatRoomService {
         waitingUsers.removeIf(w -> w.userId == userId);
     }
 
-    public void closeRoom(int userId) {
-        Room current = Repositories.get(RoomRepository.class).findByUserId(userId);
-        current.setActive(false);
-        Repositories.get(RoomRepository.class).update(current);
-        current.getUsers().forEach(user ->
-                SocketManager.getInstance().getById(user.getId()).sendToClient(
+    public void closeRoom(int user1, int user2) {
+        SocketManager.getInstance().getByUserId(user1).sendToClient(
                         new SocketMessage(
                                 null,
                                 Routes.Client.SESSION_STOP.getValue(),
                                 new Empty()
-                        )
-                )
-        );
+                        ));
+        SocketManager.getInstance().getByUserId(user2).sendToClient(
+                        new SocketMessage(
+                                null,
+                                Routes.Client.SESSION_STOP.getValue(),
+                                new Empty()
+                        ));
+        RoomRepository repository = Repositories.get(RoomRepository.class);
+        Room room = repository.findByUserId(user1);
+        room.setActive(false);
+        repository.update(room);
+
     }
 
     // ================================

@@ -1,8 +1,11 @@
 package org.cucumber.server.controllers;
 
+import org.cucumber.common.dto.CloseDto;
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.generics.ClientTarget;
 import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Message;
@@ -92,7 +95,8 @@ public class ChatController {
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
-            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId());
+            UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
+            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId(), arguments.getTarget().getId());
             socketClient.sendToClient(new SocketMessage(
                     requestId,
                     new Status(true)
