@@ -11,7 +11,7 @@ import org.cucumber.server.models.bo.User;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.AuthService;
 import org.cucumber.server.utils.classes.Controller;
-import org.cucumber.server.utils.classes.Timeout;
+import org.cucumber.common.utils.Timeout;
 import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 

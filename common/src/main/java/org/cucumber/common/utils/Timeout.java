@@ -1,4 +1,4 @@
-package org.cucumber.server.utils.classes;
+package org.cucumber.common.utils;
 
 /**
  * Asynchronous implementation of a setTimeout function (delay)

@@ -1,5 +1,6 @@
 package org.cucumber.client;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -25,10 +26,17 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.UserTarget;
+import org.cucumber.common.so.LoggerStatus;
+import org.cucumber.common.utils.Logger;
 import org.cucumber.common.utils.Routes;
+import org.cucumber.common.utils.Timeout;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
@@ -56,13 +64,14 @@ public class ChatController extends Controller implements Initializable {
 
     public static UserDTO chatter;
 
+    private Long timerStart = System.currentTimeMillis();
+
     public ChatController() {
         super("Chat");
     }
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-
         // scroll to bottom when new message is added
         vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -72,10 +81,31 @@ public class ChatController extends Controller implements Initializable {
         });
 
         this.name.setText(chatter.getUsername());
+        this.timerStart = System.currentTimeMillis();
+        updateChrono();
+    }
+
+    private void updateChrono() {
+        long current = System.currentTimeMillis();
+        int min5 = 300000;
+        if (current <= (timerStart + min5)) { //+ 5min
+            Timeout.setTimeout(() -> {
+                long minutes = (int) (((min5 - (current - timerStart)) / 1000) / 60);
+                int seconds = (int) (((min5 - (current - timerStart)) / 1000) % 60);
+                Platform.runLater(() -> chrono.setText(String.format("%d:%d", minutes, seconds)));
+                updateChrono();
+            }, 1000);
+        } else {
+            try {
+                onStop(null);
+                Logger.log(LoggerStatus.WARNING, "No more time !");
+            } catch (Exception e) {
+                Logger.log(LoggerStatus.SEVERE, "error on stop");
+            }
+        }
     }
 
     public void appendMessage(MessageDTO message, boolean isOwnMessage) {
-
         final int paddingSize = 10;
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
@@ -134,6 +164,7 @@ public class ChatController extends Controller implements Initializable {
     private static <T extends Controller> void handleMessageSendResponse(SocketMessageContent response, T context) {
 
     }
+
     private static <T extends Controller> void handleAddFavResponse(SocketMessageContent response, T context) {
 
     }
