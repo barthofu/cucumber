@@ -77,8 +77,4 @@ public class RegisterViewController extends Controller {
         }
     }
 
-    @Override
-    public void onView() {
-
-    }
 }

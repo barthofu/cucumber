@@ -2,9 +2,11 @@ package org.cucumber.client;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import org.cucumber.client.services.ChatService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
@@ -19,7 +21,7 @@ import org.cucumber.common.dto.generics.Status;
 import java.io.IOException;
 import java.util.UUID;
 
-public class WaitingController extends Controller implements Initializable {
+public class WaitingController extends Controller {
 
     public WaitingController() {
         super("En attente d'un interlocuteur");
@@ -39,7 +41,7 @@ public class WaitingController extends Controller implements Initializable {
     }
 
     @Override
-    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
+    public void onInit() {
         try {
             SocketMessageService.getInstance().send(
                     new SocketMessage(
@@ -87,8 +89,4 @@ public class WaitingController extends Controller implements Initializable {
         }
     }
 
-    @Override
-    public void onView() {
-
-    }
 }

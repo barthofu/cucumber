@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.ChatController">
@@ -14,7 +15,7 @@
          <content>
             <VBox fx:id="vbox_messages" alignment="TOP_CENTER" prefHeight="397.0" prefWidth="588.0">
                <children>
-                  <Pane prefHeight="50.0" prefWidth="588.0" style="-fx-background-color: green;">
+                  <Pane prefHeight="50.0" prefWidth="588.0">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -59,13 +60,14 @@
                               <Font name="Consolas Bold" size="28.0" />
                            </font>
                         </Label>
-                        <Label fx:id="name" alignment="CENTER" layoutX="274.0" layoutY="14.0" text="........." textFill="#e4d532">
+                        <Label fx:id="name" alignment="CENTER" layoutX="274.0" layoutY="14.0" text="........." textFill="#ff09b0">
                            <font>
                               <Font name="System Bold Italic" size="16.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
+                  <Line endX="100.0" startX="-150.0" stroke="#bcbcbc" />
                </children></VBox>
          </content>
       </ScrollPane>

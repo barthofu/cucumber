@@ -6,13 +6,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.cucumber.client.MainMenuController;
-
 
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Utility class for JavaFX
+ */
 public class FXUtils {
 
     /**
@@ -20,15 +21,10 @@ public class FXUtils {
      */
     private static final String titlePrefix = "Cucumber - ";
 
-    /**
-     * The suffix for all views files.
-     */
-    private static final String viewNameSuffix = ".fxml";
-
     private static Controller currentController = null;
 
     /**
-     * Changes the current view to the given view.
+     * Change the current view to the given view.
      * @param viewName The name of the view to change to.
      * @param controllerContext The context of the current controller (`this`).
      * @param event The event that triggered the view change.
@@ -39,7 +35,12 @@ public class FXUtils {
             ActionEvent event
     ) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(controllerContext.getClass().getResource(viewName + viewNameSuffix));
+        // destroy old controller
+        if (currentController != null) {
+            currentController.onDestroy();
+        }
+
+        FXMLLoader loader = new FXMLLoader(controllerContext.getClass().getResource("views/" + viewName + ".fxml"));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -50,12 +51,12 @@ public class FXUtils {
         appStage.setResizable(false);
         appStage.setScene(scene);
 
-        //onView Event trigger
-        currentController.onView();
+        // init new controller
+        currentController.onInit();
     }
 
     /**
-     * Changes the current view to the given view.
+     * Change the current view to the given view.
      * @param viewName The name of the view to change to.
      * @param controllerContext The context of the current controller (`this`).
      * @param sourceScene The scene that triggered the view change.
@@ -66,7 +67,12 @@ public class FXUtils {
             Scene sourceScene
     ) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(controllerContext.getClass().getResource(viewName + viewNameSuffix));
+        // destroy old controller
+        if (currentController != null) {
+            currentController.onDestroy();
+        }
+
+        FXMLLoader loader = new FXMLLoader(controllerContext.getClass().getResource("views/" + viewName + ".fxml"));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage appStage = (Stage) sourceScene.getWindow();
@@ -78,6 +84,9 @@ public class FXUtils {
         appStage.setScene(scene);
 
         getCurrentController(MainMenuController.class);
+
+        // init new controller
+        currentController.onInit();
     }
 
     /**

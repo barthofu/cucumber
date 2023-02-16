@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.RegisterViewController">
+   <children>
+      <VBox alignment="CENTER" layoutX="21.0" layoutY="146.0" prefHeight="186.0" prefWidth="607.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="172.0" prefWidth="209.0" spacing="10.0">
+                     <children>
+                        <TextField fx:id="username" prefHeight="25.0" prefWidth="149.0" promptText="Pseudo" />
+                        <PasswordField fx:id="password" promptText="Mot de passe" />
+                        <PasswordField fx:id="passwordVerif" prefHeight="25.0" prefWidth="157.0" promptText="Confirmer mot de passe" />
+                        <TextField promptText="Age" />
+                        <TextArea prefHeight="200.0" prefWidth="209.0" promptText="Bio" />
+                     </children>
+                  </VBox>
+               </children></HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            <Label fx:id="errorLabel" />
+            <Button mnemonicParsing="false" onAction="#onRegisterButton" text="Valider" />
+         </children>
+      </VBox>
+      <Label layoutX="297.0" layoutY="76.0" text="Sign up">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

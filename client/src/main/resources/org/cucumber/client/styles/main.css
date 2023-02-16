@@ -1,0 +1,27 @@
+.btn-success {
+    -fx-background-color: #90b090;
+}
+
+.btn-failure {
+    -fx-background-color: #ffb7b1;
+}
+
+.btn-yellow {
+    -fx-background-color: #f4eca4;
+}
+
+.btn {
+    -fx-background-color: #5f2b5c;
+    -fx-text-fill: white;
+}
+
+.fav-container {
+    -fx-background-color: #d3a9d1;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);
+}
+
+.fav-container Label {
+    /** -fx-text-fill: white; **/
+}

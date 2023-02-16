@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.MainMenuController">
+   <children>
+      <HBox alignment="CENTER" layoutX="25.0" layoutY="323.0" prefHeight="120.0" prefWidth="599.0">
+         <children>
+            <Button fx:id="button_join" mnemonicParsing="false" onAction="#onStartDating" prefHeight="42.0" prefWidth="135.0" styleClass="btn" text="Chatter">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <ToolBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <items>
+            <BorderPane prefHeight="40.0" prefWidth="648.0" style="-fx-min-width: 100;">
+               <right>
+                  <Label fx:id="connectedUsersLabel" text="X personnes connectées" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets right="5.0" />
+                     </BorderPane.margin></Label>
+               </right>
+               <left>
+                  <Button mnemonicParsing="false" onAction="#onQuitButton" prefHeight="45.0" prefWidth="53.0" styleClass="btn" text="Quitter" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </BorderPane.margin></Button>
+               </left>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </BorderPane>
+         </items>
+         <padding>
+            <Insets left="0.5" />
+         </padding>
+      </ToolBar>
+      <Button layoutX="596.0" layoutY="59.0" mnemonicParsing="false" onAction="#onFavButton" styleClass="btn" text="☆" />
+      <Label fx:id="usernameLabel" layoutX="26.0" layoutY="63.0" text="Connecté en tant que X" />
+      <ImageView fitHeight="242.0" fitWidth="323.0" layoutX="204.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../cucumber_logo.png" />
+         </image></ImageView>
+   </children>
+
+   <stylesheets>
+      <URL value="@../styles/main.css" />
+   </stylesheets>
+
+</AnchorPane>

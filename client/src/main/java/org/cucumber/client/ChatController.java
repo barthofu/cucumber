@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -36,7 +38,11 @@ import java.util.Date;
 import java.util.UUID;
 
 @Getter
-public class ChatController extends Controller implements Initializable {
+public class ChatController extends Controller {
+
+    public ChatController() {
+        super("Chat");
+    }
 
     @FXML
     private Button button_send;
@@ -61,33 +67,44 @@ public class ChatController extends Controller implements Initializable {
 
     private Long timerStart = System.currentTimeMillis();
 
-    public ChatController() {
-        super("Chat");
-    }
-
     @Override
-    public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
-        // scroll to bottom when new message is added
-        vbox_messages.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                sp_main.setVvalue((Double) newValue);
+    public void onInit() {
+
+        // send message on enter key pressed
+        this.button_send.getScene().setOnKeyPressed(ke -> {
+            if (ke.getCode().toString().equals("ENTER")) {
+                try {
+                    onSendMessage(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+        // scroll to bottom when new message is added
+        vbox_messages.heightProperty().addListener((observableValue, oldValue, newValue) -> sp_main.setVvalue((Double) newValue));
 
         this.name.setText(chatter.getUsername());
         this.timerStart = System.currentTimeMillis();
         updateChrono();
+
+    }
+
+    @Override
+    public void onDestroy() {
+
     }
 
     /**
-     * update the label "chrono"
-     * recursive function which manage the time elapsed since the begining of the date
+     * Update the label **chrono**
+     * Recursive function which manage the time elapsed since the beginning of the date
      * -> run onStop() if the timer as reach 5000 min
-     * */
+     */
     private void updateChrono() {
+
         long current = System.currentTimeMillis();
         int min5 = 300000;
+
         if (current <= (timerStart + min5)) { //+ 5min
             Timeout.setTimeout(() -> {
                 long minutes = (int) (((min5 - (current - timerStart)) / 1000) / 60);
@@ -122,24 +139,24 @@ public class ChatController extends Controller implements Initializable {
         vBox.setAlignment(isOwnMessage ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
         vBox.setPadding(new Insets(15, 0, 0, 0));
 
-        // text
+        // message content text
         HBox hBox = new HBox();
         hBox.setAlignment(isOwnMessage ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
         hBox.setPadding(new Insets(0, isOwnMessage ? 0 : paddingSize, 0, isOwnMessage ? paddingSize : 0));
 
         Text messageText = new Text(message.getContent());
         messageText.setWrappingWidth(300);
-        messageText.setStyle("-fx-font-size: 15px;");
+        messageText.setStyle("-fx-font-size: 14px;");
 
         TextFlow textFlow = new TextFlow(messageText);
         textFlow.setPadding(new Insets(0, paddingSize, 0, paddingSize));
         textFlow.setStyle(
-                (isOwnMessage ? "-fx-background-color: #00bfff;" : "-fx-background-color: #f0f0f0;") +
+                (isOwnMessage ? "-fx-background-color: #00bfff;" : "-fx-background-color: #d9d9d9;") +
                         " -fx-background-radius: 10px;");
 
         hBox.getChildren().add(textFlow);
 
-        // info
+        // additional info text
         Text infoText = new Text("\n" + formattedDate);
         infoText.setStyle("-fx-font-size: 10px;");
 
@@ -155,15 +172,23 @@ public class ChatController extends Controller implements Initializable {
 
     @FXML
     protected void onSendMessage(ActionEvent event) throws IOException {
-        MessageDTO messageDTO = new MessageDTO(tf_message.getText());
-        if (!messageDTO.getContent().isEmpty()) {
-            // send message to server
-            SocketMessageService.getInstance().send(
-                    new SocketMessage(UUID.randomUUID().toString(), Routes.Server.CHAT_SEND.getValue(), messageDTO),
-                    ChatController::handleMessageSendResponse,
-                    this
-            );
+
+        String messageContent = tf_message.getText();
+
+        if (messageContent.isEmpty()) {
+            return;
         }
+
+        MessageDTO messageDTO = new MessageDTO(messageContent);
+
+        // send message to server
+        SocketMessageService.getInstance().send(
+                new SocketMessage(UUID.randomUUID().toString(), Routes.Server.CHAT_SEND.getValue(), messageDTO),
+                ChatController::handleMessageSendResponse,
+                this
+        );
+
+        // clear message field
         tf_message.setText("");
     }
 
@@ -206,10 +231,6 @@ public class ChatController extends Controller implements Initializable {
     }
 
     private static <T extends Controller> void handleStopResponse(SocketMessageContent response, T context) {
-    }
-
-    @Override
-    public void onView() {
-
+        // TODO: implement
     }
 }

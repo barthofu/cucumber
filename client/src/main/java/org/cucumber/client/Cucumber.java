@@ -13,7 +13,7 @@ public class Cucumber extends Application {
     public static int port = 3000;
     public static String address = "localhost";
 
-    private static final String firstViewName = "login-view.fxml";
+    private static final String firstViewName = "views/login-view.fxml";
     private static final String firstViewTitle = "Cucumber - Se connecter";
 
     @Override

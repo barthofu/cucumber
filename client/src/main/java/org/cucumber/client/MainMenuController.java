@@ -16,13 +16,24 @@ import java.io.IOException;
 
 public class MainMenuController extends Controller {
 
+    public MainMenuController() {
+        super("La vitesse rencontre l'amour!");
+    }
+
     @FXML
     protected Label usernameLabel;
     @FXML
     protected Label connectedUsersLabel;
 
-    public MainMenuController() {
-        super("La vitesse rencontre l'amour!");
+    @Override
+    public void onInit() {
+
+        updateTotalUsers();
+
+        UserDTO currentUser = UserService.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            setCurrentUserDisplayInfos(currentUser);
+        }
     }
 
     @FXML
@@ -49,17 +60,6 @@ public class MainMenuController extends Controller {
 
     protected void setCurrentUserDisplayInfos(UserDTO user) {
         usernameLabel.setText("Connecté en tant que " + user.getUsername());
-    }
-
-    @Override
-    public void onView() {
-
-        updateTotalUsers();
-
-        UserDTO currentUser = UserService.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            setCurrentUserDisplayInfos(currentUser);
-        }
     }
 
     // ================================

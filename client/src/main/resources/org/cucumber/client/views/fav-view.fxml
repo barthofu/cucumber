@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -8,9 +9,9 @@
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.FavViewController">
    <children>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRetourButton" onDragDetected="#onRetourButton" text="Retour" />
-      <VBox alignment="CENTER" layoutX="132.0" layoutY="18.0" prefHeight="465.0" prefWidth="376.0">
+      <VBox alignment="CENTER" layoutX="132.0" layoutY="18.0" prefHeight="465.0" prefWidth="377.0" spacing="30.0">
          <children>
-            <Pane prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+            <Pane prefHeight="61.0" prefWidth="378.0" styleClass="fav-container">
                <children>
                   <Label fx:id="e1Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
                   <Button fx:id="e1Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
@@ -19,7 +20,7 @@
                   <ColorAdjust />
                </effect>
             </Pane>
-            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" styleClass="fav-container">
                <children>
                   <Label fx:id="e2Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
                   <Button fx:id="e2Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
@@ -28,10 +29,10 @@
                   <ColorAdjust />
                </effect>
                <VBox.margin>
-                  <Insets bottom="80.0" top="80.0" />
+                  <Insets />
                </VBox.margin>
             </Pane>
-            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" style="-fx-background-color: pink; -fx-border-color: green;">
+            <Pane layoutX="10.0" layoutY="10.0" prefHeight="61.0" prefWidth="376.0" styleClass="fav-container">
                <children>
                   <Label fx:id="e3Label" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="265.0" text="Emplacement Vide" />
                   <Button fx:id="e3Button" layoutX="290.0" layoutY="17.0" mnemonicParsing="false" text="Supprimer" />
@@ -43,4 +44,8 @@
          </children>
       </VBox>
    </children>
+
+      <stylesheets>
+         <URL value="@../styles/main.css" />
+      </stylesheets>
 </AnchorPane>

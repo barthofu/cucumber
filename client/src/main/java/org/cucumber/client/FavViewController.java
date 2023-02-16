@@ -24,35 +24,27 @@ import java.util.*;
 
 public class FavViewController extends Controller {
 
+    public FavViewController() {
+        super("Mes favoris");
+    }
+
     @FXML
     Label e1Label;
     @FXML
     Button e1Button;
-
 
     @FXML
     Label e2Label;
     @FXML
     Button e2Button;
 
-
     @FXML
     Label e3Label;
     @FXML
     Button e3Button;
 
-
-    public FavViewController() {
-        super("Mes favoris");
-    }
-
-    @FXML
-    protected void onRetourButton(ActionEvent event) throws IOException {
-        FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
-    }
-
     @Override
-    public void onView() {
+    public void onInit() {
         try {
             SocketMessageService.getInstance().send(
                     new SocketMessage(
@@ -68,7 +60,13 @@ public class FavViewController extends Controller {
         }
     }
 
+    @FXML
+    protected void onRetourButton(ActionEvent event) throws IOException {
+        FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
+    }
+
     public static <T extends Controller> void handleGetFavResponse(SocketMessageContent socketMessageContent, T context) {
+
         Set<UserDTO> userDTOSet = ((GetFavOfUserResponse) socketMessageContent).getUserDTOSet();
         Iterator<UserDTO> iterator = userDTOSet.iterator();
         FavViewController fvc = (FavViewController) context;
@@ -120,6 +118,6 @@ public class FavViewController extends Controller {
 
     public static <T extends Controller> void handleRmFavResponse(SocketMessageContent socketMessageContent, T context) {
         //update the list
-        context.onView();
+        context.onInit();
     }
 }

@@ -80,14 +80,4 @@ public class LoginController extends Controller {
         }
     }
 
-    //run on hello response
-//    public static void handleHelloResponse(SocketMessageContent response, Object context){
-//        System.out.println("hello from the callback on server response : " + ((MessageDTO) response).getContent());
-//    }
-
-
-    @Override
-    public void onView() {
-
-    }
 }
