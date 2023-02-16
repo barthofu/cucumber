@@ -12,6 +12,8 @@ import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.AuthService;
 import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.common.utils.Timeout;
+import org.cucumber.server.utils.errors.InvalidCredentialsException;
+import org.cucumber.server.utils.errors.UserAlreadyLoggedInException;
 import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 
@@ -25,25 +27,33 @@ public class LoginController extends Controller {
     @Override
     public void handle(SocketClient socketClient, String requestId, Object args) {
         LoginRequest arguments = args instanceof LoginRequest ? ((LoginRequest) args) : null;
+
         if (arguments != null) {
+
             try {
 
-                User user = AuthService.getInstance().checkAuth(arguments.getUsername(), arguments.getPassword());
+                User user = AuthService.getInstance().login(arguments.getUsername(), arguments.getPassword());
 
-                socketClient.setUser(user);
+                if (user != null) {
 
-                socketClient.sendToClient(new SocketMessage(
-                        requestId,
-                        Mappers.getMapper(UserMapper.class).userToUserDTO(user)
-                ));
+                    socketClient.setUser(user);
+                    socketClient.sendToClient(new SocketMessage(
+                            requestId,
+                            Mappers.getMapper(UserMapper.class).userToUserDTO(user)
+                    ));
 
-                Timeout.setTimeout(() -> {
-                    SocketManager.getInstance().broadcastCountLoggedIn();
-                }, 1000);
+                    Timeout.setTimeout(() -> {
+                        SocketManager.getInstance().broadcastCountLoggedIn();
+                    }, 1000);
 
-            } catch (Exception ignore) {
-                socketClient.sendToClient(new SocketMessage(requestId, new Status(false)));
+                } else {
+                    throw new InvalidCredentialsException();
+                }
+
+            } catch (UserAlreadyLoggedInException | InvalidCredentialsException e) {
+                socketClient.sendToClient(new SocketMessage(requestId, new Status(false, e.getMessage())));
             }
+
         } else {
             Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", LoginController.class.getName(), "args is null"));
         }

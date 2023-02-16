@@ -31,7 +31,7 @@ public class Routes {
     @AllArgsConstructor
     public enum Client {
         USER_TOTAL("user/total"),
-        SESSION_STOP("session/stop"),
+        SESSION_STOP("chat/stop"),
         MESSAGE_RECEIVE("chat/receive");
 
         private final String value;

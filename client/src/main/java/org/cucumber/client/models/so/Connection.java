@@ -7,6 +7,7 @@ import org.cucumber.client.ChatController;
 import org.cucumber.client.MainMenuController;
 import org.cucumber.client.services.MessageService;
 import org.cucumber.client.services.SocketMessageService;
+import org.cucumber.client.services.SocketService;
 import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Optional;
 
 /**
  * The Connection class is responsible for managing the connection to the server.
@@ -66,33 +68,36 @@ public class Connection implements Runnable {
             }
         }
 
-        // TODO: handle connection lost
-        // client.disconnectedServer();
+        // handle connection lost
+        try {
+            SocketService.getInstance().closeConnection();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * the "router" of the client,
-     * handle routed message & responses
-     * @param message : the message recieved
+     * The "router" of the client,
+     * handle routed messages from the server
+     * @param message the received message
      * */
     private void handleRoute(SocketMessage message) {
 
         if (matchRoute(message, Routes.Client.USER_TOTAL)) {
             UserService.getInstance().setTotalUsers(((UsersDTO) message.getContent()).getTotalUsers());
+
         } else if (matchRoute(message, Routes.Client.MESSAGE_RECEIVE)) {
             MessageService.getInstance().addMessage((MessageDTO) message.getContent());
+
         } else if (matchRoute(message, Routes.Client.SESSION_STOP)) {
-            if (FXUtils.getCurrentController().getClass().getName()
-                    .equals(ChatController.class.getName())){
-                Platform.runLater(() -> {
-                    try {
-                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), FXUtils.getCurrentController(), ((ChatController) FXUtils.getCurrentController()).getStop().getScene());
-                        FXUtils.getCurrentController().onInit();
-                    }catch (Exception e){
-                        System.exit(-1);
-                    }
-                });
-            }
+            Optional<ChatController> chatController = FXUtils.getCurrentController(ChatController.class);
+            chatController.ifPresent(controller -> Platform.runLater(() -> {
+                try {
+                    FXUtils.goTo(Views.MAIN_MENU.getViewName(), controller, controller.getStop().getScene());
+                } catch (Exception e) {
+                    System.exit(-1);
+                }
+            }));
         }
     }
 

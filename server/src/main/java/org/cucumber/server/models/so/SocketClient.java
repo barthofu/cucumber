@@ -40,7 +40,7 @@ public class SocketClient implements Runnable {
             this.isActive = true;
         } catch (IOException e) {
             Logger.log(LoggerStatus.SEVERE, String.format("Can't reach client N°%d : %s", this.socketId, e.getMessage()));
-//            Server.getInstance().removeClient(socketClient);
+            SocketManager.getInstance().removeClient(this);
         }
     }
 
@@ -57,6 +57,8 @@ public class SocketClient implements Runnable {
             Logger.log(LoggerStatus.INFO, "incoming message: " + message.getRoute());
             Router.getInstance().handle(this, message);
         }
+
+        closeClient();
     }
 
     private SocketMessage waitForMessage() {
@@ -82,6 +84,7 @@ public class SocketClient implements Runnable {
 
     public void closeClient() {
         try {
+            SocketManager.getInstance().removeClient(this);
             this.in.close();
             this.out.close();
             this.socket.close();
@@ -97,6 +100,10 @@ public class SocketClient implements Runnable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean isLoggedIn() {
+        return this.user != null;
     }
 
 

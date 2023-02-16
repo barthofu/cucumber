@@ -1,9 +1,12 @@
 package org.cucumber.client;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
@@ -34,32 +37,57 @@ public class RegisterViewController extends Controller {
     protected TextField password;
     @FXML
     protected TextField passwordVerif;
+    @FXML
+    public TextField age;
+    @FXML
+    public TextArea description;
 
     private ActionEvent lastActionEvent;
 
+    @Override
+    public void onInit() {
+
+        // force the field to be numeric only
+        age.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                age.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
+
     @FXML
     protected void onRegisterButton(ActionEvent event) throws IOException {
-        Logger.log(LoggerStatus.INFO, "register");
 
-        if (password.getText().equals(passwordVerif.getText())){
-            lastActionEvent = event;
-            SocketMessageService.getInstance().send(
-                    new SocketMessage(
-                            UUID.randomUUID().toString(),
-                            Routes.Server.REGISTER_REGISTER.getValue(),
-                            new RegisterRequest(username.getText(), password.getText())
-                    ),
-                    RegisterViewController::handleRegisterResponse,
-                    this
-            );
-        }else{
-            errorLabel.setText("Les mots de passes ne correpondent pas");
-        }
+        // checks
+        if (username.getText().isEmpty()) errorLabel.setText("Le nom d'utilisateur est vide");
+        else if (password.getText().isEmpty()) errorLabel.setText("Le mot de passe est vide");
+        else if (passwordVerif.getText().isEmpty()) errorLabel.setText("La vérification du mot de passe est vide");
+        else if (!password.getText().equals(passwordVerif.getText())) errorLabel.setText("Les mots de passes ne correpondent pas");
+
+        lastActionEvent = event;
+
+        SocketMessageService.getInstance().send(
+                new SocketMessage(
+                        UUID.randomUUID().toString(),
+                        Routes.Server.REGISTER_REGISTER.getValue(),
+                        RegisterRequest.builder()
+                                .username(username.getText())
+                                .password(password.getText())
+                                .age(Integer.parseInt(age.getText()))
+                                .description(description.getText())
+                                .build(
+                        )
+                ),
+                RegisterViewController::handleRegisterResponse,
+                this
+        );
     }
 
     private static <T extends Controller> void handleRegisterResponse(SocketMessageContent response, T context) {
+        Status status = (Status) response;
+
         try {
-            if (( (Status) response).isSuccess()) {
+            if (status.isSuccess()) {
                 Platform.runLater(() -> {
                     try {
                         FXUtils.goTo(Views.LOGIN.getViewName(), context, ((RegisterViewController) context).lastActionEvent);
@@ -67,9 +95,9 @@ public class RegisterViewController extends Controller {
                         ((RegisterViewController) context).errorLabel.setText(e.getMessage());
                     }
                 });
-            }else{
+            } else {
                 Platform.runLater(() -> {
-                    ((RegisterViewController) context).errorLabel.setText("Erreur lors de la création du compte");
+                    ((RegisterViewController) context).errorLabel.setText(status.getMessage() != null ? status.getMessage() : "Une erreur est survenue");
                 });
             }
         }catch (Exception e){

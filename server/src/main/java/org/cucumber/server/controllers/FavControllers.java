@@ -62,17 +62,15 @@ public class FavControllers {
 
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
-                        new Status(
-                                true
-                        )));
+                        new Status(true)
+                ));
             } catch (Exception e) {
                 Logger.log(LoggerStatus.SEVERE, e.getMessage());
                 e.printStackTrace();
                 socketClient.sendToClient(new SocketMessage(
                         requestId,
-                        new Status(
-                                false
-                        )));
+                        new Status(false)
+                ));
             }
         }
     }

@@ -14,7 +14,7 @@
       <children>
          <ImageView fitHeight="150.0" fitWidth="141.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="@../cucumber_logo.png" />
+               <Image url="@../assets/cucumber_logo.png" />
             </image>
          </ImageView>
          <HBox alignment="CENTER" prefHeight="96.0" prefWidth="474.0">
@@ -32,8 +32,8 @@
          </HBox>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Button fx:id="loginBtn" onAction="#onLoginButton" styleClass="btn" text=" Login " textAlignment="CENTER" />
-               <Button mnemonicParsing="false" onAction="#onSignUp" text="Sign up" textAlignment="CENTER" />
+                <Button fx:id="loginBtn" onAction="#onLoginButton" styleClass="btn" text="Se connecter" textAlignment="CENTER" />
+               <Button mnemonicParsing="false" onAction="#onSignUp" text="S'enregistrer" textAlignment="CENTER" />
             </children>
          </HBox>
       </children>
@@ -43,4 +43,5 @@
       </stylesheets>
 
    </VBox>
+   <Label fx:id="errorLabel" textFill="#e62d2d" />
 </VBox>

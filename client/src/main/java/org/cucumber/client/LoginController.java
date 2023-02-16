@@ -15,6 +15,7 @@ import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.LoginRequest;
 
 import java.io.IOException;
@@ -45,16 +46,23 @@ public class LoginController extends Controller {
 
     @FXML
     protected void onLoginButton(ActionEvent event) throws IOException {
-            lastActionEvent = event;
-            SocketMessageService.getInstance().send(
-                    new SocketMessage(
-                            UUID.randomUUID().toString(),
-                            "login",
-                            new LoginRequest(username.getText(), password.getText())
-                    ),
-                    LoginController::handleLoginResponse,
-                    this
-            );
+
+        setErrorMessage("");
+        lastActionEvent = event;
+
+        SocketMessageService.getInstance().send(
+                new SocketMessage(
+                        UUID.randomUUID().toString(),
+                        "login",
+                        new LoginRequest(username.getText(), password.getText())
+                ),
+                LoginController::handleLoginResponse,
+                this
+        );
+    }
+
+    public void setErrorMessage(String message) {
+        errorLabel.setText(message);
     }
 
     public static <T extends Controller> void handleLoginResponse(SocketMessageContent response, T context) {
@@ -71,8 +79,9 @@ public class LoginController extends Controller {
                     }
                 });
             } else {
+                String message = ((Status) response).getMessage();
                 Platform.runLater(() -> {
-                    ((LoginController) context).errorLabel.setText("Connexion impossible");
+                    ((LoginController) context).setErrorMessage(message != null ? message : "Une erreur est survenue");
                 });
             }
         } catch (Exception e){

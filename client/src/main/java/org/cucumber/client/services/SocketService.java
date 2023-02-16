@@ -29,6 +29,7 @@ public class SocketService {
     }
 
     public void closeConnection() throws IOException {
+
         if (this.in != null) {
             this.in.close();
         }

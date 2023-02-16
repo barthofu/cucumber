@@ -1,6 +1,7 @@
 package org.cucumber.server.utils.mappers;
 
 import org.cucumber.common.dto.UserDTO;
+import org.cucumber.common.dto.requests.RegisterRequest;
 import org.cucumber.server.models.bo.User;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -23,4 +24,9 @@ public interface UserMapper {
 
     @IterableMapping(qualifiedByName = "toDTO")
     Set<UserDTO> userSetToUserDTOSet(Set<User> user);
+
+    @Mapping(source = "username", target = "username")
+    @Mapping(source = "age", target = "age")
+    @Mapping(source = "description", target = "description")
+    UserDTO registerRequestToUserDTO(RegisterRequest registerRequest);
 }

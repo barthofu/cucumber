@@ -9,9 +9,14 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.MainMenuController">
    <children>
-      <HBox alignment="CENTER" layoutX="25.0" layoutY="323.0" prefHeight="120.0" prefWidth="599.0">
+      <ImageView fitHeight="518.0" fitWidth="672.0" focusTraversable="true" layoutX="-13.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/cucumber_banner.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER" layoutX="30.0" layoutY="342.0" prefHeight="120.0" prefWidth="599.0">
          <children>
-            <Button fx:id="button_join" mnemonicParsing="false" onAction="#onStartDating" prefHeight="42.0" prefWidth="135.0" styleClass="btn" text="Chatter">
+            <Button fx:id="button_join" mnemonicParsing="false" onAction="#onStartDating" prefHeight="42.0" prefWidth="135.0" style="-fx-background-color: #f4f4f4;" text="Chatter">
                <font>
                   <Font size="15.0" />
                </font>
@@ -44,9 +49,9 @@
       </ToolBar>
       <Button layoutX="596.0" layoutY="59.0" mnemonicParsing="false" onAction="#onFavButton" styleClass="btn" text="☆" />
       <Label fx:id="usernameLabel" layoutX="26.0" layoutY="63.0" text="Connecté en tant que X" />
-      <ImageView fitHeight="242.0" fitWidth="323.0" layoutX="204.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="242.0" fitWidth="323.0" layoutX="204.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@../cucumber_logo.png" />
+            <Image url="@../assets/cucumber_logo.png" />
          </image></ImageView>
    </children>
 

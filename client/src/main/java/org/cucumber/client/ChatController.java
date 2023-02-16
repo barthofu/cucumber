@@ -26,6 +26,7 @@ import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
+import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
@@ -87,12 +88,6 @@ public class ChatController extends Controller {
         this.name.setText(chatter.getUsername());
         this.timerStart = System.currentTimeMillis();
         updateChrono();
-
-    }
-
-    @Override
-    public void onDestroy() {
-
     }
 
     /**
@@ -212,6 +207,7 @@ public class ChatController extends Controller {
                 ChatController::handleAddFavResponse,
                 this
         );
+
         this.fav.setDisable(true);
     }
 
@@ -222,15 +218,15 @@ public class ChatController extends Controller {
                 new SocketMessage(
                         UUID.randomUUID().toString(),
                         Routes.Server.CHAT_CLOSE.getValue(),
-                        new UserTarget(chatter)
+                        new Empty()
                 ),
                 ChatController::handleStopResponse,
                 this
         );
+
         this.fav.setDisable(true);
     }
 
     private static <T extends Controller> void handleStopResponse(SocketMessageContent response, T context) {
-        // TODO: implement
     }
 }

@@ -1,14 +1,16 @@
 package org.cucumber.common.dto.requests;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.cucumber.common.dto.base.SocketMessageContent;
 
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class RegisterRequest extends SocketMessageContent {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
+    private int age;
+    private String description;
 }

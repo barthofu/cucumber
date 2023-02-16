@@ -13,6 +13,14 @@ public class UserRepository extends BasicRepository<User> implements IUserReposi
     }
 
     @Override
+    public User getByUsername(String username) {
+        return em
+                .createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                .setParameter("username", username)
+                .getSingleResult();
+    }
+
+    @Override
     public Set<User> getUserFav(User user) {
         return user.getFavorites();
     }

@@ -92,23 +92,36 @@ public class ChatRoomService {
         waitingUsers.removeIf(w -> w.userId == userId);
     }
 
-    public void closeRoom(int user1, int user2) {
-        SocketManager.getInstance().getByUserId(user1).sendToClient(
-                        new SocketMessage(
-                                null,
-                                Routes.Client.SESSION_STOP.getValue(),
-                                new Empty()
-                        ));
-        SocketManager.getInstance().getByUserId(user2).sendToClient(
-                        new SocketMessage(
-                                null,
-                                Routes.Client.SESSION_STOP.getValue(),
-                                new Empty()
-                        ));
+    public void closeRoom(int userId) {
+
         RoomRepository repository = Repositories.get(RoomRepository.class);
-        Room room = repository.findByUserId(user1);
-        room.setActive(false);
-        repository.update(room);
+        Room room = repository.findByUserId(userId);
+
+        if (room != null && room.getActive()) {
+
+            room.setActive(false);
+            repository.update(room);
+
+            // send to both users that the chat has been closed
+            SocketManager socketManager = SocketManager.getInstance();
+
+            socketManager.getByUserId(getChatter(userId, room).getId()).sendToClient(
+                    new SocketMessage(
+                            null,
+                            Routes.Client.SESSION_STOP.getValue(),
+                            new Empty()
+                    )
+            );
+
+            socketManager.getByUserId(userId).sendToClient(
+                    new SocketMessage(
+                            null,
+                            Routes.Client.SESSION_STOP.getValue(),
+                            new Empty()
+                    )
+            );
+        }
+
     }
 
     // ================================

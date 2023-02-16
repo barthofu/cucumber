@@ -5,6 +5,7 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 import org.cucumber.server.models.so.SocketClient;
+import org.cucumber.server.services.ChatRoomService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -34,13 +35,14 @@ public class SocketManager implements Runnable {
 
         while (true) {
             try {
+
                 Socket sockNewClient = serverSocket.accept();
-                // TODO : auth check
                 SocketClient newSocketClient = new SocketClient(sockNewClient);
                 addClient(newSocketClient);
 
                 Thread threadNewClient = new Thread(newSocketClient);
                 threadNewClient.start();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -69,11 +71,19 @@ public class SocketManager implements Runnable {
     }
 
     public SocketClient getById(int id) {
-        return this.socketClients.stream().filter(socketClient -> socketClient.getSocketId() == id).findFirst().orElse(null);
+        return this.socketClients
+                .stream()
+                .filter(socketClient -> socketClient.getSocketId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public SocketClient getByUserId(int id) {
-        return this.socketClients.stream().filter(socketClient -> socketClient.getUser().getId() == id).findFirst().orElse(null);
+        return this.socketClients
+                .stream()
+                .filter(socketClient -> socketClient.isLoggedIn() && socketClient.getUser().getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public int countLoggedIn() {
@@ -102,6 +112,11 @@ public class SocketManager implements Runnable {
         Logger.log(LoggerStatus.INFO, String.format("Client disconnected (%d)", socketClient.getSocketId()));
 
         this.socketClients.remove(socketClient);
+
+        if (socketClient.isLoggedIn()) {
+            ChatRoomService.getInstance().removeWaitingUser(socketClient.getUser().getId());
+            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId());
+        }
 
         broadcastCountLoggedIn();
     }

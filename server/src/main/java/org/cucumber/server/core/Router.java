@@ -22,10 +22,10 @@ public class Router {
     private Router() {
         this.routes = Set.of(
                 new RegisterController(),
-                new ChatController.SendMessage(),
-                new ChatController.JoinRoom(),
-                new ChatController.CancelJoin(),
-                new ChatController.CloseRoom(),
+                new ChatController.ChatSend(),
+                new ChatController.ChatJoin(),
+                new ChatController.ChatCancel(),
+                new ChatController.ChatClose(),
                 new LoginController(),
                 new FavControllers.Add(),
                 new FavControllers.Get(),

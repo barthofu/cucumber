@@ -2,6 +2,7 @@ package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.base.SocketMessage;
+import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
@@ -17,10 +18,10 @@ import org.mapstruct.factory.Mappers;
 public class ChatController {
 
 
-    public static class SendMessage extends Controller {
+    public static class ChatSend extends Controller {
         public static final String route = Routes.Server.CHAT_SEND.getValue();
 
-        public SendMessage() {
+        public ChatSend() {
             super(route);
         }
 
@@ -49,10 +50,10 @@ public class ChatController {
         }
     }
 
-    public static class JoinRoom extends Controller {
+    public static class ChatJoin extends Controller {
         public static final String route = Routes.Server.CHAT_JOIN.getValue();
 
-        public JoinRoom() {
+        public ChatJoin() {
             super(route);
         }
 
@@ -66,10 +67,10 @@ public class ChatController {
         }
     }
 
-    public static class CancelJoin extends Controller {
+    public static class ChatCancel extends Controller {
         public static final String route = Routes.Server.CHAT_CANCEL.getValue();
 
-        public CancelJoin() {
+        public ChatCancel() {
             super(route);
         }
 
@@ -84,21 +85,17 @@ public class ChatController {
         }
     }
 
-    public static class CloseRoom extends Controller {
+    public static class ChatClose extends Controller {
         public static final String route = Routes.Server.CHAT_CLOSE.getValue();
 
-        public CloseRoom() {
+        public ChatClose() {
             super(route);
         }
 
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
-            UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
-            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId(), arguments.getTarget().getId());
-            socketClient.sendToClient(new SocketMessage(
-                    requestId,
-                    new Status(true)
-            ));
+
+            ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId());
         }
     }
 }

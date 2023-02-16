@@ -35,6 +35,12 @@ public class Cucumber extends Application {
         SocketService.getInstance().openConnection(address, port);
     }
 
+    @Override
+    public void stop() throws IOException {
+        SocketService.getInstance().closeConnection();
+        System.exit(0);
+    }
+
     public static void main(String[] args) {
         launch();
     }
