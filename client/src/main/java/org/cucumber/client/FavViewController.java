@@ -93,7 +93,7 @@ public class FavViewController extends Controller {
                 });
             } else {
                 Platform.runLater(() -> {
-                    label.setText("Emplacement Vide");
+                    label.setText("Emplacement vide");
                     btn.setDisable(true);
                 });
             }
