@@ -80,6 +80,9 @@ public class FXUtils {
         getCurrentController(MainMenuController.class);
     }
 
+    /**
+     * get the controller actually in use by the interface
+     * */
     public static Controller getCurrentController() {
         return currentController;
     }

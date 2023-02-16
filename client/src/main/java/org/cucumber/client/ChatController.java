@@ -24,7 +24,6 @@ import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
-import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
@@ -33,10 +32,6 @@ import org.cucumber.common.utils.Timeout;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.UUID;
 
@@ -85,6 +80,11 @@ public class ChatController extends Controller implements Initializable {
         updateChrono();
     }
 
+    /**
+     * update the label "chrono"
+     * recursive function which manage the time elapsed since the begining of the date
+     * -> run onStop() if the timer as reach 5000 min
+     * */
     private void updateChrono() {
         long current = System.currentTimeMillis();
         int min5 = 300000;
@@ -105,6 +105,12 @@ public class ChatController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * display a new message
+     * @see MessageDTO
+     * @param isOwnMessage : is currentUser owning this message
+     * @param message : the message
+     * */
     public void appendMessage(MessageDTO message, boolean isOwnMessage) {
         final int paddingSize = 10;
 

@@ -15,9 +15,7 @@ import org.cucumber.server.utils.classes.Controller;
 import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class FavControllers {
 

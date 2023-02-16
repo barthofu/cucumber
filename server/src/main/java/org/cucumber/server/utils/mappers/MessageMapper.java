@@ -9,8 +9,6 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface MessageMapper {
 
-    MessageMapper INSTANCE = Mappers.getMapper( MessageMapper.class );
-
     @Mapping(source = "content", target = "content")
     @Mapping(source = "from.id", target = "from")
     @Mapping(source = "to.id", target = "to")

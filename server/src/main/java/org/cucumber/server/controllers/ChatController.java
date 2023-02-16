@@ -1,9 +1,7 @@
 package org.cucumber.server.controllers;
 
-import org.cucumber.common.dto.CloseDto;
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.base.SocketMessage;
-import org.cucumber.common.dto.generics.ClientTarget;
 import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;

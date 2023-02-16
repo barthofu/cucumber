@@ -13,8 +13,6 @@ import java.util.Set;
 @Mapper
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper( UserMapper.class );
-
     @Mapping(source = "id", target = "id")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "description", target = "description")

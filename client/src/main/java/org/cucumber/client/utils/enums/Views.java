@@ -1,5 +1,8 @@
 package org.cucumber.client.utils.enums;
 
+/**
+ * name of the files representing the JFX views
+ * */
 public enum Views {
     MAIN_MENU("main-menu-view"),
     FAV("fav-view"),

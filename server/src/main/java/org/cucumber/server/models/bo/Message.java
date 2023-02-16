@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.sql.Date;
 import java.time.Instant;
 import java.util.Objects;
 

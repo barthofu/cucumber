@@ -1,14 +1,12 @@
 package org.cucumber.server.services;
 
 import lombok.AllArgsConstructor;
-import org.cucumber.common.dto.CloseDto;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.models.bo.User;
-import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.repositories.Repositories;
 import org.cucumber.server.repositories.impl.RoomRepository;
 import org.cucumber.server.repositories.impl.UserRepository;

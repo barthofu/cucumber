@@ -70,6 +70,11 @@ public class Connection implements Runnable {
         // client.disconnectedServer();
     }
 
+    /**
+     * the "router" of the client,
+     * handle routed message & responses
+     * @param message : the message recieved
+     * */
     private void handleRoute(SocketMessage message) {
 
         if (matchRoute(message, Routes.Client.USER_TOTAL)) {
@@ -117,6 +122,10 @@ public class Connection implements Runnable {
 
     }
 
+    /**
+     * send SocketMessage to server
+     * @see SocketMessage
+     * */
     public void sendToServer(SocketMessage socketMessage) {
         try {
             out.writeObject(socketMessage);

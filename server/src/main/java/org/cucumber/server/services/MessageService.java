@@ -3,7 +3,6 @@ package org.cucumber.server.services;
 import org.cucumber.server.models.bo.Message;
 import org.cucumber.server.models.bo.Room;
 import org.cucumber.server.models.bo.User;
-import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.repositories.Repositories;
 import org.cucumber.server.repositories.impl.MessageRepository;
 import org.cucumber.server.repositories.impl.RoomRepository;

@@ -6,7 +6,6 @@ import org.cucumber.server.models.bo.User;
 import org.cucumber.server.repositories.IRoomRepository;
 import org.cucumber.server.repositories.Repositories;
 
-import java.time.Instant;
 import java.util.Set;
 
 public class RoomRepository extends BasicRepository<Room> implements IRoomRepository {
