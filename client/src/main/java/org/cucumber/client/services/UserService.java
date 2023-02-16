@@ -10,18 +10,24 @@ import org.cucumber.common.dto.UserDTO;
 
 import java.util.Optional;
 
+/**
+ * Service to store the current user after login and manage it.
+ */
 @Getter
 @Setter
 public class UserService {
 
     private UserDTO currentUser = null;
 
+    /**
+     * the total number of connected users, updated reactively by the server.
+     */
     private int totalUsers = 0;
 
     /**
-     * update the main menu label "user number"
-     * @param totalUsers : actual number of users
-     * */
+     * Update the main menu label "user number".
+     * @param totalUsers actual number of users
+     */
     public void setTotalUsers(int totalUsers) {
         this.totalUsers = totalUsers;
 
@@ -33,11 +39,14 @@ public class UserService {
 
     /**
      * is the current user logged in ?
-     * */
+     */
     public boolean isLoggedIn() {
         return currentUser != null;
     }
 
+    /**
+     * Logout the current user.
+     */
     public void reset() {
         currentUser = null;
     }

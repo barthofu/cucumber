@@ -17,6 +17,7 @@
                         <PasswordField fx:id="passwordVerif" prefHeight="25.0" prefWidth="157.0" promptText="Confirmer mot de passe" />
                         <TextField fx:id="age" promptText="Age" />
                         <TextArea fx:id="description" prefHeight="200.0" prefWidth="209.0" promptText="Bio" />
+                        <TextField fx:id="avatar" layoutX="10.0" layoutY="116.0" promptText="URL avatar" />
                      </children>
                   </VBox>
                </children></HBox>

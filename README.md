@@ -22,9 +22,12 @@ Il s'agit d'un projet de groupe réalisé dans le cadre de la Licence Pro DevOps
 ### Installation
 
 - Cloner le dépôt
-- Lancer la commande `mvn clean install` à la racine du projet
-- Lancer le serveur avec la commande `java -jar server/target/server-1.0-SNAPSHOT.jar`
-- Lancer un ou plusieurs clients avec la commande `java -jar client/target/client-1.0-SNAPSHOT.jar`
+- Executer la commande `mvn clean install` dans chacun des répertoires suivants (l'ordre est important):
+  - `common`
+  - `server`
+  - `client`
+- Lancer maintenant le serveur de la manière que vous voulez (jar, IDE, etc.)
+- Lancer un ou plusieurs clients de la même manière
 - Créer un compte
 - Se connecter
 - Profiter de l'application
@@ -49,6 +52,9 @@ Voici la liste des fonctionnalités implémentées dans l'application:
   - Utilisateurs
   - "Chat room" (canal de discussion chronométré entre deux utilisateurs aléatoires)
   - Favoris
+- Profil
+  - Affichage des informations de l'utilisateur
+  - Modification des informations de l'utilisateur
 
 ## Architecture
 

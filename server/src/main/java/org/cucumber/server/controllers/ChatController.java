@@ -2,9 +2,7 @@ package org.cucumber.server.controllers;
 
 import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.base.SocketMessage;
-import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.Status;
-import org.cucumber.common.dto.generics.UserTarget;
 import org.cucumber.common.utils.Routes;
 import org.cucumber.server.core.SocketManager;
 import org.cucumber.server.models.bo.Message;
@@ -18,10 +16,10 @@ import org.mapstruct.factory.Mappers;
 public class ChatController {
 
 
-    public static class ChatSend extends Controller {
+    public static class SendMessage extends Controller {
         public static final String route = Routes.Server.CHAT_SEND.getValue();
 
-        public ChatSend() {
+        public SendMessage() {
             super(route);
         }
 
@@ -50,10 +48,10 @@ public class ChatController {
         }
     }
 
-    public static class ChatJoin extends Controller {
+    public static class Join extends Controller {
         public static final String route = Routes.Server.CHAT_JOIN.getValue();
 
-        public ChatJoin() {
+        public Join() {
             super(route);
         }
 
@@ -67,10 +65,10 @@ public class ChatController {
         }
     }
 
-    public static class ChatCancel extends Controller {
+    public static class Cancel extends Controller {
         public static final String route = Routes.Server.CHAT_CANCEL.getValue();
 
-        public ChatCancel() {
+        public Cancel() {
             super(route);
         }
 
@@ -85,10 +83,10 @@ public class ChatController {
         }
     }
 
-    public static class ChatClose extends Controller {
+    public static class Close extends Controller {
         public static final String route = Routes.Server.CHAT_CLOSE.getValue();
 
-        public ChatClose() {
+        public Close() {
             super(route);
         }
 

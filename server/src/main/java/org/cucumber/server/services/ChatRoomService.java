@@ -16,6 +16,9 @@ import org.mapstruct.factory.Mappers;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for managing chat rooms. It is responsible for creating new rooms, assign users to them and match them.
+ */
 public class ChatRoomService {
 
     @AllArgsConstructor
@@ -27,6 +30,9 @@ public class ChatRoomService {
 
     List<WaitingUser> waitingUsers = new ArrayList<>();
 
+    /**
+     * Add a user to the waiting list. If there are two users in the list, they are matched and a new room is created.
+     */
     public void addWaitingUser(int userId, String requestId, int socketId) {
 
         waitingUsers.add(new WaitingUser(userId, requestId, socketId));

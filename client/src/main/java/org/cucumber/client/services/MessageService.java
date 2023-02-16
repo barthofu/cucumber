@@ -20,6 +20,10 @@ public class MessageService {
 
     List<MessageDTO> messages = new ArrayList<>();
 
+    /**
+     * Add a message to the list and append it to the chat view.
+     * @param message the message to add
+     */
     public void addMessage(MessageDTO message) {
 
         // append message to list

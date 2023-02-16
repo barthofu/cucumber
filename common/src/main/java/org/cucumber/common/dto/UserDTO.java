@@ -10,7 +10,7 @@ import org.cucumber.common.dto.base.SocketMessageContent;
 public class UserDTO extends SocketMessageContent {
     private Integer id;
     private final String username;
+    private int age;
     private String description;
     private String avatar;
-    private int age;
 }

@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
-public class FavControllers {
+public class FavController {
 
     public static class Add extends Controller {
         public static final String route = Routes.Server.FAV_ADD.getValue();
@@ -56,6 +56,7 @@ public class FavControllers {
         @Override
         public void handle(SocketClient socketClient, String requestId, Object args) {
             UserTarget arguments = args instanceof UserTarget ? ((UserTarget) args) : null;
+
             UserRepository userRepository = Repositories.get(UserRepository.class);
             try {
                 userRepository.deleteFav(socketClient.getUser(), arguments.getTarget().getId());

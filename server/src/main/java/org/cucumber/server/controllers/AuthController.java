@@ -114,7 +114,7 @@ public class AuthController {
                 socketClient.sendToClient(new SocketMessage(requestId, new Status(true)));
 
             } catch (Exception e) {
-                Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", Register.class.getName(), e.getMessage()));
+                Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", Logout.class.getName(), e.getMessage()));
                 socketClient.sendToClient(new SocketMessage(requestId, new Status(false)));
             }
         }

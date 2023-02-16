@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
@@ -9,19 +10,30 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.ChatViewController">
    <children>
-      <TextField fx:id="tf_message" layoutX="29.0" layoutY="450.0" prefHeight="25.0" prefWidth="537.0" />
-      <Button fx:id="button_send" layoutX="578.0" layoutY="450.0" mnemonicParsing="false" onAction="#onSendMessage" text="Envoyer" />
-      <ScrollPane fx:id="sp_main" layoutX="29.0" layoutY="41.0" prefHeight="399.0" prefWidth="604.0" vbarPolicy="ALWAYS">
-         <content>
-            <VBox fx:id="vbox_messages" alignment="TOP_CENTER" prefHeight="397.0" prefWidth="588.0">
+      <Pane prefHeight="50.0" prefWidth="588.0" visible="false" />
+      <Line endX="100.0" startX="-150.0" stroke="#bcbcbc" visible="false" />
+      <HBox prefHeight="494.0" prefWidth="650.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="60.0">
                <children>
-                  <Pane prefHeight="50.0" prefWidth="588.0">
-                     <VBox.margin>
-                        <Insets bottom="5.0" />
-                     </VBox.margin>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="123.0" spacing="5.0">
                      <children>
-                        <Button fx:id="stop" layoutX="533.0" layoutY="13.0" mnemonicParsing="false" onAction="#onStop" text="Stop" />
-                        <Button fx:id="fav" layoutX="493.0" layoutY="14.0" mnemonicParsing="false" onAction="#onFav" text="♥">
+                        <ImageView fx:id="avatar" fitHeight="109.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                           <image>
+                              <Image url="https://img.myloview.com/murals/default-avatar-profile-in-trendy-style-for-social-media-user-icon-400-228654852.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="username" alignment="CENTER" text="Username" textFill="#ff09b0">
+                           <font>
+                              <Font name="System Bold Italic" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="age" text="Age" textAlignment="CENTER" />
+                        <Label fx:id="description" layoutX="10.0" layoutY="178.0" text="Bio" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="fav" mnemonicParsing="false" onAction="#onFav" text="♥">
                            <textFill>
                               <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.48341232227488146">
                                  <stops>
@@ -39,37 +51,59 @@
                               </LinearGradient>
                            </textFill>
                         </Button>
-                        <Label fx:id="chrono" layoutX="14.0" layoutY="10.0" text="__:__">
-                           <textFill>
-                              <LinearGradient endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.5118483412322274">
-                                 <stops>
-                                    <Stop>
-                                       <color>
-                                          <Color red="0.9868420958518982" green="0.47514620423316956" blue="0.47514620423316956" />
-                                       </color>
-                                    </Stop>
-                                    <Stop offset="1.0">
-                                       <color>
-                                          <Color red="1.0" green="0.009259259328246117" blue="0.7027778029441833" />
-                                       </color>
-                                    </Stop>
-                                 </stops>
-                              </LinearGradient>
-                           </textFill>
-                           <font>
-                              <Font name="Consolas Bold" size="28.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="name" alignment="CENTER" layoutX="274.0" layoutY="14.0" text="........." textFill="#ff09b0">
-                           <font>
-                              <Font name="System Bold Italic" size="16.0" />
-                           </font>
-                        </Label>
                      </children>
-                  </Pane>
-                  <Line endX="100.0" startX="-150.0" stroke="#bcbcbc" />
-               </children></VBox>
-         </content>
-      </ScrollPane>
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Label fx:id="chrono" text="__:__">
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.5023696682464456" startY="0.5118483412322274">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.9868420958518982" green="0.47514620423316956" blue="0.47514620423316956" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="1.0" green="0.009259259328246117" blue="0.7027778029441833" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                     <font>
+                        <Font name="Consolas Bold" size="28.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="stop" mnemonicParsing="false" onAction="#onStop" text="Quitter" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="501.0" prefWidth="650.0">
+               <children>
+                  <Label fx:id="headerText" text="Débute ton date avec &quot;username&quot;">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ScrollPane fx:id="sp_main" prefHeight="360.0" prefWidth="450.0" vbarPolicy="ALWAYS">
+                     <VBox.margin>
+                        <Insets right="20.0" />
+                     </VBox.margin>
+                     <content>
+                        <VBox fx:id="vbox_messages" alignment="TOP_CENTER" prefHeight="396.0" prefWidth="451.0" />
+                     </content>
+                  </ScrollPane>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <TextField fx:id="tf_message" prefHeight="25.0" prefWidth="373.0" />
+                        <Button fx:id="button_send" mnemonicParsing="false" onAction="#onSendMessage" text="Envoyer" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

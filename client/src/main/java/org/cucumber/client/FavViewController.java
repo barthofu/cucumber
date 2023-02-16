@@ -62,7 +62,7 @@ public class FavViewController extends Controller {
 
     @FXML
     protected void onRetourButton(ActionEvent event) throws IOException {
-        FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
+        FXUtils.goTo(Views.MAIN_MENU.getValue(), this, event);
     }
 
     public static <T extends Controller> void handleGetFavResponse(SocketMessageContent socketMessageContent, T context) {
@@ -81,10 +81,7 @@ public class FavViewController extends Controller {
             if (iterator.hasNext()) {
                 UserDTO userDTO = iterator.next();
                 Platform.runLater(() -> {
-                    label.setText(String.format("%s : %s",
-                            userDTO.getUsername(),
-                            userDTO.getAge())
-                    );
+                    label.setText(userDTO.getUsername() + (userDTO.getAge() == 0 ? "" : " (" + userDTO.getAge() + " ans)"));
                     btn.setDisable(false);
                     btn.setOnAction(event -> {
                         ((FavViewController) context).removeUserFromFav(userDTO);

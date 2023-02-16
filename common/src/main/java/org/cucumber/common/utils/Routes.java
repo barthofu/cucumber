@@ -3,6 +3,10 @@ package org.cucumber.common.utils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Routes used by the server and the client.
+ * Thanks to that, all routes are type-safe and can be easily refactored without risks.
+ */
 @Getter
 @AllArgsConstructor
 public class Routes {
@@ -20,6 +24,7 @@ public class Routes {
         CHAT_CLOSE("chat/close"),
 
         USER_ME("user/me"),
+        USER_EDIT("user/edit"),
 
         AUTH_REGISTER("auth/register"),
         AUTH_LOGIN("auth/login"),

@@ -41,7 +41,7 @@ public class LoginViewController extends Controller {
 
     @FXML
     protected void onSignUp(ActionEvent event) throws IOException {
-        FXUtils.goTo(Views.REGISTER.getViewName(), this, event);
+        FXUtils.goTo(Views.REGISTER.getValue(), this, event);
     }
 
     @FXML
@@ -73,7 +73,7 @@ public class LoginViewController extends Controller {
 
                 Platform.runLater(() -> {
                     try {
-                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginViewController) context).lastActionEvent);
+                        FXUtils.goTo(Views.MAIN_MENU.getValue(), context, ((LoginViewController) context).lastActionEvent);
                     } catch (IOException e) {
                         ((LoginViewController) context).errorLabel.setText(e.getMessage());
                     }

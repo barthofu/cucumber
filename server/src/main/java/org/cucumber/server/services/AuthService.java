@@ -13,6 +13,9 @@ import org.cucumber.server.utils.errors.UsernameAlreadyTakenException;
 
 import java.util.List;
 
+/**
+ * Service for authentication
+ */
 public class AuthService {
 
     public User login(String username, String password) throws UserAlreadyLoggedInException {

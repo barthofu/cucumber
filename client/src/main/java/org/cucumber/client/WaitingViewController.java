@@ -35,7 +35,7 @@ public class WaitingViewController extends Controller {
                 WaitingViewController::handleCancelResponse,
                 this
         );
-        FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
+        FXUtils.goTo(Views.MAIN_MENU.getValue(), this, event);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class WaitingViewController extends Controller {
         if (status.isSuccess()) {
             Platform.runLater(() -> {
                 try {
-                    FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((WaitingViewController) context).button_cancel.getScene());
+                    FXUtils.goTo(Views.MAIN_MENU.getValue(), context, ((WaitingViewController) context).button_cancel.getScene());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -77,7 +77,7 @@ public class WaitingViewController extends Controller {
             Platform.runLater(() -> {
                 try {
                     ChatViewController.chatter = userDTO;
-                    FXUtils.goTo(Views.CHAT.getViewName(), context, ((WaitingViewController) context).button_cancel.getScene());
+                    FXUtils.goTo(Views.CHAT.getValue(), context, ((WaitingViewController) context).button_cancel.getScene());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

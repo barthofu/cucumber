@@ -28,5 +28,6 @@ public interface UserMapper {
     @Mapping(source = "username", target = "username")
     @Mapping(source = "age", target = "age")
     @Mapping(source = "description", target = "description")
+    @Mapping(source = "avatar", target = "avatar")
     UserDTO registerRequestToUserDTO(RegisterRequest registerRequest);
 }

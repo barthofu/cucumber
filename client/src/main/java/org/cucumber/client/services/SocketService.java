@@ -10,6 +10,9 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
 
+/**
+ * The SocketService class is responsible for managing the connection to the server.
+ */
 public class SocketService {
 
     private ObjectInputStream in;
@@ -37,6 +40,10 @@ public class SocketService {
         socket.close();
     }
 
+    /**
+     * Send a message to the server.
+     * @param socketMessage the message to send
+     */
     public void sendToServer(SocketMessage socketMessage) throws IOException {
         Logger.log(LoggerStatus.INFO, String.format("sending [%s]SocketMessage(%s) to `%s`", socketMessage.getId(), socketMessage.getContent().getClass().getName(), socketMessage.getRoute()));
         out.writeObject(socketMessage);

@@ -24,13 +24,14 @@ public class Router {
                 new AuthController.Login(),
                 new AuthController.Register(),
                 new AuthController.Logout(),
-                new ChatController.ChatSend(),
-                new ChatController.ChatJoin(),
-                new ChatController.ChatCancel(),
-                new ChatController.ChatClose(),
-                new FavControllers.Add(),
-                new FavControllers.Get(),
-                new FavControllers.Remove()
+                new ChatController.SendMessage(),
+                new ChatController.Join(),
+                new ChatController.Cancel(),
+                new ChatController.Close(),
+                new FavController.Add(),
+                new FavController.Get(),
+                new FavController.Remove(),
+                new UserController.Edit()
         );
     }
 
@@ -45,6 +46,10 @@ public class Router {
                 );
     }
 
+    /**
+     * Retrieve a controller class from its route.
+     * @param route The route of the controller.
+     */
     public Controller findFromRoute(String route) throws EntityNotFoundException {
         return this.routes.stream().filter(controller -> controller.getRoute().equals(route)).findFirst().orElseThrow(EntityNotFoundException::new);
     }

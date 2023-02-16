@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -51,7 +52,15 @@ public class ChatViewController extends Controller {
 
     //TOP BAR
     @FXML
-    protected Label name;
+    protected Label username;
+    @FXML
+    protected Label age;
+    @FXML
+    protected Label description;
+    @FXML
+    protected Label headerText;
+    @FXML
+    protected ImageView avatar;
     @FXML
     protected Label chrono;
     @FXML
@@ -80,7 +89,11 @@ public class ChatViewController extends Controller {
         // scroll to bottom when new message is added
         vbox_messages.heightProperty().addListener((observableValue, oldValue, newValue) -> sp_main.setVvalue((Double) newValue));
 
-        this.name.setText(chatter.getUsername());
+        // init fields
+        this.username.setText(chatter.getUsername());
+        this.age.setText(chatter.getAge() != 0 ? String.valueOf(chatter.getAge()) + " ans" : "");
+        this.description.setText(chatter.getDescription() != null ? chatter.getDescription() : "");
+        this.headerText.setText("Débute ton date avec " + chatter.getUsername() + " !");
         this.timerStart = System.currentTimeMillis();
         updateChrono();
     }
@@ -95,11 +108,11 @@ public class ChatViewController extends Controller {
         long current = System.currentTimeMillis();
         int min5 = 300000;
 
-        if (current <= (timerStart + min5)) { //+ 5min
+        if (current <= (timerStart + min5)) { // + 5min
             Timeout.setTimeout(() -> {
                 long minutes = (int) (((min5 - (current - timerStart)) / 1000) / 60);
                 int seconds = (int) (((min5 - (current - timerStart)) / 1000) % 60);
-                Platform.runLater(() -> chrono.setText(String.format("%d:%d", minutes, seconds)));
+                Platform.runLater(() -> chrono.setText(String.format("%02d:%02d", minutes, seconds)));
                 updateChrono();
             }, 1000);
         } else {
@@ -113,10 +126,10 @@ public class ChatViewController extends Controller {
     }
 
     /**
-     * display a new message
+     * Display a new message
      * @see MessageDTO
-     * @param isOwnMessage : is currentUser owning this message
-     * @param message : the message
+     * @param isOwnMessage is currentUser owning this message
+     * @param message the message
      * */
     public void appendMessage(MessageDTO message, boolean isOwnMessage) {
         final int paddingSize = 10;
@@ -135,7 +148,7 @@ public class ChatViewController extends Controller {
         hBox.setPadding(new Insets(0, isOwnMessage ? 0 : paddingSize, 0, isOwnMessage ? paddingSize : 0));
 
         Text messageText = new Text(message.getContent());
-        messageText.setWrappingWidth(300);
+        messageText.setWrappingWidth(200);
         messageText.setStyle("-fx-font-size: 14px;");
 
         TextFlow textFlow = new TextFlow(messageText);

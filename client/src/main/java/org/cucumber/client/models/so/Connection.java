@@ -90,7 +90,7 @@ public class Connection implements Runnable {
             Optional<ChatViewController> chatController = FXUtils.getCurrentController(ChatViewController.class);
             chatController.ifPresent(controller -> Platform.runLater(() -> {
                 try {
-                    FXUtils.goTo(Views.MAIN_MENU.getViewName(), controller, controller.getStop().getScene());
+                    FXUtils.goTo(Views.MAIN_MENU.getValue(), controller, controller.getStop().getScene());
                 } catch (Exception e) {
                     System.exit(-1);
                 }

@@ -3,6 +3,10 @@ package org.cucumber.server.utils.classes;
 import lombok.Getter;
 import org.cucumber.server.models.so.SocketClient;
 
+/**
+ * The Controller class is the base class for all controllers.
+ * It provides a default implementation of the IHandler interface.
+ */
 @Getter
 public abstract class Controller {
 

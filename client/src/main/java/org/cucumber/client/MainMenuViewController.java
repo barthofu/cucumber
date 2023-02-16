@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.Controller;
@@ -30,8 +32,8 @@ public class MainMenuViewController extends Controller {
     protected Label usernameLabel;
     @FXML
     protected Label connectedUsersLabel;
-
-    private ActionEvent lastActionEvent;
+    @FXML
+    protected ImageView avatar;
 
     @Override
     public void onInit() {
@@ -52,8 +54,6 @@ public class MainMenuViewController extends Controller {
     @FXML
     protected void onLogoutButton(ActionEvent event) throws IOException {
 
-        lastActionEvent = event;
-
         SocketMessageService.getInstance().send(
                 new SocketMessage(
                         UUID.randomUUID().toString(),
@@ -63,33 +63,27 @@ public class MainMenuViewController extends Controller {
                 MainMenuViewController::handleLogoutResponse,
                 this
         );
+
+        UserService.getInstance().reset();
+        FXUtils.goTo(Views.LOGIN.getValue(), this, event);
     }
 
     private static <T extends Controller> void handleLogoutResponse(SocketMessageContent response, T context) {
-        Status status = (Status) response;
-
-        if (status.isSuccess()) {
-            UserService.getInstance().reset();
-            Platform.runLater(() -> {
-                try {
-                    FXUtils.goTo(Views.LOGIN.getViewName(), context, ((MainMenuViewController) context).lastActionEvent);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
-
     }
 
     @FXML
     protected void onFavButton(ActionEvent event) throws IOException {
-        FXUtils.goTo(Views.FAV.getViewName(), this, event);
+        FXUtils.goTo(Views.FAV.getValue(), this, event);
     }
 
     @FXML
     protected void onStartDating(ActionEvent event) throws IOException {
+        FXUtils.goTo(Views.WAITING.getValue(), this, event);
+    }
 
-        FXUtils.goTo(Views.WAITING.getViewName(), this, event);
+    @FXML
+    protected void onProfileButton(ActionEvent event) throws IOException {
+        FXUtils.goTo(Views.PROFILE.getValue(), this, event);
     }
 
     public void updateTotalUsers() {
@@ -100,7 +94,8 @@ public class MainMenuViewController extends Controller {
     }
 
     protected void setCurrentUserDisplayInfos(UserDTO user) {
-        usernameLabel.setText("Connecté en tant que " + user.getUsername());
+        usernameLabel.setText(user.getUsername());
+        if (user.getAvatar() != null) avatar.setImage(new Image(user.getAvatar()));
     }
 
     // ================================

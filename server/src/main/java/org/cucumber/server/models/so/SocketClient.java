@@ -14,6 +14,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * The SocketClient class represent a socket connection of a client to the server.
+ */
 @Getter
 @Setter
 public class SocketClient implements Runnable {
@@ -24,6 +27,9 @@ public class SocketClient implements Runnable {
     private final Socket socket;
     private boolean isActive;
 
+    /**
+     * The user associated to this client (set when the client is authenticated)
+     */
     private User user = null;
 
     private ObjectOutputStream out;
@@ -82,6 +88,9 @@ public class SocketClient implements Runnable {
         return message;
     }
 
+    /**
+     * Gracefully close the client.
+     */
     public void closeClient() {
         try {
             SocketManager.getInstance().removeClient(this);

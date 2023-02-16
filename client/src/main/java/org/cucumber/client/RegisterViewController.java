@@ -37,6 +37,8 @@ public class RegisterViewController extends Controller {
     public TextField age;
     @FXML
     public TextArea description;
+    @FXML
+    public TextField avatar;
 
     private ActionEvent lastActionEvent;
 
@@ -71,6 +73,7 @@ public class RegisterViewController extends Controller {
                                 .password(password.getText())
                                 .age(Integer.parseInt(age.getText()))
                                 .description(description.getText())
+                                .avatar(avatar.getText())
                                 .build(
                         )
                 ),
@@ -86,7 +89,7 @@ public class RegisterViewController extends Controller {
             if (status.isSuccess()) {
                 Platform.runLater(() -> {
                     try {
-                        FXUtils.goTo(Views.LOGIN.getViewName(), context, ((RegisterViewController) context).lastActionEvent);
+                        FXUtils.goTo(Views.LOGIN.getValue(), context, ((RegisterViewController) context).lastActionEvent);
                     } catch (IOException e) {
                         ((RegisterViewController) context).errorLabel.setText(e.getMessage());
                     }

@@ -13,4 +13,5 @@ public class RegisterRequest extends SocketMessageContent {
     private final String password;
     private int age;
     private String description;
+    private String avatar;
 }

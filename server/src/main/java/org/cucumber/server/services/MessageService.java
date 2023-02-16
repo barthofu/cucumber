@@ -10,6 +10,9 @@ import org.cucumber.server.repositories.impl.RoomRepository;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Service for managing {@link Message}.
+ */
 public class MessageService {
 
     public Message saveMessage(User sender, String content) {
