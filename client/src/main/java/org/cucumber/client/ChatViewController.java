@@ -1,19 +1,14 @@
 package org.cucumber.client;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -39,9 +34,9 @@ import java.util.Date;
 import java.util.UUID;
 
 @Getter
-public class ChatController extends Controller {
+public class ChatViewController extends Controller {
 
-    public ChatController() {
+    public ChatViewController() {
         super("Chat");
     }
 
@@ -179,7 +174,7 @@ public class ChatController extends Controller {
         // send message to server
         SocketMessageService.getInstance().send(
                 new SocketMessage(UUID.randomUUID().toString(), Routes.Server.CHAT_SEND.getValue(), messageDTO),
-                ChatController::handleMessageSendResponse,
+                ChatViewController::handleMessageSendResponse,
                 this
         );
 
@@ -204,7 +199,7 @@ public class ChatController extends Controller {
                         Routes.Server.FAV_ADD.getValue(),
                         new UserTarget(chatter)
                 ),
-                ChatController::handleAddFavResponse,
+                ChatViewController::handleAddFavResponse,
                 this
         );
 
@@ -220,7 +215,7 @@ public class ChatController extends Controller {
                         Routes.Server.CHAT_CLOSE.getValue(),
                         new Empty()
                 ),
-                ChatController::handleStopResponse,
+                ChatViewController::handleStopResponse,
                 this
         );
 

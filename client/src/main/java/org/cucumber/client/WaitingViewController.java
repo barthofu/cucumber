@@ -2,11 +2,8 @@ package org.cucumber.client;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
 import org.cucumber.client.services.ChatService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.utils.classes.Controller;
@@ -17,13 +14,14 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.dto.generics.Empty;
 import org.cucumber.common.dto.generics.Status;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
 import java.util.UUID;
 
-public class WaitingController extends Controller {
+public class WaitingViewController extends Controller {
 
-    public WaitingController() {
+    public WaitingViewController() {
         super("En attente d'un interlocuteur");
     }
 
@@ -33,8 +31,8 @@ public class WaitingController extends Controller {
     @FXML
     protected void onCancel(ActionEvent event) throws IOException {
         SocketMessageService.getInstance().send(
-                new SocketMessage(UUID.randomUUID().toString(), "chat/cancel", new Empty()),
-                WaitingController::handleCancelResponse,
+                new SocketMessage(UUID.randomUUID().toString(), Routes.Server.CHAT_CANCEL.getValue(), new Empty()),
+                WaitingViewController::handleCancelResponse,
                 this
         );
         FXUtils.goTo(Views.MAIN_MENU.getViewName(), this, event);
@@ -46,10 +44,10 @@ public class WaitingController extends Controller {
             SocketMessageService.getInstance().send(
                     new SocketMessage(
                             UUID.randomUUID().toString(),
-                            "chat/join",
+                            Routes.Server.CHAT_JOIN.getValue(),
                             new Empty()
                     ),
-                    WaitingController::handleJoinChatRoomResponse,
+                    WaitingViewController::handleJoinChatRoomResponse,
                     this
             );
         } catch (IOException e) {
@@ -64,7 +62,7 @@ public class WaitingController extends Controller {
         if (status.isSuccess()) {
             Platform.runLater(() -> {
                 try {
-                    FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((WaitingController) context).button_cancel.getScene());
+                    FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((WaitingViewController) context).button_cancel.getScene());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -78,14 +76,14 @@ public class WaitingController extends Controller {
             ChatService.getInstance().startChat(userDTO);
             Platform.runLater(() -> {
                 try {
-                    ChatController.chatter = userDTO;
-                    FXUtils.goTo(Views.CHAT.getViewName(), context, ((WaitingController) context).button_cancel.getScene());
+                    ChatViewController.chatter = userDTO;
+                    FXUtils.goTo(Views.CHAT.getViewName(), context, ((WaitingViewController) context).button_cancel.getScene());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
         } catch (Exception e){
-            System.out.println(MainMenuController.class.getName() + " : "+  e.getMessage());
+            System.out.println(MainMenuViewController.class.getName() + " : "+  e.getMessage());
         }
     }
 

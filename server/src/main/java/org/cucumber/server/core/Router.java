@@ -21,12 +21,13 @@ public class Router {
 
     private Router() {
         this.routes = Set.of(
-                new RegisterController(),
+                new AuthController.Login(),
+                new AuthController.Register(),
+                new AuthController.Logout(),
                 new ChatController.ChatSend(),
                 new ChatController.ChatJoin(),
                 new ChatController.ChatCancel(),
                 new ChatController.ChatClose(),
-                new LoginController(),
                 new FavControllers.Add(),
                 new FavControllers.Get(),
                 new FavControllers.Remove()

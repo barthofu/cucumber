@@ -14,32 +14,3 @@ import org.cucumber.server.utils.errors.UsernameAlreadyTakenException;
 import org.cucumber.server.utils.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 
-public class RegisterController extends Controller {
-    public static final String route = Routes.Server.REGISTER_REGISTER.getValue();
-
-    public RegisterController() {
-        super(route);
-    }
-
-    @Override
-    public void handle(SocketClient socketClient, String requestId, Object args) {
-        RegisterRequest arguments = args instanceof RegisterRequest ? ((RegisterRequest) args) : null;
-
-        if (arguments != null) {
-            try {
-
-                UserDTO userDTO = Mappers.getMapper(UserMapper.class).registerRequestToUserDTO(arguments);
-
-                AuthService.getInstance().register(userDTO, arguments.getPassword());
-                socketClient.sendToClient(new SocketMessage(requestId, new Status(true)));
-
-            } catch (UsernameAlreadyTakenException e) {
-                socketClient.sendToClient(new SocketMessage(requestId, new Status(false, e.getMessage())));
-            } catch (Exception ignore) {
-                socketClient.sendToClient(new SocketMessage(requestId, new Status(false)));
-            }
-        } else {
-            Logger.log(LoggerStatus.SEVERE, String.format("%s : %s", RegisterController.class.getName(), "args is null"));
-        }
-    }
-}

@@ -54,6 +54,10 @@ public class AuthService {
         Logger.log(LoggerStatus.INFO, "Added new user: " + userDTO.getUsername());
     }
 
+    public void logout(int userId) {
+        SocketManager.getInstance().removeClient(SocketManager.getInstance().getByUserId(userId));
+    }
+
     public String hashPsswd(String str) {
         return BCrypt
                 .withDefaults()

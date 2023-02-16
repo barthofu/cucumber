@@ -1,10 +1,7 @@
 package org.cucumber.client.models.so;
 
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import org.cucumber.client.ChatController;
-import org.cucumber.client.MainMenuController;
+import org.cucumber.client.ChatViewController;
 import org.cucumber.client.services.MessageService;
 import org.cucumber.client.services.SocketMessageService;
 import org.cucumber.client.services.SocketService;
@@ -90,7 +87,7 @@ public class Connection implements Runnable {
             MessageService.getInstance().addMessage((MessageDTO) message.getContent());
 
         } else if (matchRoute(message, Routes.Client.SESSION_STOP)) {
-            Optional<ChatController> chatController = FXUtils.getCurrentController(ChatController.class);
+            Optional<ChatViewController> chatController = FXUtils.getCurrentController(ChatViewController.class);
             chatController.ifPresent(controller -> Platform.runLater(() -> {
                 try {
                     FXUtils.goTo(Views.MAIN_MENU.getViewName(), controller, controller.getStop().getScene());

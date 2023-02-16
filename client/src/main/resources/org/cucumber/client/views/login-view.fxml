@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.LoginController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="650.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.cucumber.client.LoginViewController">
     <padding>
         <Insets bottom="50.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -32,7 +32,7 @@
          </HBox>
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
             <children>
-                <Button fx:id="loginBtn" onAction="#onLoginButton" styleClass="btn" text="Se connecter" textAlignment="CENTER" />
+                <Button fx:id="loginBtn" onAction="#onLoginButton" styleClass="btn-primary" text="Se connecter" textAlignment="CENTER" />
                <Button mnemonicParsing="false" onAction="#onSignUp" text="S'enregistrer" textAlignment="CENTER" />
             </children>
          </HBox>

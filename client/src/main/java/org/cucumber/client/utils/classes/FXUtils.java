@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.cucumber.client.MainMenuController;
+import org.cucumber.client.MainMenuViewController;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -83,7 +83,7 @@ public class FXUtils {
         appStage.setResizable(false);
         appStage.setScene(scene);
 
-        getCurrentController(MainMenuController.class);
+        getCurrentController(MainMenuViewController.class);
 
         // init new controller
         currentController.onInit();

@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import org.cucumber.client.MainMenuController;
+import org.cucumber.client.MainMenuViewController;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.common.dto.UserDTO;
 
@@ -13,8 +13,6 @@ import java.util.Optional;
 @Getter
 @Setter
 public class UserService {
-
-    private Stage currentStage;
 
     private UserDTO currentUser = null;
 
@@ -27,9 +25,9 @@ public class UserService {
     public void setTotalUsers(int totalUsers) {
         this.totalUsers = totalUsers;
 
-        Optional<MainMenuController> mainMenuController = FXUtils.getCurrentController(MainMenuController.class);
+        Optional<MainMenuViewController> mainMenuController = FXUtils.getCurrentController(MainMenuViewController.class);
         Platform.runLater(() -> {
-            mainMenuController.ifPresent(MainMenuController::updateTotalUsers);
+            mainMenuController.ifPresent(MainMenuViewController::updateTotalUsers);
         });
     }
 
@@ -38,6 +36,10 @@ public class UserService {
      * */
     public boolean isLoggedIn() {
         return currentUser != null;
+    }
+
+    public void reset() {
+        currentUser = null;
     }
 
     // ================================

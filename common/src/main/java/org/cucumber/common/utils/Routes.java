@@ -21,9 +21,10 @@ public class Routes {
 
         USER_ME("user/me"),
 
-        REGISTER_REGISTER("register"),
+        AUTH_REGISTER("auth/register"),
+        AUTH_LOGIN("auth/login"),
+        AUTH_LOGOUT("auth/logout");
 
-        LOGIN_LOGIN("login");
         private final String value;
     }
 

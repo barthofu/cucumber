@@ -35,6 +35,7 @@ Voici la liste des fonctionnalités implémentées dans l'application:
 
 - Inscription
 - Connexion
+- Déconnexion
 - Affichage en temps réel du nombre d'utilisateurs connectés
 - Chat
   - File d'attente

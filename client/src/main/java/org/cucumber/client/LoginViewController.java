@@ -11,19 +11,19 @@ import org.cucumber.client.services.UserService;
 import org.cucumber.client.utils.classes.Controller;
 import org.cucumber.client.utils.classes.FXUtils;
 import org.cucumber.client.utils.enums.Views;
-import org.cucumber.common.dto.MessageDTO;
 import org.cucumber.common.dto.UserDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.LoginRequest;
+import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
 import java.util.UUID;
 
-public class LoginController extends Controller {
+public class LoginViewController extends Controller {
 
-    public LoginController() {
+    public LoginViewController() {
         super("Se connecter");
     }
 
@@ -53,10 +53,10 @@ public class LoginController extends Controller {
         SocketMessageService.getInstance().send(
                 new SocketMessage(
                         UUID.randomUUID().toString(),
-                        "login",
+                        Routes.Server.AUTH_LOGIN.getValue(),
                         new LoginRequest(username.getText(), password.getText())
                 ),
-                LoginController::handleLoginResponse,
+                LoginViewController::handleLoginResponse,
                 this
         );
     }
@@ -73,15 +73,15 @@ public class LoginController extends Controller {
 
                 Platform.runLater(() -> {
                     try {
-                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginController) context).lastActionEvent);
+                        FXUtils.goTo(Views.MAIN_MENU.getViewName(), context, ((LoginViewController) context).lastActionEvent);
                     } catch (IOException e) {
-                        ((LoginController) context).errorLabel.setText(e.getMessage());
+                        ((LoginViewController) context).errorLabel.setText(e.getMessage());
                     }
                 });
             } else {
                 String message = ((Status) response).getMessage();
                 Platform.runLater(() -> {
-                    ((LoginController) context).setErrorMessage(message != null ? message : "Une erreur est survenue");
+                    ((LoginViewController) context).setErrorMessage(message != null ? message : "Une erreur est survenue");
                 });
             }
         } catch (Exception e){

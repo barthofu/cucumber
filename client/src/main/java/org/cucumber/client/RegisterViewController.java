@@ -1,8 +1,6 @@
 package org.cucumber.client;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -16,8 +14,6 @@ import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.dto.base.SocketMessageContent;
 import org.cucumber.common.dto.generics.Status;
 import org.cucumber.common.dto.requests.RegisterRequest;
-import org.cucumber.common.so.LoggerStatus;
-import org.cucumber.common.utils.Logger;
 import org.cucumber.common.utils.Routes;
 
 import java.io.IOException;
@@ -69,7 +65,7 @@ public class RegisterViewController extends Controller {
         SocketMessageService.getInstance().send(
                 new SocketMessage(
                         UUID.randomUUID().toString(),
-                        Routes.Server.REGISTER_REGISTER.getValue(),
+                        Routes.Server.AUTH_REGISTER.getValue(),
                         RegisterRequest.builder()
                                 .username(username.getText())
                                 .password(password.getText())
@@ -100,7 +96,7 @@ public class RegisterViewController extends Controller {
                     ((RegisterViewController) context).errorLabel.setText(status.getMessage() != null ? status.getMessage() : "Une erreur est survenue");
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(RegisterViewController.class.getName() + " : "+  e.getMessage());
         }
     }

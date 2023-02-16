@@ -4,6 +4,7 @@ import org.cucumber.common.dto.UsersDTO;
 import org.cucumber.common.dto.base.SocketMessage;
 import org.cucumber.common.so.LoggerStatus;
 import org.cucumber.common.utils.Logger;
+import org.cucumber.common.utils.Routes;
 import org.cucumber.server.models.so.SocketClient;
 import org.cucumber.server.services.ChatRoomService;
 
@@ -111,12 +112,12 @@ public class SocketManager implements Runnable {
 
         Logger.log(LoggerStatus.INFO, String.format("Client disconnected (%d)", socketClient.getSocketId()));
 
-        this.socketClients.remove(socketClient);
-
         if (socketClient.isLoggedIn()) {
             ChatRoomService.getInstance().removeWaitingUser(socketClient.getUser().getId());
             ChatRoomService.getInstance().closeRoom(socketClient.getUser().getId());
         }
+
+        this.socketClients.remove(socketClient);
 
         broadcastCountLoggedIn();
     }
@@ -124,7 +125,7 @@ public class SocketManager implements Runnable {
     public void broadcastCountLoggedIn() {
         this.broadcastMessage(new SocketMessage(
                 UUID.randomUUID().toString(),
-                "user/total",
+                Routes.Client.USER_TOTAL.getValue(),
                 new UsersDTO(this.countLoggedIn())
         ));
     }
