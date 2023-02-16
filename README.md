@@ -60,7 +60,7 @@ Voici la liste des fonctionnalités implémentées dans l'application:
 
 L'application java est décomposée en 3 packages distincts.
 
-### Server
+### Serveur
 
 Le serveur applicatif auquel les différents clients vont se connecter. Il va threader chaque connexion et veille à la bonne gestion et inter-communication des clients.
 
@@ -80,15 +80,3 @@ Voici son architecture :
 
 Enfin, le package common contient les classes/interfaces/objets communs aux deux
 applications (client et serveur).
-
-
-## Todo
-- [x] Improve auth: don't permit login if user is already logged in
-- [x] Readme
-
-### Bonus
-- [ ] When server disconnects, redirects to a error 500 page with a "Close" button
-- [ ] If server is unreachable when opening client, show an error page
-- [ ] Improve favorites: both users should add each other to validate the fav
-- [ ] Profile page
-- [ ] Refactor authentication so it uses hashes instead of bcrypt
