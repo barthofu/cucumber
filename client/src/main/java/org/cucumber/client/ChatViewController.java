@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -94,6 +95,12 @@ public class ChatViewController extends Controller {
         this.age.setText(chatter.getAge() != 0 ? String.valueOf(chatter.getAge()) + " ans" : "");
         this.description.setText(chatter.getDescription() != null ? chatter.getDescription() : "");
         this.headerText.setText("Débute ton date avec " + chatter.getUsername() + " !");
+        if (chatter.getAvatar() != null) {
+            new Thread(() -> {
+                Image image = new Image(chatter.getAvatar());
+                Platform.runLater(() -> avatar.setImage(image));
+            }).start();
+        }
         this.timerStart = System.currentTimeMillis();
         updateChrono();
     }

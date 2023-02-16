@@ -5,6 +5,7 @@ import org.cucumber.common.dto.UserDTO;
 import org.cucumber.server.models.bo.User;
 import org.cucumber.server.repositories.IUserRepository;
 
+import java.util.Optional;
 import java.util.Set;
 
 public class UserRepository extends BasicRepository<User> implements IUserRepository {
@@ -14,11 +15,16 @@ public class UserRepository extends BasicRepository<User> implements IUserReposi
     }
 
     @Override
-    public User getByUsername(String username) {
-        return em
-                .createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                .setParameter("username", username)
-                .getSingleResult();
+    public Optional<User> getByUsername(String username) {
+        try {
+            return Optional.ofNullable(em
+                    .createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+
     }
 
     @Override

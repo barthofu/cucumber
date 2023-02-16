@@ -56,7 +56,12 @@ public class ProfileViewController extends Controller {
         age.setText(Integer.toString(userDTO.getAge()));
         description.setText(userDTO.getDescription());
 
-        if (userDTO.getAvatar() != null) avatar.setImage(new Image(userDTO.getAvatar()));
+        if (userDTO.getAvatar() != null) {
+            new Thread(() -> {
+                Image image = new Image(userDTO.getAvatar());
+                Platform.runLater(() -> avatar.setImage(image));
+            }).start();
+        }
     }
 
     @FXML

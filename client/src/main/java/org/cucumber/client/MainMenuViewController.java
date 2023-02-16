@@ -95,7 +95,12 @@ public class MainMenuViewController extends Controller {
 
     protected void setCurrentUserDisplayInfos(UserDTO user) {
         usernameLabel.setText(user.getUsername());
-        if (user.getAvatar() != null) avatar.setImage(new Image(user.getAvatar()));
+        if (user.getAvatar() != null) {
+            new Thread(() -> {
+                Image image = new Image(user.getAvatar());
+                Platform.runLater(() -> avatar.setImage(image));
+            }).start();
+        }
     }
 
     // ================================

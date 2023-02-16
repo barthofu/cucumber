@@ -64,18 +64,20 @@ public class RegisterViewController extends Controller {
 
         lastActionEvent = event;
 
+        RegisterRequest registerRequest = RegisterRequest.builder()
+                .username(username.getText())
+                .password(password.getText())
+                .build();
+
+        if (!age.getText().isEmpty()) registerRequest.setAge(Integer.parseInt(age.getText()));
+        if (!description.getText().isEmpty()) registerRequest.setDescription(description.getText());
+        if (!avatar.getText().isEmpty()) registerRequest.setAvatar(avatar.getText());
+
         SocketMessageService.getInstance().send(
                 new SocketMessage(
                         UUID.randomUUID().toString(),
                         Routes.Server.AUTH_REGISTER.getValue(),
-                        RegisterRequest.builder()
-                                .username(username.getText())
-                                .password(password.getText())
-                                .age(Integer.parseInt(age.getText()))
-                                .description(description.getText())
-                                .avatar(avatar.getText())
-                                .build(
-                        )
+                        registerRequest
                 ),
                 RegisterViewController::handleRegisterResponse,
                 this

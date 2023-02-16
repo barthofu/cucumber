@@ -12,6 +12,7 @@ import org.cucumber.server.utils.errors.UserAlreadyLoggedInException;
 import org.cucumber.server.utils.errors.UsernameAlreadyTakenException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service for authentication
@@ -37,18 +38,21 @@ public class AuthService {
 
     public void register(UserDTO userDTO, String password) throws UsernameAlreadyTakenException {
 
-        User userWithSameUsername = Repositories
+        Optional<User> userWithSameUsername = Repositories
                 .get(UserRepository.class)
                 .getByUsername(userDTO.getUsername());
-        if (userWithSameUsername != null)
+
+        if (userWithSameUsername.isPresent())
             throw new UsernameAlreadyTakenException();
 
         User user = User.builder()
                 .username(userDTO.getUsername())
                 .password(hashPsswd(password))
-                .age(userDTO.getAge())
-                .description(userDTO.getDescription())
                 .build();
+
+        if (userDTO.getAge() != 0) user.setAge(userDTO.getAge());
+        if (userDTO.getDescription() != null) user.setDescription(userDTO.getDescription());
+        if (userDTO.getAvatar() != null) user.setAvatar(userDTO.getAvatar());
 
         Repositories
                 .get(UserRepository.class)

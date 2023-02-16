@@ -16,11 +16,6 @@ import org.cucumber.common.utils.Logger;
  */
 public class SocketMessageService {
 
-    /**
-     * The timeout in milliseconds for a response.
-     */
-    private static final Long timeoutMillis = 10000L;
-
     private final Map<String, SocketMessageContent> responseQueue = new HashMap<>();
 
     /**
@@ -39,9 +34,8 @@ public class SocketMessageService {
         // start a new thread to wait for response
         new Thread(() -> {
             // wait for response
-            long startTime = System.currentTimeMillis();
 
-            while (!isResponseReceived(requestId) || isExpired(startTime)) {
+            while (!isResponseReceived(requestId)) {
                 // wait
                 try {
                     Thread.sleep(15L);
@@ -49,12 +43,10 @@ public class SocketMessageService {
                     break;
                 }
             }
-            if (isResponseReceived(requestId)) {
-                Logger.log(LoggerStatus.INFO, String.format("Response on %s has been resolved", message.getRoute()));
-                callback.apply(getResponseContent(requestId), context);
-            } else {
-                Logger.log(LoggerStatus.SEVERE, String.format("Response on %s has expired", message.getRoute()));
-            }
+
+            Logger.log(LoggerStatus.INFO, String.format("Response on %s has been resolved", message.getRoute()));
+            callback.apply(getResponseContent(requestId), context);
+
         }).start();
     }
 
@@ -68,10 +60,6 @@ public class SocketMessageService {
 
     private boolean isResponseReceived(String requestId) {
         return responseQueue.containsKey(requestId);
-    }
-
-    private boolean isExpired(Long startTime) {
-        return System.currentTimeMillis() >= startTime + timeoutMillis;
     }
 
     // ================================
